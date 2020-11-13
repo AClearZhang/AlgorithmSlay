@@ -1,2 +1,2 @@
 # AlgorithmSlay
-AIgorithm Engineer &amp; 
+AIgorithm Engineer & Problem Solving In LeetCode etc.
