@@ -5,7 +5,7 @@
    @E-mail              : aclearzhang@qq.com
    @Homepage            : www.aclear.top
    @LastEditors         : AClearZhang
-   @LastEditTime        : 2020-11-13 23:49:37
+   @LastEditTime        : 2020-11-17 14:55:41
    @Version             : 1.0
    @Description         : first problem solved
 '''
@@ -50,7 +50,7 @@ class Solution2:
         :type target: int
         :rtype: List[int]
         """
-        sorted_id = sorted(range(len(nums)), key=lambda k: nums[k])
+        sorted_id = sorted(range(len(nums)), key=lambda k: nums[k])  # 关键的一个方便方法
         head = 0
         tail = len(nums) - 1
         sum_result = nums[sorted_id[head]] + nums[sorted_id[tail]]
