@@ -1,11 +1,11 @@
 '''
-   @FilePath            : \project\AlgorithmSlay\2.Two sum II-Input array is sorted.py
+   @FilePath            : \AlgorithmSlay\2.Two sum II-Input array is sorted.py
    @Author              : AClearZhang
    @Date                : 2020-11-17 14:57:21
    @E-mail              : aclearzhang@qq.com
    @Homepage            : www.aclear.top
    @LastEditors         : AClearZhang
-   @LastEditTime        : 2020-11-17 15:34:50
+   @LastEditTime        : 2020-11-20 20:31:33
    @Version             : 1.0
    @Description         : 数组刷题
 '''
@@ -23,6 +23,7 @@
 # 输入: numbers = [2, 7, 11, 15], target = 9
 # 输出: [1,2]
 # 解释: 2 与 7 之和等于目标数 9 。因此 index1 = 1, index2 = 2 。
+from typing import List
 class Solution:
     '''
        @description: 
@@ -48,3 +49,7 @@ class Solution:
 
 
 
+
+if __name__ == "__main__":
+    a = Solution()
+    print(a.twoSum([2, 7, 11, 15], 9))
