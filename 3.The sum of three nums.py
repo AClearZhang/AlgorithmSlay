@@ -1,11 +1,11 @@
 '''
-   @FilePath            : \project\AlgorithmSlay\3.The sum of three nums.py
+   @FilePath            : \AlgorithmSlay\3.The sum of three nums.py
    @Author              : AClearZhang
    @Date                : 2020-11-19 21:55:24
    @E-mail              : aclearzhang@qq.com
    @Homepage            : www.aclear.top
    @LastEditors         : AClearZhang
-   @LastEditTime        : 2020-11-20 00:30:14
+   @LastEditTime        : 2020-11-20 21:19:48
    @Version             : 1.0
    @Description         :  注意以下题干描述
 
@@ -108,22 +108,34 @@ class Solution:
         res = []
         sort_num = sorted(nums)
         for i,v in enumerate(sort_num):
-            if(nums[i] > 0): break # 遗漏了！如果当前数字大于0，则三数之和一定大于0，所以结束循环
+            if(sort_num[i] > 0): # 遗漏了！如果当前数字大于0，则三数之和一定大于0，所以结束循环
+                return res
             if i >= 1 and sort_num[i] == sort_num[i-1]: #去重
                 continue
             L = i+1; R = n-1
             while L<R:
-                
-                # 去重L&R
-                while(L<R and sort_num[L+1] == sort_num[L]): L+=1
-                while(L<R and sort_num[R    -1] == sort_num[R]): R-=1
                 sum = sort_num[i] + sort_num[L] + sort_num[R]
-                if sum==0:
-                    res.append([sort_num[i],sort_num[L],sort_num[R]])
-                elif sum > 0:
+                if sum == 0:
+                    res.append([sort_num[i], sort_num[L], sort_num[R]])
+                    # 去重并寻找下一个不是次数的数值
+                    L+=1; R-=1; # 可以这样 因为排好序了，已经不可能只移动一边了！ YES！
+                    while(L<R and sort_num[L] == sort_num[L-1]): L+=1
+                    while(R>L and sort_num[R] == sort_num[R+1]): R-=1
+                elif sum>0:
                     R-=1
-                elif sum < 0:
+                elif sum < 0 :
                     L+=1
+
+                # # 去重L&R
+                # while(L<R and sort_num[L+1] == sort_num[L]): L+=1
+                # while(L<R and sort_num[R    -1] == sort_num[R]): R-=1
+                # sum = sort_num[i] + sort_num[L] + sort_num[R]
+                # if sum==0:
+                #     res.append([sort_num[i],sort_num[L],sort_num[R]])
+                # elif sum > 0:
+                #     R-=1
+                # elif sum < 0:
+                #     L+=1
         return res
                 
 
@@ -135,6 +147,7 @@ if __name__ == "__main__":
     a = Solution()
     # print(a.threeSum([-1,0,1,2,-1,-4]))
     # print(a.threeSum([0,0,0,0]))
-    print(a.threeSum([-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6]))
+    print(a.threeSum([1,0, -1]))
+    # print(a.threeSum([-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6]))
 
 
