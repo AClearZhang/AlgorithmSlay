@@ -1,3 +1,4 @@
 .vscode/
 Test.py
 Test*.ipynb
+*.exe

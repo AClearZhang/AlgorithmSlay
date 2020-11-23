@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-11-22 23:20:59
+ * @LastEditTime        : 2020-11-23 22:37:28
  * @Version             : 1.0
  * @Description         : C++ 实现题目三
 
@@ -26,18 +26,44 @@
 ]
  
  */
-#include <stdio.h>
+#include <iostream>
+#include <vector>
 #include <windows.h>
+#include <algorithm>
+
+using namespace std;
 
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
+      // 三数之和； 关键是边界限制，防止重复！
+      // 首先写出算法思想
+     
+     
+      // 首先 无数或者<3返回null
+      // 然后 排序数组
+      // head = 0
+      // 最后：for all
+      //         > 0 returen
+      //         jump, 
+
+      sort(nums.begin(), nums.end());
+      if(nums.empty() || nums.size() < 3){
+        return vector<int> [];
+      }
 
     }
 };
 
 
 int main(){
+  Solution s;
+  vector<int> c = {2, 7, 11, 15};
+  vector<int> a = s.twoSum(c, 9);
+  for (int i = 0; i < a.size(); i++)
+  {
+      cout << a[i] << " ";
+  }
   printf("Hello World!\n");
   system("pause");
   return 0;
