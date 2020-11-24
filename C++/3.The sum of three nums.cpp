@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-11-23 22:37:28
+ * @LastEditTime        : 2020-11-24 11:18:00
  * @Version             : 1.0
  * @Description         : C++ 实现题目三
 
@@ -33,6 +33,7 @@
 
 using namespace std;
 
+// 方法一： 去重，双指针大法
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
@@ -44,25 +45,70 @@ public:
       // 然后 排序数组
       // head = 0
       // 最后：for all
-      //         > 0 returen
-      //         jump, 
-
-      sort(nums.begin(), nums.end());
+      //         边界：others > 0 returen；
+      //         类边界：避免重复,和下一个是否重复  则break;
+      //         最后，
+      vector<vector<int>> answer = {};
       if(nums.empty() || nums.size() < 3){
-        return vector<int> [];
+        return answer;
       }
+      sort(nums.begin(), nums.end());
+      for(int i = 0; i < nums.size()-2 ;i++){
+        // 去重操作
+        if( i > 0 && nums[i] == nums[i-1] ){
+          continue;
+        }
+        // 【答案】边界限制应该在这！  ——   加速时间
+        if(nums[i] > 0){
+          return answer; // 【改进】直接返回就好了，节省时间.
+        }
 
+        int head = i+1, tail = nums.size()-1;
+        int target = 0-nums[i];
+        while(head < tail){
+          int others = nums[head]+nums[tail];
+          // 边界限制
+          // if(others < 0){
+          //   return answer;
+          // }
+
+          //采用后 去重方法！否则容易  漏项。
+          if(others > target){
+            tail--;
+            // while(head<tail && nums[tail] == nums[tail+1])  tail--;  //多余了
+          }else if(others < target){
+            head++;
+            // while(head<tail && nums[head] == nums[head-1])  head++;  //多余了
+          }else if(others == target){
+            answer.push_back(vector<int> {nums[i], nums[head], nums[tail]});
+            tail--;
+            while(head<tail && nums[tail] == nums[tail+1])  tail--;  //head<tail && 
+            head++;
+            while(head<tail && nums[head] == nums[head-1])  head++;
+          }
+
+        }
+      }
+      return answer;
     }
 };
 
 
+//方法二： 3Sum--变2Sum  两层去 count()  
+
+
 int main(){
   Solution s;
-  vector<int> c = {2, 7, 11, 15};
-  vector<int> a = s.twoSum(c, 9);
+  // vector<int> c = {-1, 0, 1, 2, -1, -4};
+  // vector<int> c = {0,0,0,0};
+  vector<int> c = {34,55,79,28,46,33,2,48,31,-3,84,71,52,-3,93,15,21,-43,57,-6,86,56,94,74,83,-14,28,-66,46,-49,62,-11,43,65,77,12,47,61,26,1,13,29,55,-82,76,26,15,-29,36,-29,10,-70,69,17,49};
+  vector<vector<int>> a = s.threeSum(c);
   for (int i = 0; i < a.size(); i++)
   {
-      cout << a[i] << " ";
+    for(int j = 0;j<3;j++){
+      cout << a[i][j] << " ";
+    }
+    cout << endl;
   }
   printf("Hello World!\n");
   system("pause");
