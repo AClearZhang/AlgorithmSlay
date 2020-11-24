@@ -25,13 +25,13 @@
  */
 
 /*
- * @FilePath            : \AlgorithmSlay\C++\18.FourSum.cpp
+ * @FilePath            : \project\AlgorithmSlay\C++\18.FourSum.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-11-20 21:54:51
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-11-24 22:22:50
+ * @LastEditTime        : 2020-11-24 23:23:03
  * @Version             : 1.0
  * @Description         : 此题为 kSum 总结题目中的一道.
 给定一个包含 n 个整数的数组 nums 和一个目标值 target，判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？找出所有满足条件且不重复的四元组。
@@ -116,13 +116,15 @@ public:
         if(nums.empty() || nums.size() < 4)  return answer; 
         sort(nums.begin(), nums.end());
         for(int i=0; i<nums.size()-3 ;i++){
-            if(nums[i] > target){ return answer; }
+            // if(nums[i] > target){ return answer; } //-11 No! 【错误！】
             //去除重复
             if(i>0 && nums[i] == nums[i-1]) continue;
+
             for( int j=i+1; j<nums.size()-2 ;j++ ){
                 //去除重复
                 if(j>i+1 && nums[j] == nums[j-1]) continue;
                 int head=j+1, tail = nums.size()-1;
+                
                 while(head<tail){
                     int sum = nums[i] + nums[j] + nums[head] + nums[tail];
                     if( sum == target ){
