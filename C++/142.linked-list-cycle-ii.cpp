@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-11-27 11:33:33
+ * @LastEditTime        : 2020-11-27 17:05:59
  * @Version             : 1.0
  * @Description         : 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
 
@@ -75,13 +75,26 @@ public:
      */    
         // ListNode* slow = head, *fast = head->next;
         ListNode* slow = head, *fast = head;  //注意 需要直接从头开始 2步；1步.
-        int count = 0;
+        // int count = 0;
         while(fast!=nullptr && fast->next!=nullptr){
-            cout <<  count++ << endl;
+            // cout <<  count++ << endl;
             fast = fast->next->next;
             slow = slow->next;
-            if( fast == slow ) return slow;
+            // if( fast == slow ) return slow;  //注意这里返回的 不一定是链表中！要返回链表中！
+                                                //而且 也不一定slow-> next 就是链中。
+
+            if(fast == slow){
+                slow = head;
+                while( slow != fast ){
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+                return fast;
+            }
         }
+        // 一步步走，slow放head；第二次相遇 是链中。
+
+        // 未找到返回 nullptr.
         return nullptr;
     }
 };
