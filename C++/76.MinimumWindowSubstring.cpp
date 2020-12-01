@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\C++\76.MinimumWindowSubstring.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\76.MinimumWindowSubstring.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-11-28 00:06:16
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-11-30 23:59:31
+ * @LastEditTime        : 2020-12-01 22:57:30
  * @Version             : 1.0
  * @Description         : 最小覆盖子串 —— 滑动窗口方法
  * 给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 "" 。
@@ -44,6 +44,50 @@ s 和 t 由英文字母组成
 
 using namespace std;
 
+// 算法模板：
+// class Solution {
+// public:
+//     string minWindow(string s, string t) {
+//         // char*  cur, *pre;
+//         // while( *pre!= s[s.size()-1]){
+            
+//         // }
+//         unordered_map<char, int> need, window; // need.count('A')>0 //且 直接++ 就是0++；
+//         int left=0, right=0, valid=0;
+//         for(char c:t) need[c]++;
+//         int needNum = 0;
+
+//         while( right < s.size() ){
+//             // 右边的添加到窗口  扩大窗口
+//             window[s[right]]++;
+//             right++;
+
+//             // 进行窗口内数据的一系列更新
+//             if(window[s[right]].count(s[right-1]) <= need.count(s[right-1]) && need.count(s[right-1])>0){
+//                 valid++;
+//             }
+
+//             /*** debug 输出的位置 ***/
+//             printf("window: [%d, %d)\n", left, right);
+//             /********************/
+        
+//             //左边开始减少窗口
+//             while( valid == t.size() ){   
+//                 window.erase( (pair<char,int>(s[left], left)));
+//                 left++;
+//                 // 进行窗口内数据的一系列更新
+                
+//             }
+
+
+//         }
+        
+ 
+
+//     }
+// };
+
+
 class Solution {
 public:
     string minWindow(string s, string t) {
@@ -52,24 +96,36 @@ public:
             
         // }
         unordered_map<char, int> need, window; // need.count('A')>0 //且 直接++ 就是0++；
-        for(char c:t) need[c]++;
-
         int left=0, right=0, valid=0;
+        for(char c:t) need[c]++;
+        int needNum = 0, len = INT_MAX;
+
         while( right < s.size() ){
             // 右边的添加到窗口  扩大窗口
             window[s[right]]++;
             right++;
 
-            //检查valid是否 等于count
-            while( valid == t.size() ){
-                //左边开始减少窗口
+            // 进行窗口内数据的一系列更新
+            if(window[s[right]].count(s[right-1]) <= need.count(s[right-1]) && need.count(s[right-1])>0){
+                valid++;
+            }
 
+            /*** debug 输出的位置 ***/
+            printf("window: [%d, %d)\n", left, right);
+            /********************/
+        
+            //左边开始减少窗口
+            while( valid == t.size() ){   
+                window.erase( (pair<char,int>(s[left], left)));
+                left++;
+                // 进行窗口内数据的一系列更新
+                
             }
 
 
         }
         
-
+ 
 
     }
 };
