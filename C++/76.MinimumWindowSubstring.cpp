@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-02 16:55:15
+ * @LastEditTime        : 2020-12-02 16:53:50
  * @Version             : 1.0
  * @Description         : 最小覆盖子串 —— 滑动窗口方法
  * 给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 "" 。
@@ -120,7 +120,7 @@ public:
             // 对左边窗口进行变化
             if(need.count(r) > 0){   // 会自动添加进来，设置为0了！ NO！删除 //need[r] > 0
                 window[r]++;
-                if( window[r] == need[r])
+                if( window[r] == need[r])   // 关键
                     valid++;
             }
 
