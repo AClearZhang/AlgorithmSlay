@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\C++\3.longest-substring-without-repeating-characters.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\3.longest-substring-without-repeating-characters.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-12-03 00:06:48
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-03 01:20:12
+ * @LastEditTime        : 2020-12-03 10:02:03
  * @Version             : 1.0
  * @Description         : 无重复字符的最长子串
  * 
@@ -54,6 +54,32 @@ s 由英文字母、数字、符号和空格组成
 #include <unordered_map>
 
 using namespace std;
+
+class Solution1 {
+public:
+    int lengthOfLongestSubstring(string s){        
+        unordered_map<char,int> window;
+        int left=0, right=0;
+        int max_size=0;
+        while(right<s.size()){
+            // 左闭右开
+            // 扩大窗口
+            char r = s[right];
+            right++;
+            window[r]++;
+            while(window[r]>1){
+                //缩减窗口
+                char l = s[left];
+                left++;
+                window[l]--;
+            }
+            max_size=max(max_size, right-left);
+        }
+        return max_size;
+
+    }  
+};
+
 
 class Solution {
 public:
@@ -107,12 +133,12 @@ public:
 
 int main()
 {
-    // string s = "abcabcbb";
+    string s = "abcabcbb";
     // string s = "bbbb";
     // string s = "pwwkew";
     // string s = "";
-    string s = " ";
-    Solution so;
+    // string s = " ";
+    Solution1 so;
     int num = so.lengthOfLongestSubstring(s);
     cout<<"最长子串的长度为：" << num << endl;
     system("pause");
