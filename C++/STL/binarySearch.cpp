@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-04 22:59:59
+ * @LastEditTime        : 2020-12-04 23:16:58
  * @Version             : 1.0
  * @Description         : 最简单的二分查找
  */
@@ -27,6 +27,7 @@ using namespace std;
 int binarySearch1(int nums[], int target)
 {
     int n = sizeof(nums) / sizeof(nums[0]);
+    if (n == 0) return -1;
     int left = 0;
     int right = n - 1;
     // 查找所以等于
@@ -58,13 +59,14 @@ int binarySearch1(int nums[], int target)
 int binarySearch2(int nums[], int target)
 {
     int n = sizeof(nums) / sizeof(nums[0]);
+    if (n  == 0) return -1;
     int left = 0;
     int right = n;
     // 查找所以等于
     while (left < right)
     {
         int mid = (left + right) / 2;
-        cout << "mid is:" << mid << endl;
+        // cout << "mid is:" << mid << endl;
         if (nums[mid] == target)
         {
             right = mid;
@@ -78,7 +80,12 @@ int binarySearch2(int nums[], int target)
             left = mid + 1;
         }
     }
-    return left; // 表示未查找到。
+    
+    // return left; 
+    
+    if (left == n) return -1; // 到达边界还没有 返回-1
+    
+    return nums[left] == target ? left : -1; // 若相等返回 left
 }
 
 /**
@@ -90,15 +97,17 @@ int binarySearch2(int nums[], int target)
 int binarySearch3(int nums[], int target)
 {
     int n = sizeof(nums) / sizeof(nums[0]);
+    if (n  == 0) return -1;
+    
     int left = 0;
-    int right = n - 1;
+    int right = n;
     // 查找所以等于
-    while (left <= right)
+    while (left < right)
     {
         int mid = (left + right) / 2;
         if (nums[mid] == target)
         {
-            right = mid;
+            left = mid+1;
         }
         else if (nums[mid] > target)
         {
@@ -109,7 +118,10 @@ int binarySearch3(int nums[], int target)
             left = mid + 1;
         }
     }
-    return -1; // 表示未查找到。
+//    return left-1;
+    if(left==0) return -1;  // 边界处理同前面。
+    return nums[left-1] == target? (left-1) : -1 ;
+   
 }
 
 int main()
