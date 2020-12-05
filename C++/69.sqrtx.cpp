@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-03 21:43:06
+ * @LastEditTime        : 2020-12-05 22:20:17
  * @Version             : 1.0
  * @Description         : x的平方根——使用二分查找算法
  * 实现 int sqrt(int x) 函数。
@@ -35,14 +35,43 @@
 #include <vector>
 #include <windows.h>
 #include <unordered_map>
+#include <cmath>
 
 using namespace std;
 
 
 class Solution {
 public:
-    int mySqrt(int x) {
+    int mySqrt1(int x) {
+        return sqrt(x);
+        //二分查找 中间值
 
+
+    }
+    int mySqrt2(int x) {
+        if (x == 0) return 0;
+        int left = 1;   //gai
+        int right = x; // 左闭右闭  
+        // 查找所以等于
+        while (left <= right)
+        {
+            int mid = (left + right) / 2;
+            // int mid = left + (right - left) / 2;
+            int sqr2 = x/mid;  // 重点
+            if ( sqr2 == x)
+            {
+                return mid;
+            }
+            else if (sqr2 > x)
+            {
+                right = mid - 1;
+            }
+            else if (sqr2 < x)
+            {
+                left = mid + 1;
+            }
+        }
+        return left; // 表示未查找到。
     }
 };
 
@@ -56,8 +85,10 @@ int main()
     // Solution1 so;
     // int num = so.lengthOfLongestSubstring(s);
     
-    
-    cout<<"最长子串的长度为：" << 5/2 << endl;
+    Solution so;
+    int x = 8;
+
+    cout<<"x"<< x <<"的向下根号为：" << so.mySqrt1(x) << endl;
     system("pause");
     return 0;
 }

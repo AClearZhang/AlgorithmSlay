@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-04 23:16:58
+ * @LastEditTime        : 2020-12-05 22:03:40
  * @Version             : 1.0
  * @Description         : 最简单的二分查找
  */
@@ -94,35 +94,7 @@ int binarySearch2(int nums[], int target)
  * @return {*}
  * @notes: 
  */
-int binarySearch3(int nums[], int target)
-{
-    int n = sizeof(nums) / sizeof(nums[0]);
-    if (n  == 0) return -1;
-    
-    int left = 0;
-    int right = n;
-    // 查找所以等于
-    while (left < right)
-    {
-        int mid = (left + right) / 2;
-        if (nums[mid] == target)
-        {
-            left = mid+1;
-        }
-        else if (nums[mid] > target)
-        {
-            right = mid;
-        }
-        else if (nums[mid] <  target)
-        {
-            left = mid + 1;
-        }
-    }
-//    return left-1;
-    if(left==0) return -1;  // 边界处理同前面。
-    return nums[left-1] == target? (left-1) : -1 ;
-   
-}
+
 
 int main()
 {
