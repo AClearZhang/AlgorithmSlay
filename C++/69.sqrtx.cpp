@@ -73,16 +73,17 @@ public:
         //     }
         // }
         // return r;
-        if (x == 0) return 0;
-        int left = 1;   //gai
+        if (x == 0)
+            return 0;
+        int left = 1;  //gai
         int right = x; // 左闭右闭
         // 查找所以等于
         while (left <= right)
         {
             // int mid = (left + right) / 2; // 会溢出！所以最好用下面一行的！
             int mid = left + (right - left) / 2;
-            int sqr2 = x/mid;  // 重点
-            if ( sqr2 == mid)
+            int sqr2 = x / mid; // 重点
+            if (sqr2 == mid)
             {
                 return mid;
             }
@@ -96,6 +97,16 @@ public:
             }
         }
         return right; // 返回一个 刚好的下确界  【重点！】
+    }
+    // 牛顿迭代法求解方程.
+    int mySqrt3(int a)
+    {
+        long x = a;
+        while (x * x > a)
+        {
+            x = (x + a / x) / 2;
+        }
+        return x;
     }
 };
 
