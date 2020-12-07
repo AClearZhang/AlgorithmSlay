@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-05 22:20:17
+ * @LastEditTime        : 2020-12-07 09:25:03
  * @Version             : 1.0
  * @Description         : x的平方根——使用二分查找算法
  * 实现 int sqrt(int x) 函数。
@@ -30,48 +30,72 @@
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
+#include <cmath>
 #include <iostream>
 #include <map>
+#include <unordered_map>
 #include <vector>
 #include <windows.h>
-#include <unordered_map>
-#include <cmath>
 
 using namespace std;
 
-
-class Solution {
+class Solution
+{
 public:
-    int mySqrt1(int x) {
+    // 最简单可以完成
+    int mySqrt1(int x)
+    {
         return sqrt(x);
         //二分查找 中间值
-
-
     }
-    int mySqrt2(int x) {
+
+    // 通过二分查找，找到方大于x 直至刚好小于x的下确界
+    int mySqrt2(int x)
+    {
+        // if (x == 0)
+        //     return x;
+        // int l = 1, r = x, mid, sqrt;
+        // while (l <= r)
+        // {
+        //     mid = l + (r - l) / 2;
+        //     sqrt = x / mid;
+        //     if (sqrt == mid)
+        //     {
+        //         return mid;
+        //     }
+        //     else if (mid > sqrt)
+        //     {
+        //         r = mid - 1;
+        //     }
+        //     else
+        //     {
+        //         l = mid + 1;
+        //     }
+        // }
+        // return r;
         if (x == 0) return 0;
         int left = 1;   //gai
-        int right = x; // 左闭右闭  
+        int right = x; // 左闭右闭
         // 查找所以等于
         while (left <= right)
         {
-            int mid = (left + right) / 2;
-            // int mid = left + (right - left) / 2;
+            // int mid = (left + right) / 2; // 会溢出！所以最好用下面一行的！
+            int mid = left + (right - left) / 2;
             int sqr2 = x/mid;  // 重点
-            if ( sqr2 == x)
+            if ( sqr2 == mid)
             {
                 return mid;
             }
-            else if (sqr2 > x)
+            else if (sqr2 < mid)
             {
                 right = mid - 1;
             }
-            else if (sqr2 < x)
+            else if (sqr2 > mid)
             {
                 left = mid + 1;
             }
         }
-        return left; // 表示未查找到。
+        return right; // 返回一个 刚好的下确界  【重点！】
     }
 };
 
@@ -84,12 +108,11 @@ int main()
     // // string s = " ";
     // Solution1 so;
     // int num = so.lengthOfLongestSubstring(s);
-    
-    Solution so;
-    int x = 8;
 
-    cout<<"x"<< x <<"的向下根号为：" << so.mySqrt1(x) << endl;
+    Solution so;
+    int x = 2147483647;
+
+    cout << "x" << x << "的向下根号为：" << so.mySqrt2(x) << endl;
     system("pause");
     return 0;
 }
-
