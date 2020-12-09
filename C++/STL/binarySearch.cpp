@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-07 23:16:37
+ * @LastEditTime        : 2020-12-09 10:52:01
  * @Version             : 1.0
  * @Description         : 最简单的二分查找
  */
@@ -195,7 +195,7 @@ int binarySearchRightBound1(int nums[], int target, int n)
     // 
     return nums[left-1] == target ? left-1 : -1; // 【关键】是 中间小于等于target  mid = left-1 了！所以要判断①别出界；②left-1 最终才是要找的数值！
 }
-
+ 
 int main()
 {
     int s[] = {1,2,2,2,4};
