@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-03 10:47:59
+ * @LastEditTime        : 2020-12-09 22:31:09
  * @Version             : 1.0
  * @Description         : 搜索旋转排序数组II
  * 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
@@ -31,10 +31,122 @@
 链接：https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
+#include <cmath>
+#include <iostream>
+#include <map>
+#include <unordered_map>
+#include <vector>
+#include <windows.h>
 
+using namespace std;
+
+
+// 思路：本题虽然有循环，但是内部也还是有递增的序列； 
+// 仍然可以找到一边的 递增序列；进行log(n)的二分查找。
 class Solution {
 public:
     bool search(vector<int>& nums, int target) {
-        
+        int n = nums.size();
+        if(n==0) return false;
+        // int split;
+        int left=0, right = n;
+        //外部寻找 有序数组
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(nums[mid] == target) return true;  // 错了拿出来
+            
+             // 少边界！！！ 相等时候，
+            if( nums[mid] == nums[right-1] ) right -= 1;
+            // 内部在有序内 真正的二分查找
+            else if( nums[mid] < nums[right-1] ){
+                // 说明右边是排好序的
+                if(target < nums[mid]){
+                    right = mid;
+                }else{
+                    right-=1;
+                }
+
+                //--- 下面的太慢了
+                // // auto a = this->binarySearch(nums.begin(), target);
+                // int low = mid+1, high = right;
+                // while( low < high){
+                //     int midRight = low+ (high-low)/2;
+                //     if(nums[midRight] == target){
+                //         return true;
+                //     }else if(nums[midRight] < target){
+                //         low = midRight+1;
+                //     }else high = midRight;
+                // }
+                // // 跳出来就是未找到.
+                // right = mid;
+            }else if(nums[mid] > nums[left]){ //
+                // 左边排好序  左边二分查找
+                if(target>nums[mid]){  // 错了  ——  23 4|512   找1就不行！
+                    left = mid + 1;
+                }else{
+                    left+=1;
+                }
+
+
+                //-----下面的太慢了！
+                // int low = left, high = mid;
+                // while( low < high){
+                //     int midLeft = low+ (high-low)/2;
+                //     if(nums[midLeft] == target){
+                //         return true;
+                //     }else if(nums[midLeft] < target){
+                //         low = midLeft+1;
+                //     }else high = midLeft;
+                // }
+                // // 说明左边未找到
+                // left = mid + 1;
+            }
+           
+        }
+        // 循环结束，二分查找 还是没能找到，返回false
+        return false;
     }
+
+    // int binarySearch(vector<int> &nums, int target){
+    //     int n = nums.size();
+    //     if (n == 0) return -1;
+    //     int left = 0;
+    //     int right = n ;
+    //     // 查找所以等于
+    //     while (left < right)
+    //     {
+    //         int mid = left + (right - left)/2;
+    //         if (nums[mid] == target)
+    //         {
+    //             return mid;
+    //         }
+    //         else if (nums[mid] > target)
+    //         {
+    //             right = mid;
+    //         }
+    //         else if (nums[mid] < target)
+    //         {
+    //             left = mid + 1;
+    //         }
+    //     }
+    //     return -1; // 表示未查找到。
+    // }
 };
+
+
+int main(){
+    // vector<int> arr = {2,5,6,0,0,1,2};
+    // vector<int> arr = {1,1,1,3,1};
+    // vector<int> arr = {1};
+    vector<int> arr = {1,1,3};
+
+    // int target = 0;
+    int target = 3;
+    // int target = 1;
+    Solution so;
+    bool answer = so.search(arr,target);
+    cout<<"answer is : "<< answer << endl;
+
+    system("pause");
+    return 0;
+}
