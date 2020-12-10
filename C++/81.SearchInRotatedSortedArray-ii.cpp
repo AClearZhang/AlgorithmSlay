@@ -1,11 +1,36 @@
 /*
+ * 
+ *    ┏┓　　　┏┓
+ *  ┏┛┻━━━┛┻┓
+ *  ┃　　　　　　　┃
+ *  ┃　　　━　　　┃
+ *  ┃　＞　　　＜　┃
+ *  ┃　　　　　　　┃
+ *  ┃...　⌒　...　┃
+ *  ┃　　　　　　　┃
+ *  ┗━┓　　　┏━┛
+ *      ┃　　　┃　
+ *      ┃　　　┃
+ *      ┃　　　┃
+ *      ┃　　　┃  神兽保佑
+ *      ┃　　　┃  代码无bug　　
+ *      ┃　　　┃
+ *      ┃　　　┗━━━┓
+ *      ┃　　　　　　　┣┓
+ *      ┃　　　　　　　┏┛
+ *      ┗┓┓┏━┳┓┏┛
+ *        ┃┫┫　┃┫┫
+ *        ┗┻┛　┗┻┛
+ */
+
+/*
  * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\81.SearchInRotatedSortedArray-ii.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-12-03 10:47:32
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-09 22:31:09
+ * @LastEditTime        : 2020-12-10 10:24:33
  * @Version             : 1.0
  * @Description         : 搜索旋转排序数组II
  * 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
@@ -60,10 +85,19 @@ public:
             // 内部在有序内 真正的二分查找
             else if( nums[mid] < nums[right-1] ){
                 // 说明右边是排好序的
-                if(target < nums[mid]){
+                // if(target < nums[mid]){
+                //     right = mid;
+                // }else{
+                //     right-=1;
+                // }
+                if(target >= nums[mid] && target <= nums[right-1]){
+                    // 做靠谱的事情， 剩下未知的交给 else
+                    // right = mid;
+                    left = mid + 1;
+
+                }else{// 不在右边
+                    // right-=1;
                     right = mid;
-                }else{
-                    right-=1;
                 }
 
                 //--- 下面的太慢了
@@ -79,12 +113,13 @@ public:
                 // }
                 // // 跳出来就是未找到.
                 // right = mid;
-            }else if(nums[mid] > nums[left]){ //
+            }else{ // (nums[mid] > nums[left]) 错误！
                 // 左边排好序  左边二分查找
-                if(target>nums[mid]){  // 错了  ——  23 4|512   找1就不行！
-                    left = mid + 1;
+                if(target>=nums[left] && target <= nums[mid-1]){  // 错了  ——  23 4|512   找1就不行！
+                    // left = mid + 1;
+                    right = mid;
                 }else{
-                    left+=1;
+                    left= mid + 1;
                 }
 
 
@@ -138,10 +173,11 @@ int main(){
     // vector<int> arr = {2,5,6,0,0,1,2};
     // vector<int> arr = {1,1,1,3,1};
     // vector<int> arr = {1};
-    vector<int> arr = {1,1,3};
+    // vector<int> arr = {1,1,3};
+    // vector<int> arr = {3,5,1};
+    vector<int> arr = {2,2,2,0,1};
 
-    // int target = 0;
-    int target = 3;
+    int target = 0;
     // int target = 1;
     Solution so;
     bool answer = so.search(arr,target);
