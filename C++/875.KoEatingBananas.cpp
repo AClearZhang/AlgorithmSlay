@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-10 11:37:34
+ * @LastEditTime        : 2020-12-10 15:54:09
  * @Version             : 1.0
  * @Description         : koko 吃香蕉问题——涉及 二分查找问题
  * 
@@ -58,21 +58,38 @@ using namespace std;
 class Solution {
 public:
     /**
-     * @description: 分析：1、首先暴力搜索方法思考  2、其次，用二分搜索，替代暴力搜索  3、直接二分搜索可以的堆树的  左侧界
+     * @description: 分析：1、首先暴力搜索方法思考  2、其次，用二分搜索，替代暴力搜索  3、直接二分搜索可以的堆树的  左侧界，吃的天数和H相比的左侧界
      * @param {*}
      * @return {*}
      * @notes: 
      */
     int minEatingSpeed(vector<int>& piles, int H) {
         int n = findMaxNum(piles);
-        int left=0, right = n;
-        while(left < right){
+        // cout << "n:" << n << endl;
+        if(n==0) return 1;
+        int left=1, right = n;  //至多至少 吃的根数
+        while(left <= right){   //采用左闭右闭
             int mid = left + (right - left) /2;
-            
-
-
+            int days = canEatInV(piles, mid);
+            // cout << "mid v:" << mid << " ;eat days:" << days << endl;
+            if(days <= H){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
         }
+        if( left >= n+1 || canEatInV(piles, left) > H) return -1;
+        return left;
+    }
+    int canEatInV(vector<int> piles, int v){
+        int days=0;
 
+        for(auto p:piles){
+            days+=ceil((float)p/v);
+            // cout << "caneat:" << days ;
+        }
+        // cout << "Caneat End" << endl;
+        return days;
     }
     int findMaxNum(vector<int> piles){
         // vector<int>::iterator p = piles.begin();
@@ -88,7 +105,14 @@ public:
 
 int main(){
 
-
+    // vector<int> arr = {3,6,7,11};
+    vector<int> arr = {30,11,23,4,20};
+    // int H = 8;
+    int H = 5;
+    // int H = 6;
+    Solution so;
+    int ans = so.minEatingSpeed(arr, H);
+    cout << "koko最少的吃香蕉速度为：" << ans << endl;
 
     system("pause");
     return 0;
