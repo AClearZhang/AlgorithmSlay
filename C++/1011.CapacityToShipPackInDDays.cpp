@@ -82,7 +82,7 @@ public:
         int n = pair.first, max = pair.second;
         if(n==0) return 1;
         int left = max,right = n;
-        cout << "max:" << max << ",n:" << n << endl;
+        // cout << "max:" << max << ",n:" << n << endl;
         while(left<=right){
             int mid = left + (right - left)/2;
             int days = canDaysInboat(weights, mid);
