@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-10 11:19:14
+ * @LastEditTime        : 2020-12-10 20:49:15
  * @Version             : 1.0
  * @Description         : 在D天内送达包裹的能力
  * 
@@ -71,15 +71,64 @@ using namespace std;
 
 class Solution {
 public:
+    /**
+     * @description: 1、首先寻找所有货物重量 2、查找当前mid载重的天数 3、二分查找，找最低载重——即左侧界
+     * @param {*}
+     * @return {*}
+     * @notes: 注意：最低包裹限制要  大于等于最小的包裹。
+     */
     int shipWithinDays(vector<int>& weights, int D) {
+        auto pair = findMaxMinBoatWeight(weights);
+        int n = pair.first, max = pair.second;
+        if(n==0) return 1;
+        int left = max,right = n;
+        cout << "max:" << max << ",n:" << n << endl;
+        while(left<=right){
+            int mid = left + (right - left)/2;
+            int days = canDaysInboat(weights, mid);
+            if(days <= D){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
+        }
+        if(left >= n+1 || canDaysInboat(weights,left)>D) return -1;
+        return left;
+    }
+    int canDaysInboat(vector<int> weights, int boat){
+        int sum = 0, days=1;
+        for(auto w : weights){
+            sum += w;
+            if(sum>boat){
+                days+=1;
+                sum = w;
+            }
+        }
+        return days;
 
+    }
+    pair<int,int> findMaxMinBoatWeight(vector<int> weights){
+        int sum = 0,max = 0;
+        for(auto w : weights){
+            sum+=w;
+            max = w > max ? w : max ;
+        }
+        pair<int,int> res = {sum, max};
+        return res;
     }
 };
 
 
 int main(){
 
-
+    vector<int> arr = {1,2,3,4,5,6,7,8,9,10};
+    // vector<int> arr = {3,2,2,4,1,4};
+    // vector<int> arr = {1,2,3,1,1};
+    int D = 5;
+    // int D = 3; 
+    Solution so;
+    int ans = so.shipWithinDays(arr, D);
+    cout << "船只的最低载重量为：" << ans << endl;
 
     system("pause");
     return 0;
