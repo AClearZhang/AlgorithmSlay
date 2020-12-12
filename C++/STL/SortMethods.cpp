@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-11 22:38:57
+ * @LastEditTime        : 2020-12-12 22:13:28
  * @Version             : 1.0
  * @Description         : 实现各种经典的排序方法
  * 
@@ -155,17 +155,46 @@ public:
 
     }
 
-
+// -------
+    /**
+     * @Description: 归并排序实现
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
+    void merge_sort(vector<int> &nums, int l,int r,vector<int> &temp){
+        if(l+1>=r){
+            return ;
+        }
+        //divide
+        int m = l + (r-l)/2;
+        merge_sort(nums,l,m,temp);
+        merge_sort(nums,m,r,temp);
+        //conquer
+        int p = l, q = m, i = l;
+        while(p<m || q<r){
+            if(q>=r || (p < m && nums[p] <= nums[q])){
+                temp[i++] = nums[p++];
+            }else {
+                temp[i++] = nums[q++];
+            }
+        }
+        for(i = l; i < r; ++i){
+            nums[i] = temp[i];
+        }
+    }
 
 };
 
 
 int main(){
-    // vector<int> arr = {8,9,1,7,2,3,5,4,6,0};
-    vector<int> arr = {2,0};
-    int n = 2;
+    vector<int> arr = {8,9,1,7,2,3,5,4,6,0};
+    // vector<int> arr = {2,0};
+    int n = 10;
     SortMethods sortMethods;
-    sortMethods.ShellSort(arr, n);
+    // sortMethods.ShellSort(arr, n);
+    vector<int> temp=arr;
+    sortMethods.merge_sort(arr,0, n, temp);
     cout << "当前数值的排序为：";
     for(auto a: arr){
         cout << a << "  ";
