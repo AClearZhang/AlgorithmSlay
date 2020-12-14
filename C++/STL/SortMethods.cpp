@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-12 22:13:28
+ * @LastEditTime        : 2020-12-14 22:02:16
  * @Version             : 1.0
  * @Description         : 实现各种经典的排序方法
  * 
@@ -162,7 +162,7 @@ public:
      * @Return: 
      * @Notes: 
      */
-    void merge_sort(vector<int> &nums, int l,int r,vector<int> &temp){
+    void merge_sort(vector<int> &nums, int l,int r,vector<int> &temp){ //左闭右开
         if(l+1>=r){
             return ;
         }
@@ -170,7 +170,7 @@ public:
         int m = l + (r-l)/2;
         merge_sort(nums,l,m,temp);
         merge_sort(nums,m,r,temp);
-        //conquer
+        //conquer 
         int p = l, q = m, i = l;
         while(p<m || q<r){
             if(q>=r || (p < m && nums[p] <= nums[q])){
@@ -183,6 +183,79 @@ public:
             nums[i] = temp[i];
         }
     }
+    // 二路-归并排序———【关键是将以有序的左右两端直接 归并Merge()方法】【分治 —— 直接用递归】
+    // 左闭右闭
+    void mergeSortInWD(vector<int> &nums, int left, int right, vector<int> &temp){
+        if(left < right){
+            int mid = left + (right-left)/2;
+            mergeSortInWD(nums, left, mid, temp);
+            mergeSortInWD(nums, mid+1, right, temp);
+            // conquer 归并开始
+            // merge(nums, left,mid,right);
+            int i,j,k;
+            // vector<int> temp = nums;
+            for( i=left,j=mid+1,k=i; i<=mid && j <= right ;k++){
+                if(nums[i] <= nums[j]){
+                    temp[k]  = nums[i++];
+                }else{
+                    temp[k] = nums[j++];
+                }
+            }
+            // 剩下的直接复制到nums数组中
+            while(i<=mid) temp[k++] = nums[i++];
+            while(j<=right) temp[k++] = nums[j++];
+            // 将nums稳定不变的;temp是交换件
+            // 因为return 只是中间的几个，所以原样子赋值给nums，不改变nums
+            for(i = j=left;j<=k;i++, j++){
+                nums[i] = temp[j];
+            }
+
+            // int k = 0;
+            // int i = left;
+            // int j = mid + 1;
+            // while (i <= mid && j <= right) {
+            //     if (nums[i] < nums[j]){
+            //         temp[k++] = nums[i++];
+            //     }
+            //     else{
+            //         temp[k++] = nums[j++];
+            //     }
+            // }
+            // if (i == mid + 1) {
+            //     while(j <= right)
+            //         temp[k++] = nums[j++];
+            // }
+            // if (j == right + 1) {
+            //     while (i <= mid)
+            //         temp[k++] = nums[i++];
+            // }
+            // for (j = 0, i = left ; j < k; i++, j++) {
+            //     nums[i] = temp[j];
+            // }
+
+        }
+
+    }
+    void merge(vector<int> nums, int left, int mid, int right){
+        //k 控制A中； i j 控制temp中小的放入nums中
+        int i,j,k;
+        vector<int> temp = nums;
+        for( i=left,j=mid+1,k=i; i<=mid && j <= right ;k++){
+            if(nums[i] <= nums[j]){
+                temp[k]  = nums[i++];
+            }else{
+                temp[k] = nums[j++];
+            }
+        }
+        // 剩下的直接复制到nums数组中
+        while(i<=mid) temp[k++] = nums[i++];
+        while(j<=right) temp[k++] = nums[j++];
+        // 将nums稳定不变的;temp是交换件
+        // 因为return 只是中间的几个，所以原样子赋值给nums，不改变nums
+        for(i = j=left;j<=k;i++, j++){
+            nums[i] = temp[j];
+        }
+    }
 
 };
 
@@ -193,8 +266,10 @@ int main(){
     int n = 10;
     SortMethods sortMethods;
     // sortMethods.ShellSort(arr, n);
-    vector<int> temp=arr;
-    sortMethods.merge_sort(arr,0, n, temp);
+    vector<int> temp={8,9,1,7,2,3,5,4,6,0};
+    // sortMethods.merge_sort(arr,0, n, temp); //成功归并算法.  左闭右开
+    sortMethods.mergeSortInWD(arr,0, n-1, temp); //成功归并算法.  左闭右闭
+    // sortMethods.mergeSortInWD1(arr,0, n-1); //成功归并算法.  左闭右闭
     cout << "当前数值的排序为：";
     for(auto a: arr){
         cout << a << "  ";
