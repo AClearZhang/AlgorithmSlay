@@ -213,7 +213,7 @@ public:
             // int k = 0;
             // int i = left;
             // int j = mid + 1;
-            // while (i <= mid && j <= right) {
+            // while (i <= mid && j <= right) {   【上方可换为这个】
             //     if (nums[i] < nums[j]){
             //         temp[k++] = nums[i++];
             //     }
@@ -236,26 +236,26 @@ public:
         }
 
     }
-    void merge(vector<int> nums, int left, int mid, int right){
-        //k 控制A中； i j 控制temp中小的放入nums中
-        int i,j,k;
-        vector<int> temp = nums;
-        for( i=left,j=mid+1,k=i; i<=mid && j <= right ;k++){
-            if(nums[i] <= nums[j]){
-                temp[k]  = nums[i++];
-            }else{
-                temp[k] = nums[j++];
-            }
-        }
-        // 剩下的直接复制到nums数组中
-        while(i<=mid) temp[k++] = nums[i++];
-        while(j<=right) temp[k++] = nums[j++];
-        // 将nums稳定不变的;temp是交换件
-        // 因为return 只是中间的几个，所以原样子赋值给nums，不改变nums
-        for(i = j=left;j<=k;i++, j++){
-            nums[i] = temp[j];
-        }
-    }
+    // void merge(vector<int> nums, int left, int mid, int right){
+    //     //k 控制A中； i j 控制temp中小的放入nums中
+    //     int i,j,k;
+    //     vector<int> temp = nums;
+    //     for( i=left,j=mid+1,k=i; i<=mid && j <= right ;k++){
+    //         if(nums[i] <= nums[j]){
+    //             temp[k]  = nums[i++];
+    //         }else{
+    //             temp[k] = nums[j++];
+    //         }
+    //     }
+    //     // 剩下的直接复制到nums数组中
+    //     while(i<=mid) temp[k++] = nums[i++];
+    //     while(j<=right) temp[k++] = nums[j++];
+    //     // 将nums稳定不变的;temp是交换件
+    //     // 因为return 只是中间的几个，所以原样子赋值给nums，不改变nums
+    //     for(i = j=left;j<=k;i++, j++){
+    //         nums[i] = temp[j];
+    //     }
+    // }
 
 };
 
