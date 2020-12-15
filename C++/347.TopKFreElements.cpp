@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-15 11:35:28
+ * @LastEditTime        : 2020-12-15 15:36:50
  * @Version             : 1.0
  * @Description         : 347. 前 K 个高频元素
 给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
@@ -29,7 +29,7 @@
 #include <algorithm>
 
 using namespace std;
-typedef  pair<int,int> PAIR;
+
 
 class Solution {
 public:
@@ -39,8 +39,8 @@ public:
      * @Return: 
      * @Notes: 
      */
-    
-    static bool cmp(const pair<int,int> &a, const pair<int,int> &b){
+    typedef  pair<int,int> PAIR;
+    static bool cmp(const pair<int,int> a, const pair<int,int> b){
         return a.second > b.second;
     }
     vector<int> topKFrequent(vector<int>& nums, int k) {
@@ -50,11 +50,16 @@ public:
         for(auto a:nums){
             sta[a]++;
         }
+        // cout << "now the static is:";
+        // for(auto s:sta){
+        //     cout<< s.first << " " << s.second << ";";
+        // }
+        // cout << endl;
         vector<PAIR> vec(sta.begin(), sta.end()); // 【关键】
 
         sort(vec.begin(), vec.end(), cmp);
         vector<int> rel;
-        for(auto s:sta){
+        for(auto s:vec){
             if(--k<0) break;
             rel.push_back(s.first);
         }
@@ -63,8 +68,10 @@ public:
 };
 
 int main(){
-    vector<int> arr = {1,1,1,2,2,3};
-    int k = 2;
+    // vector<int> arr = {1,1,1,2,2,3};
+    vector<int> arr = {1};
+    // int k = 2;
+    int k = 1;
     Solution so;
     auto rel = so.topKFrequent(arr, k);
     for(auto r:rel){
