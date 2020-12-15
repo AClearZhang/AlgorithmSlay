@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-15 11:06:45
+ * @LastEditTime        : 2020-12-15 10:57:41
  * @Version             : 1.0
  * @Description         : 215. 数组中的第K个最大元素
 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
@@ -30,9 +30,15 @@ using namespace std;
 
 class Solution {
 public:
-    bool comp(int a, int b){
+    bool static comp(int a, int b){
         return a>b; 
     }
+    /**
+     * @Description: 方法二——注意在类内 由于需要一个全局的静态成员函数， 所以加了static；进行从大到小的比较。
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
     int findKthLargest1(vector<int>& nums, int k) {
         //从大到小排序 —— 找到 k-1 个未知的数。
         int n = nums.size();
@@ -40,7 +46,12 @@ public:
         return nums[k-1];
     }
     
-    
+    /**
+     * @Description: 下面通过自定义快排序实现 从大到小排序。
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
     int findKthLargest(vector<int>& nums, int k) {
         //从大到小排序 —— 找到 k-1 个未知的数。
         QuickSort(nums, 0, nums.size()-1);
