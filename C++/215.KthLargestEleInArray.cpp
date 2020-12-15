@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-15 10:57:41
+ * @LastEditTime        : 2020-12-15 20:53:52
  * @Version             : 1.0
  * @Description         : 215. 数组中的第K个最大元素
 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
@@ -78,6 +78,43 @@ public:
         nums[left] = pivot;
         return left;
     }
+    /**
+     * @Description: 同时改变快速排序的想法；  实现快速选择。 —— 新增
+     * @Param: 
+     * @Return: 
+     * @Notes: 注意不同于快速排序的地方——快速选择只需要找到第k大的枢轴值(pivot)即可，然后  再在大于或小于的方向缩小范围寻找 “位置”。
+     */
+    int findKthLargest2(vector<int>& nums, int k) {
+        // 仍然从小到大快速选择；找到导数第k个， 即正数第nums.size()-k+1个；但是需要数组从零开始所以是数组 nums.size()-k
+        int l=0,r = nums.size() -1, target = nums.size()-k;
+        while(l<r){
+            int pivot = quickSelection(nums, l, r);
+            if(pivot == target)  return nums[pivot];
+            else if(pivot > target) r = pivot - 1;
+            else{
+                l = pivot + 1;
+            }
+        }
+        // 如果说没找到l==r了；返回 此时位置即可。
+        return nums[l];
+    }
+    // 辅助函数 —— 快速选择位置
+    int quickSelection(vector<int> &nums, int l ,int r){
+        int pivot = nums[l];
+        while(l<r){
+            while(l<r && nums[r] >= pivot) r--;
+            nums[l] = nums[r];
+            while(l<r && nums[l] <= pivot) l++;
+            nums[r] = nums[l];
+        }
+        // 当前l为枢轴值，定了
+        nums[l]=pivot;
+        return l;
+    }
+
+
+
+    
 };
 
 int main(){
@@ -86,7 +123,8 @@ int main(){
     // int k = 2;
     int k = 2;
     Solution so;
-    int rel = so.findKthLargest1(arr, k);
+    // int rel = so.findKthLargest1(arr, k);
+    int rel = so.findKthLargest2(arr, k);
     cout<<"result is :" << rel << endl;
     for(auto a:arr){
         cout << a << endl;
