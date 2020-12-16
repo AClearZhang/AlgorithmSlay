@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-15 22:33:06
+ * @LastEditTime        : 2020-12-16 15:32:55
  * @Version             : 1.0
  * @Description         : 547. 朋友圈
 班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。
@@ -50,8 +50,50 @@ using namespace std;
 
 class Solution {
 public:
+    /**
+     * @Description: 本质上朋友圈和岛屿面积几个 == 朋友圈的个数
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
     int findCircleNum(vector<vector<int>>& M) {
-
+        //遍历能进入几次dfs
+        int count = 0;
+        vector<bool> visited(M.size(), false);
+        for(int i = 0; i< M.size();i++){
+            if(!visited[i]){
+                count++;
+                dfsInFriCircle(M, i, visited);
+            }
+        }
+        return count;
+    }
+    void dfsInFriCircle(vector<vector<int>> &M, int i,vector<bool> &visited){
+        visited[i] = true;
+        for(int j = 0;j<M.size();j++){     //【注意从0开始】
+            if(!visited[j] && M[i][j]){ //相邻的朋友
+                dfsInFriCircle(M, j, visited);
+            }
+        }
     }
 };
 
+int main()
+{
+    vector<vector<int>> arr = {{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                               {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                               {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
+                               {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}};
+    vector<vector<int>> arr1 = {{0, 0, 0, 0, 0, 0, 0, 0}};
+    vector<vector<int>> arr2 = {{1, 1, 0, 0, 0}, {1, 1, 0, 0, 0}, {0, 0, 0, 1, 1}, {0, 0, 0, 1, 1}};
+    vector<vector<int>> arr3 = {{1,0,0,1},{0,1,1,0},{0,1,1,1},{1,0,1,1}};
+    Solution so;
+    int num_circle = so.findCircleNum(arr3);
+    cout << "当前朋友圈数量为：" << num_circle << endl;
+    system("pause");
+    return 0;
+}
