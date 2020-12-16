@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-15 22:34:30
+ * @LastEditTime        : 2020-12-16 15:45:12
  * @Version             : 1.0
  * @Description         : 417. 太平洋大西洋水流问题
 给定一个 m x n 的非负整数矩阵来表示一片大陆上各个单元格的高度。“太平洋”处于大陆的左边界和上边界，而“大西洋”处于大陆的右边界和下边界。
@@ -40,7 +40,13 @@ m 和 n 都小于150
 
 [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]] (上图中带括号的单元).
  */
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <vector>
 
+
+using namespace std;
 
 class Solution {
 public:
@@ -50,3 +56,22 @@ public:
 };
 
 
+int main()
+{
+    vector<vector<int>> arr = {{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                               {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                               {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
+                               {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}};
+    vector<vector<int>> arr1 = {{0, 0, 0, 0, 0, 0, 0, 0}};
+    vector<vector<int>> arr2 = {{1, 1, 0, 0, 0}, {1, 1, 0, 0, 0}, {0, 0, 0, 1, 1}, {0, 0, 0, 1, 1}};
+    vector<vector<int>> arr3 = {{1,0,0,1},{0,1,1,0},{0,1,1,1},{1,0,1,1}};
+    Solution so;
+    int num_circle = so.findCircleNum(arr3);
+    cout << "当前朋友圈数量为：" << num_circle << endl;
+    system("pause");
+    return 0;
+}
