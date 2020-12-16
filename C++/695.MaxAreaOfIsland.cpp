@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-16 10:22:33
+ * @LastEditTime        : 2020-12-16 11:13:12
  * @Version             : 1.0
  * @Description         : 岛屿的最大面积
  * 695. 岛屿的最大面积
@@ -44,6 +44,7 @@
 #include <unordered_map>
 #include <vector>
 #include <windows.h>
+#include <stack>
 
 using namespace std;
 class Solution
@@ -64,11 +65,48 @@ public:
                 //r c 找到位置下面开始dfs
                 if (grid[i][j])
                 {
-                    now = dfs(grid, i, j);
+                    now = dfs1(grid, i, j);
                     max = max < now ? now : max;
                 }
             }
         return max;
+    }
+    /**
+     * @Description: 实现栈结构的 深搜遍历方式；相当于 中序遍历？
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
+    int maxAreaOfIsland1(vector<vector<int>> &grid)
+    {
+        int rel = 0;
+        for(int i = 0; i!=grid.size() ;++i){
+            for(int j = 0; j != grid[0].size() ;++j){
+                if(grid[i][j]){
+                    int local_area = 0;
+                    stack<pair<int, int>> island;
+                    island.push({i,j});
+                    
+                    // 开始进入深搜stack  类似递归
+                    while(!island.empty()){
+                        auto [row,col] = island.top();
+                        island.pop();
+                        if(row>-1 && row<grid.size() && col > -1 && col<grid[0].size() && grid[row][col]){
+                            // 先序处理
+                            grid[row][col] = 0;
+                            local_area+=1;
+                            // 再深入搜索 —— 即入栈
+                            int di[] = {-1, 1, 0, 0}, dj[] = {0, 0, -1, 1}; //分别对应上下左右深搜方向
+                            for(int k = 0; k<4 ;++k){
+                                island.push({row+di[k], col+dj[k]});
+                            }
+                        }
+                    }
+                    rel = rel < local_area? local_area : rel ;
+                }
+            }
+        }
+        return rel;
     }
 protected:
     int dfs(vector<vector<int>> &grid, int r, int c)
@@ -91,24 +129,40 @@ protected:
         }
         return rel;
     }
+    int dfs1(vector<vector<int>> &grid, int r, int c)
+    {
+        if (r > -1 && r < grid.size() && c > -1 && c < grid[0].size() && grid[r][c])
+        {
+            // 相当于先序遍历开始；
+            grid[r][c] = 0;
+            // 再进行深搜--- 修改直接 return
+            return 1 + dfs1(grid, r-1,c) + dfs1(grid, r+1,c) + dfs1(grid, r, c-1) + dfs1(grid, r, c+1);
+        }
+        // 其它
+        else
+        {
+            return 0;
+        }
+    }
 };
 
 int main()
 {
-    vector<vector<int>> arr = { {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-                                {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-                                {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
-                                {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
-                                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-                                {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0} };
-    vector<vector<int>> arr1 = {{0,0,0,0,0,0,0,0}};
-    vector<vector<int>> arr2 = {{1,1,0,0,0},{1,1,0,0,0},{0,0,0,1,1},{0,0,0,1,1}};
+    vector<vector<int>> arr = {{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                               {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                               {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
+                               {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}};
+    vector<vector<int>> arr1 = {{0, 0, 0, 0, 0, 0, 0, 0}};
+    vector<vector<int>> arr2 = {{1, 1, 0, 0, 0}, {1, 1, 0, 0, 0}, {0, 0, 0, 1, 1}, {0, 0, 0, 1, 1}};
     Solution so;
     // int maxArea = so.maxAreaOfIsland(arr);
-    int maxArea = so.maxAreaOfIsland(arr2);
-    cout << "当前最大的面积为：" << maxArea << endl;    
+    // int maxArea = so.maxAreaOfIsland(arr2);
+    int maxArea = so.maxAreaOfIsland1(arr);
+    cout << "当前最大的面积为：" << maxArea << endl;
     system("pause");
     return 0;
 }
