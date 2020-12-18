@@ -47,7 +47,7 @@ M[i][j] == M[j][i]
 
 using namespace std;
 
-
+//三种解法 —— 深搜、广搜、 并查集。
 class Solution {
 public:
     /**
