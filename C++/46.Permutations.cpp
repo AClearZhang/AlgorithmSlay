@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-20 21:53:29
+ * @LastEditTime        : 2020-12-20 22:10:59
  * @Version             : 1.0
  * @Description         : 全排列
  * 给定一个 没有重复 数字的序列，返回其所有可能的全排列。
@@ -34,7 +34,8 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
     /**
      * @Description: 全排列 —— 使用回溯 “决策树”
@@ -42,21 +43,26 @@ public:
      * @Return: 
      * @Notes: 
      */
-    vector<vector<int>> permute(vector<int>& nums) {
+    vector<vector<int>> permute(vector<int> &nums)
+    {
         vector<vector<int>> ans;
         vector<int> track;
         recallTree(nums, track, ans);
         return ans;
     }
-    void recallTree(vector<int> &nums, vector<int> &track, vector<vector<int>> &ans){
-        if(track.size() == nums.size()){
+    void recallTree(vector<int> &nums, vector<int> &track, vector<vector<int>> &ans)
+    {
+        if (track.size() == nums.size())
+        {
             ans.push_back(track);
-            return ;
+            return;
         }
 
         // 选择列表的选择。
-        for(int i=0; i < nums.size(); ++i ){
-            if( find(track.begin(), track.end(), nums[i]) != track.end() ){
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            if (find(track.begin(), track.end(), nums[i]) != track.end())
+            {
                 // 找到了
                 continue;
             }
@@ -66,26 +72,51 @@ public:
             // 还原track
             track.pop_back();
         }
-
-
     }
+    /**
+     * @Description: 101大佬解题方法，进行交换【未完成】
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
+    void backtracking(vector<int> &nums, int level, vector<vector<int>> &ans)
+    {
+        if (level == nums.size() - 1)
+        {
+            ans.push_back(nums);
+            return;
+        }
+        for (int i = level; i < nums.size(); i++)
+        {
+            swap(nums[i], nums[level]);         // 修改当前节点状态
+            backtracking(nums, level + 1, ans); // 递归子节点
+            swap(nums[i], nums[level]);         // 回改当前节点状态
+        }
+    }
+    vector<vector<int>> permute(vector<int> &nums){
+        vector<vector<int>> ans;
+        backtracking(nums, 0, ans);
+        return ans; 
+    }
+
 };
 
+int main()
+{
 
-int main(){
-
-    vector<int> arr = {1,2,3};
+    vector<int> arr = {1, 2, 3};
     Solution so;
     auto rel = so.permute(arr);
     printf("输出结果为：/n");
-    for(auto r: rel){
-        cout << "[ " ;
-        for(auto r2:r){
-            cout << r2 << ", " ;
+    for (auto r : rel)
+    {
+        cout << "[ ";
+        for (auto r2 : r)
+        {
+            cout << r2 << ", ";
         }
         cout << " ]" << endl;
     }
-
 
     system("pause");
     return 0;
