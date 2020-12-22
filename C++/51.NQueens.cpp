@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\51.n_queens.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\51.NQueens.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-12-21 22:51:42
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-22 15:12:24
+ * @LastEditTime        : 2020-12-22 22:06:39
  * @Version             : 1.0
  * @Description         : n皇后问题
  * 51. N 皇后
@@ -169,7 +169,7 @@ public:
             // 递归子节点
             backtracking(ans, board, column, ldiag, rdiag, row+1, n);
             // 回改当前节点状态
-            board[row][i] = '.';
+            board[row][i] = '.';  // 必要的。回溯之前的状态【】
             // column[i] = ldiag[n-row+i-1] = rdiag[row+i+1] = false;
             column[i] = ldiag[row-i+n-1] = rdiag[row+i] = false;
         }

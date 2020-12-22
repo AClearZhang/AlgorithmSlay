@@ -73,7 +73,7 @@ public:
      * @Description: 使用多个TreeNode 指针数组进行，层次遍历/层次建立搜索树的方法——寻找最小的深度
      * @Param: 
      * @Return: 
-     * @Notes: 
+     * @Notes: 【注意：注释的代码  为框架的完整  方式，自行体悟与使用。】
      */
     int minDepth(TreeNode* root) {
         if(root == nullptr) return 0;
@@ -122,7 +122,7 @@ public:
 
 int main(){
 
-    TreeNode *root = {3,9,20,nullptr, nullptr, 15, 7};
+    // TreeNode *root = {3,9,20,nullptr, nullptr, 15, 7};
 
     system("pause");
     return 0;
