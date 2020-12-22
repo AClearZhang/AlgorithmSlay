@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\752.OpenLockBFS.cpp
+ * @FilePath            : \project\AlgorithmSlay\C++\752.OpenLockBFS.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-12-22 21:11:35
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-22 22:37:58
+ * @LastEditTime        : 2020-12-22 23:50:58
  * @Version             : 1.0
  * @Description         : 打开密码锁？寻找最小的步数？——使用 BFS寻找 最小路径？
  * 752. 打开转盘锁
@@ -59,6 +59,9 @@
 #include <windows.h>
 #include <queue>
 #include <set>
+#include <unordered_map>
+#include <unordered_set>
+
 
 using namespace std;
 
@@ -72,7 +75,15 @@ public:
      * @Notes: 
      */
     int openLock(vector<string>& deadends, string target) {
-        
+        // unordered_set<string>deadset(deadends.begin(),deadends.end());//死亡密码
+
+        // unordered_set<string>visited;//走过的密码
+        // visited.insert("0000");
+
+        // queue<string>q;//当前的密码
+        // q.push("0000");
+
+        // int step=0;
     }
     /**
      * @Description: 以下 两个辅助函数， 方便查找邻域的节点； —— 对应注意 防止死循环；visited[]
@@ -81,12 +92,14 @@ public:
      * @Notes: 
      */
     // 辅助函数，向上拨动一次
-    string plusOne(){
-
+    string plusOne(string cur, int j){
+        cur[j] = cur[j] == '9' ? '0' : (cur[j]+1);
+        return cur;
     }
     // 辅助函数，向下拨动一次
-    string minusOne(){
-
+    string minusOne(string cur, int j){
+        cur[j] = cur[j]=='0'?'9':cur[j]-1;
+        return cur;
     }
 
 };
