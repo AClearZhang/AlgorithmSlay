@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-22 21:12:22
+ * @LastEditTime        : 2020-12-22 22:37:58
  * @Version             : 1.0
  * @Description         : 打开密码锁？寻找最小的步数？——使用 BFS寻找 最小路径？
  * 752. 打开转盘锁
@@ -65,17 +65,95 @@ using namespace std;
 
 class Solution {
 public:
+    /**
+     * @Description: 对应 labuladong c++实现方法
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
     int openLock(vector<string>& deadends, string target) {
+        
+    }
+    /**
+     * @Description: 以下 两个辅助函数， 方便查找邻域的节点； —— 对应注意 防止死循环；visited[]
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
+    // 辅助函数，向上拨动一次
+    string plusOne(){
 
+    }
+    // 辅助函数，向下拨动一次
+    string minusOne(){
+
+    }
+
+};
+class Solution1 {
+public:
+
+    string plusOne(string str,int i)//数字+1
+    {
+        str[i] = str[i]=='9'?'0':str[i]+1;
+        return str;
+    }
+
+    string downOne(string str,int i)//数字-1
+    {
+        str[i] = str[i]=='0'?'9':str[i]-1;
+        return str;
+    }
+
+
+    int openLock(vector<string>& deadends, string target) {
+        unordered_set<string>deadset(deadends.begin(),deadends.end());//死亡密码
+
+        unordered_set<string>visited;//走过的密码
+        visited.insert("0000");
+
+        queue<string>q;//当前的密码
+        q.push("0000");
+
+        int step=0;
+
+        while(!q.empty())
+        {
+            int size = q.size();//当前这一批次，广度优先遍历，一批(一层)一批的走
+            for(int i=0;i<size;i++)
+            {
+                string cur = q.front();//这一批次，当前密码
+                q.pop();
+
+                if(deadset.count(cur)) continue; //在死亡密码中，换下一个
+                if(cur==target) return step;    //到达目标，结束
+
+                for(int i=0;i<4;i++)    //每次转动，有(上、下)*4 种可能
+                {
+                    string up = plusOne(cur,i);  //向上
+                    if(!visited.count(up))       //没有走过
+                    {
+                        q.push(up);              //放入当前密码(下一批次计算)
+                        visited.insert(up);      //放入走过密码
+                    }
+                    string down = downOne(cur,i); //向下
+                    if(!visited.count(down))      //没有走过
+                    {
+                        q.push(down);
+                        visited.insert(down);
+                    }
+                }
+            }
+            step++;
+        }
+        return -1;
     }
 };
 
 
-
 int main(){
 
-    // TreeNode *root = {3,9,20,nullptr, nullptr, 15, 7};
-
+    // TreeNode *root = {3,9,20,nullptr, nullptr, 15, 7};`
     system("pause");
     return 0;
 }
