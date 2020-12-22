@@ -79,9 +79,9 @@ public:
         // 关键在深搜
         // 边缘结束
         if(r<0 || r>=board.size() || c<0 || c>=board[0].size()||count>word.length() || rel || visited[r][c])  return;
-        // if(board[r][c]!=word[count]) return ;
+        if(board[r][c]!=word[count]) return ;  
         // 结束条件
-        if (word.length() == count)  // 因为有了上面那个条件，所以这可以用-1；
+        if (word.length()-1 == count)  // 因为有了上面那个条件，所以这可以用-1；  // 不减一 确实不对！！
         {
             rel = true;
             return;
@@ -118,9 +118,9 @@ public:
         // 边界约束
         if(r<0 || r>=board.size() || c<0 || c>=board[0].size()||pos>word.length() )  return;
         // 未找到---提前结束条件
-        if(board[r][c]!=word[pos]|| rel || visited[r][c]) return ;
+        if(board[r][c]!=word[pos]|| rel || visited[r][c]) return ;  //【关键
         // 找到的结束条件
-        if (word.length()-1 == pos)  // 因为有了上面那个条件，所以这可以用-1；
+        if (word.length()-1 == pos)  // 因为有了上面那个条件，所以这可以用-1； //【关键
         {
             rel = true;
             return;
@@ -130,6 +130,7 @@ public:
 
         // cout << "i am in and word is:" << word[pos] << endl; 
         // 才开始深搜
+        
         visited[r][c] = true;
         for (int k = 0; k < 4; ++k)
         {
@@ -137,7 +138,7 @@ public:
         }
     
         // 回溯返回状态
-        visited[r][c] = false;   //回溯去除，说明当前节点不能往下了；但是可以作为最后的中间件。所以false。
+        visited[r][c] = false;   //回溯去除，说明当前节点不能往下了；但是可以作为最后的中间件。所以false。//【关键 增加visit
         return;
     }
 };
