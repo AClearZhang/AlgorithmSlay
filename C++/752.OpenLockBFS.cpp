@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-23 11:30:13
+ * @LastEditTime        : 2020-12-23 14:54:40
  * @Version             : 1.0
  * @Description         : 打开密码锁？寻找最小的步数？——使用 BFS寻找 最小路径？
  * 752. 打开转盘锁
@@ -224,30 +224,34 @@ public:
         if(stopEnds.count("0000")) return -1;
         q1.insert("0000");
         q2.insert(target);
-        visited.insert("0000");   // 访问过 并 添加进来了。
-        visited.insert(target);   // 访问过 并 添加进来了。
+        // visited.insert("0000");   // 访问过 并 添加进来了。
+        // visited.insert(target);   // 访问过 并 添加进来了。
         while(!q1.empty() && !q2.empty()){
             // 遍历过程中 不能修改 哈希集合
             // temp:这里新建优化交换 q1 & q2过程 —— 方便一次性 交替更新和 dis增长.
             // temp:作用2 直接添加进temp  就不用删除 q1中的元素了。
-            unordered_set<string> temp = q1;
+            if(q1.size() > q2.size()){   //新增 —— 瞬间时间效率和内存效率都上去了。 
+                //交换q1 q2
+                swap(q1,q2);
+            }
+            unordered_set<string> temp;
             for(string cur : q1){  // 扩散当前q1 的所有邻域—— 当前包括 set中的所有集合；所以 visited 显得格外重要。
                 
                 if(stopEnds.count(cur)) continue;
-                visited.insert(cur);
                 if(q2.count(cur))  return dis;    // 【重点】
+                visited.insert(cur);
 
                 // 插入扩散四周
                 for(int i = 0; i<4 ;++i){
                     string plus = plusOne(cur, i);
                     if(!visited.count(plus)){
                         temp.insert(plus);
-                        visited.insert(plus);
+                        // visited.insert(plus);
                     }
                     string minus = minusOne(cur, i);
                     if(!visited.count(minus)){
                         temp.insert(minus);
-                        visited.insert(minus);
+                        // visited.insert(minus);
                     }
                 }
                 
