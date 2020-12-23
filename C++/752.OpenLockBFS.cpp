@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\C++\752.OpenLockBFS.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\752.OpenLockBFS.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-12-22 21:11:35
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-22 23:50:58
+ * @LastEditTime        : 2020-12-23 10:31:59
  * @Version             : 1.0
  * @Description         : 打开密码锁？寻找最小的步数？——使用 BFS寻找 最小路径？
  * 752. 打开转盘锁
@@ -75,15 +75,50 @@ public:
      * @Notes: 
      */
     int openLock(vector<string>& deadends, string target) {
-        // unordered_set<string>deadset(deadends.begin(),deadends.end());//死亡密码
+        if(target == "") return 0;
+        unordered_set<string> stopEnds(deadends.begin(), deadends.end());
+        unordered_set<string> visited;
+        queue<string> q;
 
-        // unordered_set<string>visited;//走过的密码
-        // visited.insert("0000");
+        int dis = 0;
+        if(stopEnds.count("0000")) return -1;
+        q.push("0000");
+        visited.insert("0000");   // 访问过 并 添加进来了。
+        while(!q.empty()){
+            int sz = q.size();
+            for(int i = 0; i < sz ;++i){
+                // 每个当前这一层高度进行pop 和  访问处理。
+                string cur = q.front();
+                q.pop();
+                if(cur == target){ // do
+                    return dis;
+                }
+                
+                // 邻域添加到 queue中去
+                for(int j = 0; j < 4 ; ++j){
+                    string plus = plusOne(cur, j);
+                    string minus = minusOne(cur, j);
+                    // if(!visited.count(plus) && stopEnds.find(plus) == stopEnds.end()){
+                    if(!visited.count(plus) && !stopEnds.count(plus)){
+                        // 不是永久暂停
+                        q.push(plus);
+                        visited.insert(plus);
+                    }
+                    // if(!visited.count(minus) &&stopEnds.find(minus) == stopEnds.end()){
+                    if(!visited.count(minus) && !stopEnds.count(plus)){
+                        // 不是永久暂停
+                        q.push(minus);
+                        visited.insert(minus);    // 【没加这个。cpu爆炸了！】
+                    }
+                }
 
-        // queue<string>q;//当前的密码
-        // q.push("0000");
+            }
+            dis++;
+        }
 
-        // int step=0;
+        return -1;
+
+
     }
     /**
      * @Description: 以下 两个辅助函数， 方便查找邻域的节点； —— 对应注意 防止死循环；visited[]
@@ -165,8 +200,12 @@ public:
 
 
 int main(){
-
-    // TreeNode *root = {3,9,20,nullptr, nullptr, 15, 7};`
+    // vector<string> deadends = {"0201","0101","0102","1212","2002"}; string target = "0202";
+    vector<string> deadends = {"8887","8889","8878","8898","8788","8988","7888","9888"}; string target = "8888";
+    Solution so;
+    auto distance = so.openLock(deadends, target);
+    cout << "揭开当前密码锁需要的最小步数为:" << distance << endl;
+    
     system("pause");
     return 0;
 }
