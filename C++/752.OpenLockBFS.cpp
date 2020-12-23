@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-23 10:31:59
+ * @LastEditTime        : 2020-12-23 11:30:13
  * @Version             : 1.0
  * @Description         : 打开密码锁？寻找最小的步数？——使用 BFS寻找 最小路径？
  * 752. 打开转盘锁
@@ -105,10 +105,10 @@ public:
                         visited.insert(plus);
                     }
                     // if(!visited.count(minus) &&stopEnds.find(minus) == stopEnds.end()){
-                    if(!visited.count(minus) && !stopEnds.count(plus)){
+                    if(!visited.count(minus) && !stopEnds.count(minus)){  // 一样的时间复杂度。
                         // 不是永久暂停
                         q.push(minus);
-                        visited.insert(minus);    // 【没加这个。cpu爆炸了！】
+                        visited.insert(minus);    // 【没加这个。cpu爆炸了！】【必须放在这，因为 visited是防止 加入队列访问过死循环爆炸的】
                     }
                 }
 
@@ -173,7 +173,7 @@ public:
                 string cur = q.front();//这一批次，当前密码
                 q.pop();
 
-                if(deadset.count(cur)) continue; //在死亡密码中，换下一个
+                if(deadset.count(cur)) continue; //在死亡密码中，换下一个  【注意这里不一样。】
                 if(cur==target) return step;    //到达目标，结束
 
                 for(int i=0;i<4;i++)    //每次转动，有(上、下)*4 种可能
@@ -196,6 +196,90 @@ public:
         }
         return -1;
     }
+};
+
+/**
+ * @Description: 双向BFS  时间同，但是空间不同
+ * @Param: 
+ * @Return: 
+ * @Notes: 
+ */
+class Solution2 {
+public:
+    /**
+     * @Description: 对应 labuladong c++实现方法
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
+    int openLock(vector<string>& deadends, string target) {
+        if(target == "") return 0;
+        unordered_set<string> stopEnds(deadends.begin(), deadends.end());
+        unordered_set<string> visited;
+        unordered_set<string> q1;
+        unordered_set<string> q2;
+
+
+        int dis = 0;
+        if(stopEnds.count("0000")) return -1;
+        q1.insert("0000");
+        q2.insert(target);
+        visited.insert("0000");   // 访问过 并 添加进来了。
+        visited.insert(target);   // 访问过 并 添加进来了。
+        while(!q1.empty() && !q2.empty()){
+            // 遍历过程中 不能修改 哈希集合
+            // temp:这里新建优化交换 q1 & q2过程 —— 方便一次性 交替更新和 dis增长.
+            // temp:作用2 直接添加进temp  就不用删除 q1中的元素了。
+            unordered_set<string> temp = q1;
+            for(string cur : q1){  // 扩散当前q1 的所有邻域—— 当前包括 set中的所有集合；所以 visited 显得格外重要。
+                
+                if(stopEnds.count(cur)) continue;
+                visited.insert(cur);
+                if(q2.count(cur))  return dis;    // 【重点】
+
+                // 插入扩散四周
+                for(int i = 0; i<4 ;++i){
+                    string plus = plusOne(cur, i);
+                    if(!visited.count(plus)){
+                        temp.insert(plus);
+                        visited.insert(plus);
+                    }
+                    string minus = minusOne(cur, i);
+                    if(!visited.count(minus)){
+                        temp.insert(minus);
+                        visited.insert(minus);
+                    }
+                }
+                
+            }
+            dis++;
+
+            // 两者进行互换
+            q1 = q2;
+            q2 = temp;
+        }
+
+        return -1;
+
+
+    }
+    /**
+     * @Description: 以下 两个辅助函数， 方便查找邻域的节点； —— 对应注意 防止死循环；visited[]
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
+    // 辅助函数，向上拨动一次
+    string plusOne(string cur, int j){
+        cur[j] = cur[j] == '9' ? '0' : (cur[j]+1);
+        return cur;
+    }
+    // 辅助函数，向下拨动一次
+    string minusOne(string cur, int j){
+        cur[j] = cur[j]=='0'?'9':cur[j]-1;
+        return cur;
+    }
+
 };
 
 
