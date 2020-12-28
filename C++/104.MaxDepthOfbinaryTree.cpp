@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-28 19:32:38
+ * @LastEditTime        : 2020-12-28 19:52:47
  * @Version             : 1.0
  * @Description         : 求二叉树的最大深度
  * 104. 二叉树的最大深度
@@ -22,8 +22,7 @@
    / \
   9  20
     /  \
-   15   7
-返回它的最大深度 3 。
+   15   7 返回它的最大深度 3 。
  */
 
 
@@ -78,7 +77,7 @@ public:
      * @Description: BFS广搜/层次 找高度
      * @Param: queue，
      * @Return: 
-     * @Notes: 
+     * @Notes: 【注意：】在这一题中，广搜和深搜的时间和空间复杂度是一样的。
      */
     int maxDepth1(TreeNode* root) {
         //visited 不用了
@@ -113,6 +112,16 @@ public:
         }
 
         return height;
+    }
+    /**
+     * @Description: 大佬递归方法。
+     * @Param: 
+     * @Return: 
+     * @Notes: 
+     */
+    int maxDepth2(TreeNode* root) {
+        // 最大深度
+        return root? 1 + max(maxDepth(root->left), maxDepth(root->right)): 0 ;
     }
 };
 int main()
