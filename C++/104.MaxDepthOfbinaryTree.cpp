@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-26 11:22:15
+ * @LastEditTime        : 2020-12-28 19:32:38
  * @Version             : 1.0
  * @Description         : 求二叉树的最大深度
  * 104. 二叉树的最大深度
@@ -76,12 +76,43 @@ public:
 
     /**
      * @Description: BFS广搜/层次 找高度
-     * @Param: 
+     * @Param: queue，
      * @Return: 
      * @Notes: 
      */
     int maxDepth1(TreeNode* root) {
-        
+        //visited 不用了
+        if(root == nullptr) {return 0;}
+        queue<TreeNode*> q;
+        int height = 0;
+
+        q.push(root);
+        while(!q.empty()){
+            // 开始bfs
+            int sz = q.size();
+            while(sz--){
+                TreeNode* a = q.front();
+                q.pop();
+
+                // height
+
+                // xunzhao1
+                // visit
+                if(a->left != nullptr){
+                    q.push(a->left);
+
+                }
+                if(a->right!=nullptr){
+                    q.push(a->right);
+
+                }
+                
+
+            }
+            height++;
+        }
+
+        return height;
     }
 };
 int main()
