@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-28 20:32:34
+ * @LastEditTime        : 2020-12-28 22:16:21
  * @Version             : 1.0
  * @Description         : 平衡二叉树 合法性判断
  * 
@@ -65,6 +65,12 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+/**
+ * @Description: 我的递归做法。
+ * @Param: 
+ * @Return: 
+ * @Notes: 
+ */
 class Solution {
 public:
     bool isBalanced(TreeNode* root) {
