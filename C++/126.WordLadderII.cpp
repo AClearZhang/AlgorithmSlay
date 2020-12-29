@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-24 20:35:07
+ * @LastEditTime        : 2020-12-29 09:02:36
  * @Version             : 1.0
  * @Description         : 单词接龙II
  * 126. 单词接龙 II
@@ -64,7 +64,7 @@ public:
      * @Description: 单词接龙解题思路：①首先，BFS寻找最短路径的层数 和 构建搜索树的邻接表。②使用回溯思想，深搜并记录track 返回最短路径的 单词接龙多种解决方案。
      * @Param: 结构需要：见下方
      * @Return: 
-     * @Notes: 注意：①subVisited ②不要 同一层相连，去除这样构建的搜索树——使不相连。
+     * @Notes: 注意：①subVisited ②不要 同一层相连，去除这样构建的搜索树——使不相连。   【注意：已经不相连了，因为 visit 已经去除了同层连接】
      */
     vector<vector<string>> findLadders(string beginWord, string endWord, vector<string> &wordList)
     {
@@ -101,7 +101,7 @@ public:
 
                 // 寻找邻域 并 添加到搜索树
                 vector<string> neiborWord;
-                vector<string> successor; // 错了位置
+                vector<string> successor; // 【错了位置】
                 findCurNeibor(cur, neiborWord, wordList1);
                 for( string nei : neiborWord ){
                     if(!visited.count(nei)){
