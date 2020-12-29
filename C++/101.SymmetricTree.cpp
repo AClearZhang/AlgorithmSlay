@@ -66,8 +66,28 @@ struct TreeNode {
 
 class Solution {
 public:
+    /**
+     * @Description: 
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
     bool isSymmetric(TreeNode* root) {
-        
+        if(root == nullptr) return true;
+        // if(!root->left || !root->right) return false;
+
+        return helper(root->left, root->right);
+    }
+    // 辅助函数——对应对称搜索 左右两棵子树。
+    bool helper(TreeNode* root1, TreeNode* root2){
+        // 边界 / 结束条件
+        if(root1 == nullptr && root2 == nullptr) return true;
+        if(!root1 || !root2 ) return false;
+
+        // 开始后序遍历
+        return helper(root1->left, root2->right) && helper(root1->right, root2->left) 
+                && root1->val == root2->val;
+
     }
 };
 
