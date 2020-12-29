@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-28 19:52:47
+ * @LastEditTime        : 2020-12-29 20:20:29
  * @Version             : 1.0
  * @Description         : 求二叉树的最大深度
  * 104. 二叉树的最大深度
@@ -49,7 +49,12 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
-
+/**
+ * @Description: 深度搜索 找最大深度
+ * @Param: 
+ * @Return: 
+ * @Notes: 
+ */
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
