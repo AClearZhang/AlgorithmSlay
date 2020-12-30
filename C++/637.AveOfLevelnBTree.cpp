@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-30 11:17:45
+ * @LastEditTime        : 2020-12-30 14:41:24
  * @Version             : 1.0
  * @Description         : 二叉树的层平均值
  * 637. 二叉树的层平均值
@@ -69,7 +69,7 @@ public:
         q.push(root);
         while(!q.empty()){
             int sz = q.size();
-            int sum = 0;
+            long sum = 0;  // 【注意需要32位有符号整型 变量。】
             while(sz--){
                 TreeNode* cur = q.front();
                 q.pop();
@@ -85,7 +85,10 @@ public:
                     q.push(cur->right);
                 }
             }
-            ans.push_back((double)sum/q.size());
+            if(q.size()){
+
+                ans.push_back((double)sum/q.size());
+            }
         }
         return ans;
     }

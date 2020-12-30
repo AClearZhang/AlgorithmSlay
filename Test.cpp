@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-15 10:52:32
+ * @LastEditTime        : 2020-12-30 14:35:11
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -89,20 +89,30 @@ int findKthLargest1(vector<int>& nums, int k) {
 
 
 int main(){
-    vector<int> arr = {3,1,2,4};
-    int k = 2;
-    findKthLargest1(arr, k) ;
-    for(auto a : arr){
-        cout << a << endl;
-    }
-//     int a = 4;
-//     int b = 3;
-//     float c = a / b ;
-//     cout << "Now Test caculate Values." << endl;
-//     cout << "c is :" << c << endl;
-//     cout << "float(a) / b is:" << float(a)/b << endl; 
-//     cout << "(float)a / b is:" << (float)a/b << endl; 
-//     printf("a/b:%.1f", a/b);
+    // vector<int> arr = {3,1,2,4};
+    // int k = 2;
+    // findKthLargest1(arr, k) ;
+    // for(auto a : arr){
+    //     cout << a << endl;
+    // }
+
+    /**
+     * @Description: 这里进行测试 c++除法取整数和小数的问题。
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
+    int a = 4;
+    int b = 3;
+    float c = a / b ;
+    cout << "Now Test caculate Values." << endl;
+    cout << "c is :" << c << endl;
+    cout << "float(a) / b is:" << float(a)/b << endl; 
+    cout << "(float)a / b is:" << (float)a/b << endl; 
+    printf("a/b:%.1f\n", a/b);
+    cout << "1.0/2 = " << 1.0/2 << endl;
+    cout << "1.0/a = " << 1.0/a << endl;
+
     
 //     cout << endl << endl << "Now Test return array Numbers" << endl;
 //     //内部声明普通数组
