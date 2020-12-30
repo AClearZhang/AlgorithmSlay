@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-30 10:29:28
+ * @LastEditTime        : 2020-12-30 10:53:41
  * @Version             : 1.0
  * @Description         : 删点成林
  * 1110. 删点成林
@@ -69,13 +69,13 @@ public:
         vector<TreeNode*> ans;
         unordered_set<int> delete_list(to_delete.begin(), to_delete.end());
         root = helper(root, delete_list, ans);
-        if(!root){
+        if(root){ // 存在
             ans.push_back(root);
         }
         return ans;
     }
     // helper辅助函数——寻找删除点 并 返回构建树的结果？删除<其中要 注意是中间节点即要加入进去>or原始不变？
-    TreeNode* helper(TreeNode* root, unordered_set<int> delete_list,  vector<TreeNode*> ans){
+    TreeNode* helper(TreeNode* root, unordered_set<int> delete_list,  vector<TreeNode*> &ans){
         // 边界，返回root
         if(!root) return root;
 
@@ -83,7 +83,7 @@ public:
         root->left = helper(root->left, delete_list, ans);
         root->right = helper(root->right, delete_list, ans);
             // visit
-        if(delete_list.count(root->val)>0) { //存在
+        if(delete_list.count(root->val)>0) { //存在gin
             // 中间节点  
             if(root->left){ ans.push_back(root->left); }
             if(root->right){ ans.push_back(root->right); }
