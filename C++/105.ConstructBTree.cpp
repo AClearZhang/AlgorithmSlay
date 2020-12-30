@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-30 16:47:24
+ * @LastEditTime        : 2020-12-30 21:18:44
  * @Version             : 1.0
  * @Description         : 前序和中序遍历 序列来构建二叉树
  * 105. 从前序与中序遍历序列构造二叉树
@@ -68,13 +68,15 @@ public:
     }
     // 辅助函数 —— 递归构建
     // 每次都构建根节点，然后 找中间点。  递归构建左右子树。  再回溯后序返回，——最终能返回到root
-    TreeNode* helper(vector<int>& preorder,  unordered_map<int, int> inorderMap, int preLeft, int preRight, int inLeft, int inRight){
+    TreeNode* helper(vector<int>& preorder,  unordered_map<int, int> &inorderMap, int preLeft, int preRight, int inLeft, int inRight){
         if( preLeft > preRight )  return nullptr;
+
         TreeNode* root = new TreeNode(preorder[preLeft]);
         int pivot = inorderMap[preorder[preLeft]];
         int num_left = pivot - inLeft, num_right = inRight - pivot;
-        root ->left = helper(preorder, inorderMap, );
-
+        root->left = helper(preorder, inorderMap, preLeft+1, preLeft+num_left, inLeft, pivot-1);
+        root->right = helper(preorder, inorderMap,  preLeft+num_left+1, preRight, pivot+1, inRight);
+        return root;
     }
 };
 
