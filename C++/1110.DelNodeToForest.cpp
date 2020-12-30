@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-29 22:19:38
+ * @LastEditTime        : 2020-12-30 10:29:28
  * @Version             : 1.0
  * @Description         : 删点成林
  * 1110. 删点成林
@@ -58,8 +58,41 @@ struct TreeNode {
 
 class Solution {
 public:
+    /**
+     * @Description: 算法思维：树的框架进行递归 —— 后序遍历方便一次性 加入到ans中。
+     * @param {*} 设置成unordered_set 方便进行搜索。 vector<TreeNode* > ans
+     * @return {*} 
+     * @notes: 注意：【是要根据实际实用的 要求在递归的1、形参2、返回值中使用】 在这里进行删除的关键点是如何给父节点分发nullptr？！所以 返回root指针方便操作。
+     */
     vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
+        //删点成林
+        vector<TreeNode*> ans;
+        unordered_set<int> delete_list(to_delete.begin(), to_delete.end());
+        root = helper(root, delete_list, ans);
+        if(!root){
+            ans.push_back(root);
+        }
+        return ans;
+    }
+    // helper辅助函数——寻找删除点 并 返回构建树的结果？删除<其中要 注意是中间节点即要加入进去>or原始不变？
+    TreeNode* helper(TreeNode* root, unordered_set<int> delete_list,  vector<TreeNode*> ans){
+        // 边界，返回root
+        if(!root) return root;
 
+        // 后序遍历 开始
+        root->left = helper(root->left, delete_list, ans);
+        root->right = helper(root->right, delete_list, ans);
+            // visit
+        if(delete_list.count(root->val)>0) { //存在
+            // 中间节点  
+            if(root->left){ ans.push_back(root->left); }
+            if(root->right){ ans.push_back(root->right); }
+            
+            return nullptr;
+        }
+
+        // 遍历结束
+        return root;
     }
 };
 
