@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-30 21:58:17
+ * @LastEditTime        : 2020-12-30 22:00:01
  * @Version             : 1.0
  * @Description         : 二叉树的前序遍历
  * 
@@ -88,7 +88,7 @@ public:
             ans.push_back(cur_node->val);
 
             // 加入stack
-            if(cur_node->right){
+            if(cur_node->right){                    //【注意：先右后左  才能保证树的先序遍历】
                 stack_node.push(cur_node->right);
                 // ans.push_back(cur_node->right->val);
             }
