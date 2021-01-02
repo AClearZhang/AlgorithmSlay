@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-30 22:00:01
+ * @LastEditTime        : 2021-01-02 10:16:45
  * @Version             : 1.0
  * @Description         : 二叉树的前序遍历
  * 
@@ -52,7 +52,7 @@ public:
      * @return {*}
      * @notes: 
      */
-    vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> preorderTraversal(TreeNode* root){
         vector<int> ans;
         if(root == nullptr) return ans;
 
