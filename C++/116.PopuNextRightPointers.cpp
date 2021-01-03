@@ -62,10 +62,14 @@ public:
     Node* connect(Node* root) {
         // 边界
         if(root == nullptr || !root->left || !root->right)
-            return nullptr;
+            return root;
         // if(root->next == nullptr)  root->next = nullptr;
 
         root->left->next = root->right;
+        // 关键还要连接右侧节点的next：
+        if(root->next != nullptr){
+            root->right->next = root->next->left;
+        }
 
         // 前序遍历递归寻找右侧节点
         connect(root->left);

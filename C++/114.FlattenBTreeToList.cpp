@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-03 17:38:02
+ * @LastEditTime        : 2021-01-03 20:23:15
  * @Version             : 1.0
  * @Description         : 二叉树展开为链表
  * 
@@ -75,9 +75,19 @@ public:
         flatten(root->left);
         flatten(root->right);
 
-        
-
+        // 开始展开成一侧 并 重置为nullptr
+        if(root->left == nullptr)  return;
+        // 两侧都有值，开始 flatten
+        TreeNode* tmp = root->right;
+        root->right = root->left;
+            // 寻找最后一个 尾节点链接到tmp
+        TreeNode* cur=root->right;
+        while(cur->right != nullptr) cur = cur->right;
+        cur->right = tmp;
+        root->left = nullptr;
     }
+
+    
     /**
      * @Description: 注意是要求本地展开为一个链表！ 先序遍历思想 —— 不太对 重新想递归。
      * @param {TreeNode} *root
