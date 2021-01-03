@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-02 22:30:21
+ * @LastEditTime        : 2021-01-03 17:38:02
  * @Version             : 1.0
  * @Description         : 二叉树展开为链表
  * 
@@ -63,12 +63,28 @@ class Solution
 {
 public:
     /**
-     * @Description: 注意是要求本地展开为一个链表！
+     * @Description: 递归 且 重想不干扰原先结构。
+     * @param {TreeNode} *root
+     * @return {*}
+     * @notes: 【可以后序遍历】
+     */
+    void flatten(TreeNode *root)
+    {
+        if(root == nullptr) return ;
+        
+        flatten(root->left);
+        flatten(root->right);
+
+        
+
+    }
+    /**
+     * @Description: 注意是要求本地展开为一个链表！ 先序遍历思想 —— 不太对 重新想递归。
      * @param {TreeNode} *root
      * @return {*}
      * @notes: 
      */
-    void flatten(TreeNode *root)
+    void flatten1(TreeNode *root)
     {
         if(root == nullptr) return ;
         dfsAndPoint(root->left, root, root->right);
@@ -88,9 +104,10 @@ public:
         // 先序遍历
         // visit
         cur->right = root;
-        root->
+        // root->
 
-        dfsAndPoint(root->left, cur, tmp);
+        dfsAndPoint(root->left, cur, tmp);  // 【想法有地方没有覆盖 —— 并不算递归 重复调用，因为会打乱之前的 树的链接！】
+
 
 
     }
