@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-02 21:47:33
+ * @LastEditTime        : 2021-01-04 15:22:25
  * @Version             : 1.0
  * @Description         : 
  */
@@ -31,7 +31,7 @@ using namespace std;
 
 //  Definition for a Node.
 /**
- * @Description: 给出完美二叉树定义：每个椰子鸡诶单在同一层， 每个父节点都有两个子节点。
+ * @Description: 给出完美二叉树定义：每个叶子及节点在同一层， 每个父节点都有两个子节点。
  * @param {*}
  * @return {*}
  * @notes: 

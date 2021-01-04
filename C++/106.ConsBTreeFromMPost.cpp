@@ -104,10 +104,10 @@ public:
         // 相信并想象如何递归构建
         TreeNode* root = new TreeNode(postorder[postRight]);
         
-        
         int pivot =  inorderMap[postorder[postRight]]; // 寻找 中序的分治点。
-        root->left = helper( postorder, inorderMap, 0, postLeft+(pivot-inLeft)-1, 0, pivot-1);
-        root->right = helper( postorder, inorderMap, postLeft+(pivot - inLeft), postLeft+inRight-inLeft, pivot+1, inRight);
+        // int num_left = pivot - inLeft, num_right = inRight - pivot;
+        root->left = helper( postorder, inorderMap, postLeft, postLeft+(pivot-inLeft)-1, inLeft, pivot-1);
+        root->right = helper( postorder, inorderMap, postLeft+(pivot - inLeft), postLeft+inRight-inLeft-1, pivot+1, inRight); // 【在 倒数第三个 忘了-1】或者 postRight-1 也可以。
         return root;
     }
 };
