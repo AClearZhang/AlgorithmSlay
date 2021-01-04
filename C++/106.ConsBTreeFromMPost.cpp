@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-03 22:16:39
+ * @LastEditTime        : 2021-01-04 11:03:17
  * @Version             : 1.0
  * @Description         : 106 通过中序和后序来构造二叉树
  * 106. 从中序与后序遍历序列构造二叉树
@@ -95,13 +95,20 @@ public:
 
         return helper(postorder, inorderMap, 0, postorder.size()-1, 0, inorder.size()-1);
     }
-    // 辅助函数构建二叉树
+    // 辅助函数构建二叉树  
+    // 左闭右闭
     TreeNode* helper(vector<int> &postorder, unordered_map<int,int> &inorderMap, int postLeft, int postRight, int inLeft, int inRight){
         if(postLeft > postRight) return nullptr;
 
 
+        // 相信并想象如何递归构建
+        TreeNode* root = new TreeNode(postorder[postRight]);
         
-
+        
+        int pivot =  inorderMap[postorder[postRight]]; // 寻找 中序的分治点。
+        root->left = helper( postorder, inorderMap, 0, postLeft+(pivot-inLeft)-1, 0, pivot-1);
+        root->right = helper( postorder, inorderMap, postLeft+(pivot - inLeft), postLeft+inRight-inLeft, pivot+1, inRight);
+        return root;
     }
 };
 
