@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-06 22:17:00
+ * @LastEditTime        : 2021-01-09 23:59:54
  * @Version             : 1.0
  * @Description         : serialize  序列化和反序列化二叉树
  * 297. 二叉树的序列化与反序列化
@@ -106,7 +106,7 @@ private:
         serialize(root->right, ssr);
 
          //注意最后输出 带括号所以需要辅助函数。
-    }
+    } 
     // 辅助函数 反序列化
     TreeNode* deserialize(vector<string> &preTree,int cur)
     {
@@ -143,6 +143,6 @@ private:
 
 int main()
 {
-
+    
     return 0;
 }
