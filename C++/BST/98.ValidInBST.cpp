@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-14 17:24:01
+ * @LastEditTime        : 2021-01-15 11:36:49
  * @Version             : 1.0
  * @Description         : 验证BST 构建的合法性。
  * 98. 验证二叉搜索树
@@ -58,12 +58,74 @@ struct TreeNode {
 class Solution {
 public:
     /**
-     * @Description: 总的思路：
-     * @param {*}
+     * @Description: 总的思路：使得中间的值大于所有左边 小于左右右边。
+     * @param {*} 新函数--有最小节点和最大节点 ； 
      * @return {*}
      * @notes: 
      */
     bool isValidBST(TreeNode* root) {
+        // if(root == nullptr) return true;
+        return isValidBST(root, nullptr, nullptr);
+    }
+    // 辅助函数判断是否 大于和小于
+    /**
+     * @Description: 变相后序：使得左子树限定在不大于root，  右子树限定在不小于root
+     * @param {*}  即：左子树 小于root<max>， 右子树 大于root<min>；
+     * @return {*}
+     * @notes: 
+     */
+    bool isValidBST(TreeNode* root, TreeNode* min, TreeNode* max){
+        if(root == nullptr ) return true;
+        // 三种--- 使得当前节点-不超过右子树min[就是root节点啊！]  大于左子树max[就是root节点啊]
+        if(min!=nullptr && root->val <= min->val) return false;
+        if(max!=nullptr && root->val >= max->val) return false;
 
+        return isValidBST(root->left, min, root) 
+                && isValidBST(root->right, root, max);
+
+    }
+    /**
+     * @Description: 站在了 中间节点角度，上边是站在了 左右子树角度。
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
+    bool isValidBST(TreeNode* root, TreeNode* min, TreeNode* max){
+        if(root == nullptr) return true;
+        // 左搜---右边最小的
+        bool left = isValidBST(root->left, min, root);
+        bool right = isValidBST(root->right, root, max);
+
+        if(max!=nullptr && root->val >= max->val) return false;
+        if(min!=nullptr && root->val <= min->val) return false;
+        return left && right;
+
+        // if(root->val < min->val) {
+        //     bool left = isValidBST(root->left, root, max);
+        // }else{
+        //     bool left = isValidBST(root->left, min, max);
+        // }
+        // if(root->val > max->val) {
+        //     bool right = isValidBST(root->right, min, root);
+        // }else{
+        //     bool right = isValidBST(root->right, min, max);
+        // }
+
+        
+            // visit 后序 【不对】。因为是看上面的 max和min是否有值！ 而不是看root->lefr 是否有值！
+        // 叶子节点
+        // if(root->left == nullptr && root->right==nullptr) return true;
+        // // 单节点
+        // else if(root->left == nullptr && root->val < min->val && left && right){
+        //     return true;
+        // }
+        // else if(root->right == nullptr && root->val > max->val && left && right){
+        //     return true;
+        // }
+        // // 双节点
+        // else if(root->val > max->val && root->val < min->val && left && right){
+        //     return true;
+        // }
+        // return false;
     }
 };
