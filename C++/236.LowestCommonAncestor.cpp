@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-20 11:48:26
+ * @LastEditTime        : 2021-01-20 15:58:59
  * @Version             : 1.0
  * @Description         : 寻找二叉树中的 最近公共祖先
  * 
@@ -67,7 +67,7 @@ public:
 
         // 当前节点，分为三种情况
         if(left != nullptr && right != nullptr) return root;
-        if(left == nullptr && right == nullptr) return nullptr;
+        else if(left == nullptr && right == nullptr) return nullptr;
         else{
             return left == nullptr ? right : left ;
         }
