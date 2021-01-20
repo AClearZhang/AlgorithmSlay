@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-21 00:24:34
+ * @LastEditTime        : 2021-01-21 00:26:30
  * @Version             : 1.0
  * @Description         : 合并两个有序的链表 —— 升序
  * 21. 合并两个有序链表
@@ -79,6 +79,8 @@ public:
         }
         return ans->next;
     }
+    // 101 dalao递归写法——顺序递归 ； 返回时构建链表 并返回当前构建的链表。
+    //  【注意递归的：小的被留下(最终返回时构建了)  并递归小的下一个】
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         if(!l1){
             return l2;
@@ -92,7 +94,6 @@ public:
         }
         l1->next = mergeTwoLists(l1->next, l2);
         return l1;
-
     }
 
 };
