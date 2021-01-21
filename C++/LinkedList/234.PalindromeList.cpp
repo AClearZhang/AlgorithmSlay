@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-21 11:52:43
+ * @LastEditTime        : 2021-01-22 00:50:35
  * @Version             : 1.0
  * @Description         : 判断链表是否回文
  * 234. 回文链表
@@ -43,8 +43,40 @@ struct ListNode
 
 class Solution {
 public:
+    /**
+     * @Description: 总体思路：先找到中间节点，然后 中间节点传入辅助函数进行回溯的判断。
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
     bool isPalindrome(ListNode* head) {
-
+        if(head == nullptr) return true;
+        // 寻找中点
+        int mid = 0;
+        ListNode* p = head;
+        while(p){
+            p = p->next;
+            mid++;
+        }
+        mid = ceil((float)mid/2);       //【注意】这里1 
+        printf("now mid is:%d\n", mid);
+        p = head;
+        while(mid--){
+            p = p->next;
+        }
+        bool flag = true;
+        isPalindrome(p, head, flag);
+        return flag;
+    }
+    // 辅助函数
+    ListNode* isPalindrome(ListNode* mid, ListNode* head, bool &flag){
+        if(mid == nullptr){
+            return head;
+        }
+        ListNode*tmp = isPalindrome(mid->next, head, flag);
+        cout << mid->val<<endl;
+        cout << tmp->val << endl;
+        if(mid->val != tmp->val) flag = false;  //【注意】这里2
+        return tmp->next;    //【注意】这里3
     }
 };
-
