@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-20 18:41:03
+ * @LastEditTime        : 2021-01-23 19:26:11
  * @Version             : 1.0
  * @Description         : 反转列表
  * 206. 反转链表
@@ -39,7 +39,7 @@ struct ListNode {
 class Solution {
 public:
     /**
-     * @Description: 递归耗费时间，直接使用两个指针操作
+     * @Description: 我的解法——递归耗费时间，直接使用两个指针操作
      * @param {*}
      * @return {*}
      * @notes: 
@@ -93,7 +93,64 @@ public:
         return prev;
 
     }
+    
+};
 
+class Solution {
+public:
+    /**
+     * @Description: dong's —— 秀操作技巧
+     * @param {*}
+     * @return {*}
+     * @notes: 【注意】递归函数名称一定要 知晓定义意义：
+     *              输入一个节点head，将“以head为起点”的链表翻转，并返回“翻转完成后的链表头结点”。
+     */
+    // 方法1： 后序的递归
+    ListNode* reverse(ListNode* head) {
+        if(head == nullptr || head->next == nullptr) {
+            return head;
+        }
+
+        ListNode* last = reverse(head->next);
+        head->next->next = head;
+        head->next = nullptr;
+        return last;
+    }
+    //进阶1：递归 翻转前n个值
+    ListNode* reverseN(ListNode* head, int n, ListNode* &successor){
+        // base case
+        if(n == 1){
+            successor = head->next;
+            return head;
+        }
+
+        ListNode* last = reverseN(head->next, n-1, successor);
+        head->next->next = head;
+        head->next  = successor;
+        return last;
+    }
+    //进阶2：递归 从m开始翻转n个
+    ListNode* reverseAfter(ListNode* head, int m, int n){
+        // base case
+        if(m == 1){
+            ListNode* suc = nullptr;
+            return reverseN(head, n, suc);
+        }
+        head->next = reverseAfter(head->next, m-1, n);
+        
+        return head;
+    }
+    //进阶3(类似进阶2)：递归  给一个索引区间[m,n]（索引从1开始）仅仅翻转区间中的链表元素
+    ListNode* reverseBetween(ListNode* head, int m, int n){
+        // base case
+        if(m == 1){
+            ListNode* suc = nullptr;
+            return reverseN(head, n, suc);
+        }
+        head->next = reverseBetween(head->next, m-1, n-1);
+        
+        return head;
+    }
 
 
 };
