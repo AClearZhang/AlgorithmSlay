@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-21 00:26:30
+ * @LastEditTime        : 2021-01-27 10:44:48
  * @Version             : 1.0
  * @Description         : 合并两个有序的链表 —— 升序
  * 21. 合并两个有序链表
@@ -88,12 +88,16 @@ public:
         if(!l2){
             return l1;
         }
+
+        // 注意base case(前序) 和 返回当前最小值(的后序)；递归回溯的策略都有。
         if(l1->val > l2->val){
             l2->next = mergeTwoLists(l1, l2->next);
             return l2;
         }
-        l1->next = mergeTwoLists(l1->next, l2);
-        return l1;
+        else{
+            l1->next = mergeTwoLists(l1->next, l2);
+            return l1;
+        }
     }
 
 };
