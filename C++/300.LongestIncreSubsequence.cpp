@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-02-01 23:40:47
+ * @LastEditTime        : 2021-02-02 00:42:17
  * @Version             : 1.0
  * @Description         : LIS 最长递增子序列（区别 不是子串，不用非得连续）
  * 300. 最长递增子序列
@@ -53,8 +53,29 @@ using namespace std;
 
 class Solution {
 public:
+    /**
+     * @Description: 
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
     int lengthOfLIS(vector<int>& nums) {
+        vector<int> dp(nums.size(), 1);
+        for(int i = 0; i<nums.size() ; i++){
+            for(int j = 0; j<i ;j++){
+                if(nums[i] > nums[j]){
+                    // 表明当前状态 可由j+1 进行设置数值
+                    dp[i] = max(dp[i], 1+dp[j]);
+                }
+            }
+        }
 
+        // 遍历找出最大的dp来
+        int maxSeq = 1;
+        for(int a:dp){
+            maxSeq = a>maxSeq ? a : maxSeq ;
+        }
+        return maxSeq;
     }
 };
 
