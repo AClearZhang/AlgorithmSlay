@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-02-02 00:42:17
+ * @LastEditTime        : 2021-02-02 17:33:24
  * @Version             : 1.0
  * @Description         : LIS 最长递增子序列（区别 不是子串，不用非得连续）
  * 300. 最长递增子序列
@@ -54,7 +54,7 @@ using namespace std;
 class Solution {
 public:
     /**
-     * @Description: 
+     * @Description: 最长递增子序列
      * @param {*}
      * @return {*}
      * @notes: 
