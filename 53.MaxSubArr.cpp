@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-02-05 18:33:28
+ * @LastEditTime        : 2021-02-05 18:41:29
  * @Version             : 1.0
  * @Description         : 53. 最大子序和
 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
@@ -54,7 +54,7 @@ public:
      * @return {*}
      * @notes: 【重点】 最后要搜索一下最大值
      */
-    int maxSubArray(vector<int>& nums) {
+    int maxSubArrayEasy(vector<int>& nums) {
         int n = nums.size();
         if(n == 0) return 0;
         // dp存储, 0
@@ -74,6 +74,32 @@ public:
             max = a>max ? a : max ;
         }
         return max;
+    }
+
+    /**
+     * @Description: 进阶
+     * @param {*}
+     * @return {*}
+     * @notes:  // 提升—— DP状态压缩
+                // 由于前面的方法过于简单和暴力，时间和空间复杂度都为O(n)
+                // 鉴于——{// 两种情况: 本身 或 前者+自身}  —— 只和前者有关所以dp 两个数值即可。
+     */
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 0) return 0;
+        // dp存储, 0
+        int maxRes = nums[0];  
+        int dp_0 = nums[0], dp_1 = 0;
+        
+
+        // 状态转移方程
+        for( int i = 1; i < n ;i++ ){
+            // 两种情况: 本身 或 前者+自身
+            dp_1 = max( nums[i], dp_0+nums[i] );
+            dp_0 = dp_1;
+            maxRes = max(maxRes, dp_0);
+        }
+        return maxRes;
     }
 };
 
