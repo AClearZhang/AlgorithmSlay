@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-02-06 15:54:52
+ * @LastEditTime        : 2021-02-06 16:38:17
  * @Version             : 1.0
  * @Description         : 二维数组的 倾斜遍历/ 侧遍历
  */
@@ -42,7 +42,7 @@ int main()
     // }
 
     /**
-     * @Description: 左到右  上到下；左上角
+     * @Description:左上角：左到右  上到下
      * @param {*}
      * @return {*}
      * @notes: 
@@ -132,6 +132,22 @@ int main()
 // 9 7 6
 // 3 7
 // 1
+// ****************************
+// 1
+// 3 7
+// 9 7 6
+// 6 5 22
+// 3 5 8
+// 2 4
+// 1
+// ****************************
+// 6
+// 22 7
+// 8 7 1
+// 4 5 3
+// 1 5 9
+// 2 6
+// 3
 // ****************************
 // 3
 // 2 6
