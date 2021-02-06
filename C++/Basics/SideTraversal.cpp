@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-02-06 15:53:31
+ * @LastEditTime        : 2021-02-06 15:54:52
  * @Version             : 1.0
  * @Description         : 二维数组的 倾斜遍历/ 侧遍历
  */
@@ -18,7 +18,7 @@ using namespace std;
 int main()
 {
     vector<vector<int>> vec = {{1, 2, 3}, {4, 5, 6}, {8, 5, 9}, {22, 7, 3}, {6, 7, 1}};
-    int k, m = 5; // m行5  n列3
+    int m = 5; // m行5  n列3 k, 
 
     //   for(int i=0;i<m;i++)
     //   {//有m行
