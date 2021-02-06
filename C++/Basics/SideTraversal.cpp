@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-02-06 12:20:18
+ * @LastEditTime        : 2021-02-06 15:53:31
  * @Version             : 1.0
  * @Description         : 二维数组的 倾斜遍历/ 侧遍历
  */
@@ -59,7 +59,46 @@ int main()
         }
         cout << endl;
     }
+     /**
+     * @Description: 右下角： 下到上 右到左
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
+    cout << "****************************" << endl;
+    int iii, jjj;                                 //遍历时的行和列
+    for (int num = m+n-2; num >= 0; num--) //num是遍历的次数
+    {
+        for (iii = 0; iii < m; iii++)
+        {
+            jjj =num-iii;
+            if (jjj >= 0 && jjj < n){
+                cout << vec[iii][jjj] << " ";
+            }
+        }
+        cout << endl;
+    }
 
+    
+     /**
+     * @Description: 左下角：左到右  下到上
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
+    cout << "****************************" << endl;
+    int iiii, jjjj;                                 //遍历时的行和列
+    for (int num = m+n-2; num >= 0; num--) //num是遍历的次数
+    {
+        for (iiii = 0; iiii < m; iiii++)
+        {
+            jjjj = n - num + iiii - 1;
+            if (jjjj >= 0 && jjjj < n){
+                cout << vec[iiii][jjjj] << " ";
+            }
+        }
+        cout << endl;
+    }
     /**
      * @Description: 右上角：右到左  上到下
      * @param {*}
@@ -79,6 +118,8 @@ int main()
         }
         cout << endl;
     }
+    
+    
     system("pause");
     return 0;
 }
