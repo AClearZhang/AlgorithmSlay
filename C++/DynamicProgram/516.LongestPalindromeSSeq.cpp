@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-04 17:24:10
+ * @LastEditTime        : 2021-03-04 18:46:54
  * @Version             : 1.0
  * @Description         : 最长回文子序列
  * 516. 最长回文子序列
@@ -78,6 +78,62 @@ public:
             }
         }
         return dp[0][n-1];
+    }
+    /**
+     * @Description: 遍历方向不一致。倾斜遍历。
+     * @param {string} s
+     * @return {*}
+     * @notes: 
+     */
+    int longestPalindromeSubseq2(string s) {
+        int n = s.size();
+        if( n==0 || n==1) return n==0?0:1;
+        // base case + init
+        vector<vector<int>> dp(n, vector<int>(n,0));
+            // dui jiao
+        for(int i=0;i<n;i++)  dp[i][i] = 1;
+
+        // start
+        for(int num = (n+n)/2-2;num>=0;num--){
+            for(int i = 0;i<n;i++){
+                int j = n - num + i -1;
+                if(j<0 || j>=n) continue;
+                
+                //状态转移方程
+                if(s[i] == s[j])  dp[i][j] = dp[i+1][j-1]+2;
+                else{
+                    dp[i][j] = max(dp[i+1][j], dp[i][j-1]);
+                }
+            }
+        }
+        return dp[0][n-1];
+    }
+    /**
+     * @Description: 状态压缩到一维  数组。
+     * @param {string} s
+     * @return {*}
+     * @notes: 
+     */
+    int longestPalindromeSubseq3(string s) {
+        int n = s.size();
+        if( n==0 || n==1) return n==0?0:1;
+        // base case + init
+        vector<int> dp(n, 1);
+
+        // start
+        for(int i = n-2;i>=0;i--){
+            int pre = 0;
+            for(int j = i+1;j<n;j++){
+                int temp = dp[j];
+                //状态转移方程
+                if(s[i] == s[j])  dp[j] = pre+2;
+                else{
+                    dp[j] = max(dp[j], dp[j-1]);
+                }
+                pre = temp;
+            }
+        }
+        return dp[n-1];
     }
 };
 
