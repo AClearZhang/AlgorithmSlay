@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\DynamicProgram\1143.LongComSubsequence.cpp
+ * @FilePath            : \project\AlgorithmSlay\C++\DynamicProgram\1143.LongComSubsequence.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-02-06 16:44:18
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-02-06 16:49:39
+ * @LastEditTime        : 2021-03-04 15:40:40
  * @Version             : 1.0
  * @Description         : 最长公共子序列
  * 1143. 最长公共子序列
@@ -51,11 +51,35 @@
 
 using namespace std;
 
-
-
 class Solution {
 public:
+    /**
+     * @Description: 最大公共子序列——子序列问题。
+     * @param {string} text1
+     * @param {string} text2
+     * @return {返回 最大公共子序列的个数}
+     * @notes: 
+     */
     int longestCommonSubsequence(string text1, string text2) {
-        
+        // base 
+        int m = text1.size(), n = text2.size();
+        if(m == 0 || n == 0){
+            return 0;
+        }
+            // base case 0 0 置为0
+        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+
+        // 开始扫描，状态转移方程
+        // dp[i][j]  表示 text1[0- i-1]   text2[0- j-1] 为止有多少公共子序列
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=n;j++){
+                if(text1[i-1] == text2[j-1])  dp[i][j] = 1+dp[i-1][j-1];
+                else{  // 不相等，说明至少有一个不在lcs中， 取最大数
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
+        }
+        // 最后返回 最大的
+        return dp[m][n];
     }
 };
