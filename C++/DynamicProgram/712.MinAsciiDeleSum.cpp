@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-05 17:46:03
+ * @LastEditTime        : 2021-03-05 20:01:44
  * @Version             : 1.0
  * @Description         : 最小 ASCII 删除和
  * 712. 两个字符串的最小ASCII删除和
@@ -125,8 +125,11 @@ public:
         if (s1[i]==s2[j]) {
             // s1[i] 和 s2[j] 都是在 lcs 中的，不用删除
             memo[i][j] = dp(s1, i + 1, s2, j + 1, memo);
-        } else {
+        }
+        else {
             // s1[i] 和 s2[j] 至少有一个不在 lcs 中，删一个
+
+            // 下面没错 只是IDE标红不好看。
             memo[i][j] = min( (int)s1[i] + dp(s1, i + 1, s2, j, memo),
             (int)s2[j] + dp(s1, i, s2, j + 1, memo));
         }
