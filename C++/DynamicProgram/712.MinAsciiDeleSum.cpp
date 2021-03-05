@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-05 12:25:16
+ * @LastEditTime        : 2021-03-05 17:14:15
  * @Version             : 1.0
  * @Description         : 最小 ASCII 删除和
  * 712. 两个字符串的最小ASCII删除和
@@ -46,7 +46,42 @@ using namespace std;
 
 class Solution {
 public:
+    /**
+     * @Description: 两种解法——①前到后的 DP ②后到前的 递归+备忘录 
+     * @param {string} s1
+     * @param {string} s2
+     * @return {*}
+     * @notes: dp[i][j] 表示s1[..--i-1] s2[..--j-1]构成ASCII码的最小值
+     *          关键：稍加修改 lcs的
+     */
     int minimumDeleteSum(string s1, string s2) {
+        int res = 0; //ascii mini value
+        int m=s1.size(),n=s2.size();
+        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));   
+        //base 
+        for(int i=1;i<=m;i++){
+            res += (int)s1[i-1];
+            dp[i][0] = res;
+        }
+        res = 0;
+        for(int j=1;j<=n;j++){
+            res += (int)s2[j-1];
+            dp[0][j] = res;
+        }
+
+        // 开始扫描，状态转移方程
+        // dp[i][j]  表示 s1[0- i-1]   s2[0- j-1] 为止有多少公共子序列
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=n;j++){
+                if(s1[i-1] == s2[j-1])  dp[i][j] = dp[i-1][j-1];
+                else{  // 不相等，说明至少有一个不在lcs中， 取最小的 ASCII码
+                    dp[i][j] = min(dp[i-1][j]+(int)s1[i-1], 
+                    min(dp[i][j-1]+(int)s2[j-1], dp[i-1][j-1]+(int)s1[i-1]+s2[j-1]));
+                }
+            }
+        }
+        // 最后返回 最大的
+        return dp[m][n];
 
     }
 };
