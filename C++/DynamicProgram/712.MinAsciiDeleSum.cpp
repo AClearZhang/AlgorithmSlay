@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-05 17:14:15
+ * @LastEditTime        : 2021-03-05 17:46:03
  * @Version             : 1.0
  * @Description         : 最小 ASCII 删除和
  * 712. 两个字符串的最小ASCII删除和
@@ -82,6 +82,55 @@ public:
         }
         // 最后返回 最大的
         return dp[m][n];
-
     }
+
+    /**
+     * @Description: 方法二——使用自顶向下的方法 递归做法。
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
+    // 备忘录
+    /* 主函数 */    
+    int minimumDeleteSum2(string s1, string s2) {
+        int m = s1.length(), n = s2.length();
+        // 备忘录值为 -1 代表未曾计算
+        vector<vector<int>> memo(m, vector<int>(n, -1));
+
+        return dp(s1, 0, s2, 0, memo);
+    }
+
+    // 定义：将 s1[i..] 和 s2[j..] 删除成相同字符串，
+    // 最小的 ASCII 码之和为 dp(s1, i, s2, j)。
+    int dp(string &s1, int i, string &s2, int j, vector<vector<int>> &memo) {
+        int res = 0;
+        // base case
+        if (i == s1.length()) {
+            // 如果 s1 到头了，那么 s2 剩下的都得删除
+            for (; j < s2.length(); j++)
+                res += (int)s2[j];
+            return res;
+        }
+        if (j == s2.length()) {
+            // 如果 s2 到头了，那么 s1 剩下的都得删除
+            for (; i < s1.length(); i++)
+                res += (int)s1[i];
+            return res;
+        }
+
+        if (memo[i][j] != -1) {
+            return memo[i][j];
+        }
+
+        if (s1[i]==s2[j]) {
+            // s1[i] 和 s2[j] 都是在 lcs 中的，不用删除
+            memo[i][j] = dp(s1, i + 1, s2, j + 1, memo);
+        } else {
+            // s1[i] 和 s2[j] 至少有一个不在 lcs 中，删一个
+            memo[i][j] = min( (int)s1[i] + dp(s1, i + 1, s2, j, memo),
+            (int)s2[j] + dp(s1, i, s2, j + 1, memo));
+        }
+        return memo[i][j];
+    }
+
 };
