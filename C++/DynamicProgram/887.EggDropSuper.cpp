@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-06 13:18:42
+ * @LastEditTime        : 2021-03-06 15:51:40
  * @Version             : 1.0
  * @Description         : 最坏情况 至少掉落几次 找到这个楼层F
  * 887. 鸡蛋掉落
@@ -67,14 +67,31 @@ public:
      * @notes: 注意！要理解清楚题意：！最坏情况  ！至少 
      */
     int superEggDrop(int k, int n) {
-        vector<vector<int>> memo(k+1, vector<int>(n+1, 0));
-        //base:
-        
+        vector<vector<int>> memo(k+1, vector<int>(n+1, -1));
+        return dp(k,n , memo);
     }
+    // 辅助函数：表示最坏情况下，至少 移动几步能找到对应的层数。
+    // memo 备忘录记录以计算出的步数；避免重复计算。
     int dp(int K, int N, vector<vector<int>> &memo){
-        if(N==0) return 0;
+        // base
         if(K==1) return N;
+        if(N==0) return 0;
         
+        if(memo[K][N]!=-1){
+            // 说明已经计算过
+            return memo[K][N];
+        }
 
+        // dp
+        int res = INT_MAX; 
+        for(int i = 1;i<=N;i++){            // 穷举、递归遍历。
+            res = min(res,max(
+                dp(K-1, i-1, memo), // 碎了
+                dp(K, N-i, memo)//没碎
+                ) + 1
+            );
+        }  // 0会超出范围
+        memo[K][N] = res;
+        return res;
     }
 };
