@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-06 12:20:54
+ * @LastEditTime        : 2021-03-06 13:13:16
  * @Version             : 1.0
  * @Description         : 正则表达式匹配 —— DP方法
  * 10. 正则表达式匹配
@@ -70,6 +70,7 @@ public:
 		// base
 		dp[0][0] = true;
             // important dp[0][...]
+			// 重点新增 dp[0]的初始化！！！ 注意！！！
         for(int i = 1;i<=n;i++){
             if(p[i-1]=='*' && i>=2){
                 dp[0][i] = dp[0][i-2];
