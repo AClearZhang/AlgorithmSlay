@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-06 15:51:40
+ * @LastEditTime        : 2021-03-06 18:11:40
  * @Version             : 1.0
  * @Description         : 最坏情况 至少掉落几次 找到这个楼层F
  * 887. 鸡蛋掉落
@@ -60,6 +60,41 @@ using namespace std;
 class Solution {
 public:
     /**
+     * @Description: nb 的另一个方法。
+     * @param {int} k
+     * @param {int} n
+     * @return {int} 最终返回 遍历到的m. 
+     * @notes: 关键1：逆向思维的DP[K][m] == N //同样也是目标。
+     *              表示当前有K个鸡蛋，最多可以尝试扔m次；
+     *                求在这个状态下， 最多可以测试多少楼层——N。
+     *         关键2：状态转移方程：上楼+下楼+1 = 总的楼层数目。== dp[K][m]
+     */
+    int superEggDrop(int K, int N) {
+        vector<vector<int>> dp(K+1, vector<int>(N+1, 0));
+        // base 0
+
+        // dp start
+        int m=0;
+        for(;dp[K][m]<N;){
+            m++;
+        // for( m=1;dp[K][m]<N;m++){  // 会报错  超出int范围
+            for(int i=1;i<=K;i++){
+                dp[i][m] = dp[i][m-1]+dp[i-1][m-1]+1;
+            }
+        }
+        
+        // 下面这个也可以。
+        // int m = 0;
+        // while(dp[K][m]<N){
+        //     m++;
+        //     for(int i=1;i<=K;i++){
+        //         // cout << "i:" << i << " ,m:" << m<<endl;
+        //         dp[i][m] = dp[i][m-1]+dp[i-1][m-1]+1;
+        //     }
+        // }
+        return m;
+    }
+    /**
      * @Description: 使用暴力 -> 递归+备忘录 简洁方法先打基础做出来！之后再进阶 优化复杂度。
      * @param {int} k
      * @param {int} n
@@ -68,10 +103,11 @@ public:
      */
     int superEggDrop(int k, int n) {
         vector<vector<int>> memo(k+1, vector<int>(n+1, -1));
-        return dp(k,n , memo);
+        // return dp(k,n , memo);
+        return dp2(k,n , memo);
     }
     // 辅助函数：表示最坏情况下，至少 移动几步能找到对应的层数。
-    // memo 备忘录记录以计算出的步数；避免重复计算。
+        // memo 备忘录记录以计算出的步数；避免重复计算。
     int dp(int K, int N, vector<vector<int>> &memo){
         // base
         if(K==1) return N;
@@ -88,9 +124,52 @@ public:
             res = min(res,max(
                 dp(K-1, i-1, memo), // 碎了
                 dp(K, N-i, memo)//没碎
-                ) + 1
+                ) + 1               // 扔出去一次 别忘记+1；
             );
         }  // 0会超出范围
+        memo[K][N] = res;
+        return res;
+    }
+    // 辅助函数2：表示最坏情况下，至少 移动几步能找到对应的层数。
+        // memo 备忘录记录以计算出的步数；避免重复计算。
+    // 此处：使用二分查找 优化两个单调线性函数的 线性搜索时间。
+        // 具体图片见 P174《AI小抄》。
+    int dp2(int K, int N, vector<vector<int>> &memo){
+        // base
+        if(K==1) return N;
+        if(N==0) return 0;
+        
+        if(memo[K][N]!=-1){
+            // 说明已经计算过
+            return memo[K][N];
+        }
+
+        // dp1
+        // int res = INT_MAX; 
+        // for(int i = 1;i<=N;i++){            // 穷举、递归遍历。
+        //     res = min(res,max(
+        //         dp(K-1, i-1, memo), // 碎了
+        //         dp(K, N-i, memo)//没碎
+        //         ) + 1               // 扔出去一次 别忘记+1；
+        //     );
+        // }  // 0会超出范围
+
+
+        // dp2
+        int res = INT_MAX; 
+        int lo=1,hi=N;
+        while(lo<=hi){
+            int mid = (lo+hi)/2;
+            int broken = dp(K-1, mid-1, memo); // sui
+            int not_broken = dp(K, N-mid, memo); //wei sui
+            if(broken > not_broken){
+                hi = mid -1; // 向下搜索
+                res = min(res, broken+1);
+            }else{
+                lo = mid + 1;
+                res = min(res, not_broken+1);
+            }
+        }
         memo[K][N] = res;
         return res;
     }
