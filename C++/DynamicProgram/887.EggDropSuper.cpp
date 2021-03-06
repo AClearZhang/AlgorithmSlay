@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-06 18:11:40
+ * @LastEditTime        : 2021-03-06 18:13:05
  * @Version             : 1.0
  * @Description         : 最坏情况 至少掉落几次 找到这个楼层F
  * 887. 鸡蛋掉落
@@ -83,7 +83,7 @@ public:
             }
         }
         
-        // 下面这个也可以。
+        // 下面这个也可以。 甚至更好！区别在于加了 while()
         // int m = 0;
         // while(dp[K][m]<N){
         //     m++;
