@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-05 19:57:13
+ * @LastEditTime        : 2021-03-06 12:20:54
  * @Version             : 1.0
  * @Description         : 正则表达式匹配 —— DP方法
  * 10. 正则表达式匹配
@@ -64,7 +64,31 @@ public:
 
      */
     bool isMatch(string s, string p) {
-        
+		int m=s.size(), n=p.size();
+        vector<vector<bool>> dp(m+1, vector<bool>(n+1, false));
+
+		// base
+		dp[0][0] = true;
+            // important dp[0][...]
+        for(int i = 1;i<=n;i++){
+            if(p[i-1]=='*' && i>=2){
+                dp[0][i] = dp[0][i-2];
+            }
+        }
+		// start dp
+		for(int i = 1;i<=m;i++){
+			for(int j = 1; j<=n ;j++){
+				if(s[i-1] == p[j-1] || p[j-1]=='.'){
+					dp[i][j] = dp[i-1][j-1];
+				}else if(p[j-1]=='*'){
+					if(p[j-2] != s[i-1] && p[j-2]!='.')  dp[i][j] = dp[i][j-2];
+					else{// if(p[j-2]==s[i-1]||p[j-2]=='.')
+						dp[i][j] = (dp[i][j-1]||dp[i-1][j]||dp[i][j-2]);
+					}
+				}
+			}
+		}
+		return dp[m][n];
     }
 
 
@@ -72,58 +96,58 @@ public:
 };
 
 
-/**
- * @Description: 其它老哥在 leetcode上的代码
- * @param {*}
- * @return {*}
- * @notes: 
- */
-class Solution {
-    public boolean isMatch(String s, String p) {
-        int sLen = s.length(), pLen = p.length();
-		boolean[][] memory = new boolean[sLen+1][pLen+1];
-		memory[0][0] = true;
-		for(int i = 0; i <= sLen; i++) {
-			for(int j = 1; j <= pLen; j++) {
-				if(p.charAt(j-1) == '*') {
-					memory[i][j] = memory[i][j-2] || (i > 0 && (s.charAt(i-1) == p.charAt(j-2) || 
-							p.charAt(j-2) == '.') && memory[i-1][j]);
-				}else {
-					memory[i][j] = i > 0 && (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.')
-									&& memory[i-1][j-1];
-				}
-			}
-		}
-		return memory[sLen][pLen];
-    }
-}
-// 在上面方法的基础上，由于每次都只使用了memory表中相邻的两行，因此可以进一步降低代码的空间复杂度如下:
+// /**
+//  * @Description: 其它老哥在 leetcode上的代码
+//  * @param {*}
+//  * @return {*}
+//  * @notes: 
+//  */
+// class Solution {
+//     public boolean isMatch(String s, String p) {
+//         int sLen = s.length(), pLen = p.length();
+// 		boolean[][] memory = new boolean[sLen+1][pLen+1];
+// 		memory[0][0] = true;
+// 		for(int i = 0; i <= sLen; i++) {
+// 			for(int j = 1; j <= pLen; j++) {
+// 				if(p.charAt(j-1) == '*') {
+// 					memory[i][j] = memory[i][j-2] || (i > 0 && (s.charAt(i-1) == p.charAt(j-2) || 
+// 							p.charAt(j-2) == '.') && memory[i-1][j]);
+// 				}else {
+// 					memory[i][j] = i > 0 && (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.')
+// 									&& memory[i-1][j-1];
+// 				}
+// 			}
+// 		}
+// 		return memory[sLen][pLen];
+//     }
+// }
+// // 在上面方法的基础上，由于每次都只使用了memory表中相邻的两行，因此可以进一步降低代码的空间复杂度如下:
 
-class Solution {
-    public boolean isMatch(String s, String p) {
-        int sLen = s.length(), pLen = p.length();
-		boolean[][] memory = new boolean[2][pLen+1];
-		memory[0][0] = true;
-		int cur = 0, pre = 0;
-		for(int i = 0; i <= sLen; i++) {
-			cur = i % 2;
-			pre = (i + 1) % 2;
-			if(i > 1) {
-				for(int j = 0; j <= pLen; j++) {
-					memory[cur][j] = false;
-				}
-			}
-			for(int j = 1; j <= pLen; j++) {
-				if(p.charAt(j-1) == '*') {
+// class Solution {
+//     public boolean isMatch(String s, String p) {
+//         int sLen = s.length(), pLen = p.length();
+// 		boolean[][] memory = new boolean[2][pLen+1];
+// 		memory[0][0] = true;
+// 		int cur = 0, pre = 0;
+// 		for(int i = 0; i <= sLen; i++) {
+// 			cur = i % 2;
+// 			pre = (i + 1) % 2;
+// 			if(i > 1) {
+// 				for(int j = 0; j <= pLen; j++) {
+// 					memory[cur][j] = false;
+// 				}
+// 			}
+// 			for(int j = 1; j <= pLen; j++) {
+// 				if(p.charAt(j-1) == '*') {
 					
-					memory[cur][j] = memory[cur][j-2] || (i > 0 && (s.charAt(i-1) == p.charAt(j-2) || 
-							p.charAt(j-2) == '.') && memory[pre][j]);
-				}else {
-					memory[cur][j] = i > 0 && (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.')
-									&& memory[pre][j-1];
-				}
-			}
-		}
-		return memory[cur][pLen];
-    }
-}
+// 					memory[cur][j] = memory[cur][j-2] || (i > 0 && (s.charAt(i-1) == p.charAt(j-2) || 
+// 							p.charAt(j-2) == '.') && memory[pre][j]);
+// 				}else {
+// 					memory[cur][j] = i > 0 && (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.')
+// 									&& memory[pre][j-1];
+// 				}
+// 			}
+// 		}
+// 		return memory[cur][pLen];
+//     }
+// }
