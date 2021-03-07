@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-07 17:12:01
+ * @LastEditTime        : 2021-03-07 17:39:54
  * @Version             : 1.0
  * @Description         : 分割等和子集。
  * 416. 分割等和子集
@@ -87,6 +87,36 @@ public:
             }
         }
         return dp[n][w];
+    }
+    /**
+     * @Description: 优化状态压缩。
+     * @param {*}
+     * @return {*}
+     * @notes: // 状态压缩重点注意：此处防止上一行被覆盖/以至于重复使用 数值。
+     */
+    bool canPartition(vector<int>& nums) {
+        // 加和
+        int sum=0, n=nums.size();
+        for(int i = 0;i<nums.size();i++){
+            sum+=nums[i];
+        }
+        if(sum % 2 != 0){
+            return false;
+        }
+        int w = sum/2;
+        // base
+        vector<bool> dp(w+1, false);
+        dp[0] = true;
+
+        // dp start
+        for(int i = 1; i <= n ;i++){
+            for(int j = 1; j <= w ;j++){        // 状态压缩重点注意：此处防止上一行被覆盖/以至于重复使用 数值。
+                if(j - nums[i-1] >= 0 ){
+                    dp[j] = dp[j-nums[i-1]] || dp[j];
+                }
+            }
+        }
+        return dp[w];
     }
 };
 
