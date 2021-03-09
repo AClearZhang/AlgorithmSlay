@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-08 23:32:37
+ * @LastEditTime        : 2021-03-09 12:22:11
  * @Version             : 1.0
  * @Description         : 贪婪+DP——跳跃游戏I
  * 55. 跳跃游戏
@@ -41,7 +41,21 @@ using namespace std;
 
 class Solution {
 public:
+    /**
+     * @Description: 关键可以是 找 最大跳跃到的长度。 O(N) 即可完成。
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
     bool canJump(vector<int>& nums) {
-
+        int n = nums.size();
+        if(n == 0) return true;
+        int farest = 0;
+        for(int i = 0; i < n; i++){
+            farest = max(farest, i+nums[i]);  // 找当前局部最大 与 全局最大对比。
+            // 如果当前为0 返回false
+            if(farest == i && i!=(n-1)) return false;
+        }
+        return true;
     }
 };
