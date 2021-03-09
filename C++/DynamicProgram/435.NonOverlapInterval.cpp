@@ -78,7 +78,7 @@ public:
                 end_right = intervals[i][1];
             }
         }
-        // 最长重叠 为count;
+        // 最长不重叠 为count;
             // 所以需要擦除  n-count
         return intervals.size()-count;
     }

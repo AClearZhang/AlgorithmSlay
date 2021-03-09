@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-08 23:31:55
+ * @LastEditTime        : 2021-03-09 12:07:22
  * @Version             : 1.0
  * @Description         : 贪婪+DP——用最少数量的箭 引爆气球。
  * 452. 用最少数量的箭引爆气球
@@ -51,6 +51,27 @@ using namespace std;
 class Solution {
 public:
     int findMinArrowShots(vector<vector<int>>& points) {
-
+        if(points.size() == 0) return 0;
+        // 按照end 从小到大排序。
+        sort(points.begin(), points.end(), cmpare);
+        
+        // 执行贪婪算法
+        int count = 1; // 至少一个
+        int end_right = points[0][1];
+        for(int i = 0; i<points.size() ;i++){
+            int start = points[i][0];
+            if(end_right < start){          //【关键】 类似于435 但是此处相等也算是 重叠了！去嗲了 等于号。
+                // 此时不重叠 加加
+                count++;
+                // 更换 end_right
+                end_right = points[i][1];
+            }
+        }
+        // 最长不重叠 为count;
+            // 需要至少射出 cont个箭放个 扎破气球。
+        return count;
+    }
+    static bool cmpare(vector<int>& a, vector<int>& b){
+        return a[1] < b[1];
     }
 };
