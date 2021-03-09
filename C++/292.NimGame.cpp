@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-09 17:19:46
+ * @LastEditTime        : 2021-03-09 17:52:36
  * @Version             : 1.0
  * @Description         : 智力游戏1
  * 292. Nim 游戏
@@ -47,6 +47,6 @@ using namespace std;
 class Solution {
 public:
     bool canWinNim(int n) {
-        
+        return (n%4!=0);
     }
 };
