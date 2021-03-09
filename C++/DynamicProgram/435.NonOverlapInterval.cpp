@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-08 23:30:40
+ * @LastEditTime        : 2021-03-09 12:02:37
  * @Version             : 1.0
  * @Description         : 贪婪算法 + DP —— 区间调度问题。
  * 435. 无重叠区间
@@ -50,7 +50,39 @@ using namespace std;
 
 class Solution {
 public:
+    /**
+     * @Description: 重点在于。end <= zuoStart{count++};
+     * @param {*}
+     * @return {*}
+     * @notes: 
+1.从区间集合 intvs 中选择一个区间 x，这个 x 是在当前所有区间中结束最早的（end 最小）。
+
+2. 把所有与 x 区间相交的区间从区间集合 intvs 中删除。
+
+3. 重复步骤 1 和 2，直到 intvs 为空为止。之前选出的那些 x 就是最大不相交子集。
+     */
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        if(intervals.size() == 0) return 0;
+        // 按照end 从小到大排序。
+        sort(intervals.begin(), intervals.end(), cmpare);
         
+        // 执行贪婪算法
+        int count = 1; // 至少一个
+        int end_right = intervals[0][1];
+        for(int i = 0; i<intervals.size() ;i++){
+            int start = intervals[i][0];
+            if(end_right <= start){
+                // 此时不重叠 加加
+                count++;
+                // 更换 end_right
+                end_right = intervals[i][1];
+            }
+        }
+        // 最长重叠 为count;
+            // 所以需要擦除  n-count
+        return intervals.size()-count;
+    }
+    static bool cmpare(vector<int>& a, vector<int>& b){
+        return a[1] < b[1];
     }
 };
