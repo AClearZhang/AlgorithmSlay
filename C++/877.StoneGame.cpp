@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-09 17:41:40
+ * @LastEditTime        : 2021-03-09 17:50:13
  * @Version             : 1.0
  * @Description         : 石子游戏
  * 877. 石子游戏
@@ -38,7 +38,10 @@ piles.length 是偶数。
 1 <= piles[i] <= 500
 sum(piles) 是奇数。
  */
+#include <vector>
+#include <iostream>
 
+using namespace std;
 
 class Solution {
 public:
