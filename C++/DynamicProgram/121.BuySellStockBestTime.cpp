@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-10 17:19:46
+ * @LastEditTime        : 2021-03-10 19:10:15
  * @Version             : 1.0
  * @Description         : 买卖股票的最佳时期
  * 121. 买卖股票的最佳时机
@@ -82,5 +82,29 @@ public:
             maxPro = max(maxPro, prices[i]-minSell);
         }
         return maxPro;
+    }
+    /**
+     * @Description: 方法三：状态机
+     * @param {*}
+     * @return {*}
+     * @notes: 关键：状态机穷举所有状态 + 使用所有选择 更新。
+     */
+    int maxProfit(vector<int>& prices){
+        int n = prices.size();
+        // dp 数组
+        int dp_i_0 = 0, dp_i_1=INT_MAX;
+        // base
+        // dp start
+        for(int i = 0; i<n ;i++){
+            if(i-1 == -1){
+                dp_i_0 = 0;
+                dp_i_1 = -prices[i];
+            }
+            dp_i_0 = max(dp_i_0, dp_i_1+prices[i]);
+            dp_i_1 = max(dp_i_1, -prices[i]);
+        }
+
+        // return
+        return dp_i_0;
     }
 };
