@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-11 17:18:41
+ * @LastEditTime        : 2021-03-11 17:33:25
  * @Version             : 1.0
  * @Description         : 目标和  区别回溯 以及 冬天规划
  * 494. 目标和
@@ -70,7 +70,7 @@ public:
     { // -nums 会出界！
 
         // 转换为 string 作为键值
-        string key = start+","+target;
+        string key =  to_string(start)+","+ to_string(target);
         if(memo.count(key) > 0){
             return memo[key];
         }
@@ -93,7 +93,7 @@ public:
         for (int i = 0; i < 2; i++)
         { // 正负两种选择
             int nowNum = pow((-1), i) * nums[start];
-            count += backtrack(nums, target - nowNum, start + 1);
+            count += backtrack(nums, target - nowNum, start + 1, memo);
         }
         memo[key] = count;
         return count;
