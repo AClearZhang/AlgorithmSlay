@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\C++\DynamicProgram\122.BuySellStockBestTimeII.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\DynamicProgram\122.BuySellStockBestTimeII.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-03-10 17:28:59
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-10 18:02:58
+ * @LastEditTime        : 2021-03-11 11:22:30
  * @Version             : 1.0
  * @Description         : k=init+ 无限次交易的最大收益
  * 122. 买卖股票的最佳时机 II
@@ -140,12 +140,13 @@ public:
      * @notes: 
      */
     int maxProfit(vector<int>& prices) {
-        int maxPro = 0;
-        for(int i = 1; i<prices.size(); i++){
-            if(prices[i]>prices[i-1]){
-                maxPro += (prices[i]-prices[i-1]);
-            }
+        // int maxPro = 0;
+        int dp_i_0=0, dp_i_1 = -prices[0];
+        for(int i = 0; i<prices.size(); i++){
+            int temp = dp_i_0;
+            dp_i_0 = max(dp_i_0, dp_i_1+prices[i]);  // 上个状态更新了，下面有用了！
+            dp_i_1 = max(dp_i_1, temp-prices[i]);
         }
-        return maxPro;
+        return dp_i_0;
     }
 };

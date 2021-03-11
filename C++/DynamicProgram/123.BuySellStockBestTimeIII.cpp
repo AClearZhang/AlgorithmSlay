@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\C++\DynamicProgram\123.BuySellStockBestTimeIII.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\DynamicProgram\123.BuySellStockBestTimeIII.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-03-10 18:02:33
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-10 19:36:25
+ * @LastEditTime        : 2021-03-11 12:09:37
  * @Version             : 1.0
  * @Description         : 买卖股票最佳时间 最大利润。III。 添加限制 只能交易两次。
  * 123. 买卖股票的最佳时机 III
@@ -46,70 +46,118 @@
 1 <= prices.length <= 105
 0 <= prices[i] <= 105
  */
-#include <iostream>
-#include <cmath>
-#include <windows.h>
 #include <algorithm>
+#include <cmath>
+#include <iostream>
 #include <string>
 #include <vector>
+#include <windows.h>
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    /**
+     /**
      * @Description: k=2  状态机
      * @param {*}
-     * @return {*}
+     * @return {*} 注意理解： 返回的一定是k=2状态，因为 每个状态机都代表——
+     *              当前状态下递推(递归似的)的既得收益！
      * @notes: 关键：状态机穷举所有状态 + 使用所有选择 更新。
      */
-    int maxProfit(vector<int>& prices){
-        int n = prices.size();
-        int max_k = 2;
-        // dp 数组
-        vector<vector<vector<int>>> dp(n, vector<vector<int>>(max_k+1, vector<int>(2,0)));
+     int maxProfit(vector<int> &prices)
+     {
+          int n = prices.size();
+          int max_k = 2;
+          // dp 数组
+          vector<vector<vector<int>>> dp(n, vector<vector<int>>(max_k + 1, vector<int>(2, 0)));
 
-        // base
-        // dp start
-        for(int i = 0; i<n ;i++){
-           for(int k=max_k;k>=1;k--){  // cuo wu
-                if(i-1 == -1) {
-                        dp[i][1][0] = 0;
-                        dp[i][1][1] = INT_MIN;
-                        dp[i][2][0] = 0;
-                        dp[i][2][1] = INT_MIN;
-                        continue; // cuo
-                }
-                dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]);
-                dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i]);
-           }
-        }
+          // base
+          // dp start
+          for (int i = 0; i < n; i++)
+          {
+               if (i - 1 == -1)
+               {
+                    dp[i][1][0] = 0;
+                    dp[i][1][1] = -prices[i];
+                    dp[i][2][0] = 0;
+                    dp[i][2][1] = -prices[i];
+                    continue; // cuo
+               }
+               for (int k = max_k; k >= 1; k--)
+               { // cuo wu
 
-        // return
-        return dp[n-1][max_k][0];
-    }
-    // int maxProfit(vector<int>& prices){
-    //     int n = prices.size();
-    //     // dp 数组
-    //     vector<vector<vector<int>>> dp(n, vector<vector<int>>(2, vector<int>(2,0)));
+                    dp[i][k][0] = max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i]);
+                    dp[i][k][1] = max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i]);
+               }
+          }
 
-    //     // base
-    //     // dp start
-    //     for(int i = 0; i<n ;i++){
-    //        if(i-1 == -1) {
-    //             dp[0][0][0] = 0;
-    //             dp[0][0][1] = INT_MIN;
-    //             dp[0][1][0] = 0;
-    //             dp[0][1][1] = INT_MIN;
-    //             // cuo
-    //        }
-    //        for(int k=0;k<2;k++){  // cuo wu
-    //         dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]);
-    //         dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i]);
-    //        }
-    //     }
+          // return
+          return dp[n - 1][max_k][0];
+     }
+     /**
+     * @Description: 方法二：状态机 压缩空间 —— 高效！！！
+     * @param {*}
+     * @return {*} 注意理解： 返回的一定是k=2状态，因为 每个状态机都代表——
+     *              当前状态下递推(递归似的)的既得收益！
+     * @notes: 关键：状态机穷举所有状态 + 使用所有选择 更新。
+     */
+     int maxProfit(vector<int> &prices)
+     {
+          int n = prices.size();
+          int max_k = 2;
 
-    //     // return
-    //     return dp[n-1][2][0];
-    // }
+          // base
+          // dp start
+          int dp_1_0 = 0, dp_1_1 = -prices[0], dp_2_0 = 0, dp_2_1 = -prices[0];
+          for (int i = 0; i < n; i++)
+          {
+               int temp1 = dp_1_0;
+               dp_1_0 = max(dp_1_0, dp_1_1+prices[i]);
+               dp_1_1 = max(dp_1_1, -prices[i]);
+               dp_2_0 = max(dp_2_0, dp_2_1+prices[i]);
+               dp_2_1 = max(dp_2_1, dp_1_0-prices[i]);
+               // if (i - 1 == -1)
+               // {
+               //      dp[i][1][0] = 0;
+               //      dp[i][1][1] = -prices[i];
+               //      dp[i][2][0] = 0;
+               //      dp[i][2][1] = -prices[i];
+               //      continue; // cuo
+               // }
+               // for (int k = max_k; k >= 1; k--)
+               // { // cuo wu
+
+               //      dp[i][k][0] = max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i]);
+               //      dp[i][k][1] = max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i]);
+               // }
+          }
+
+          // return
+          return dp_2_0;
+     }
+     // int maxProfit(vector<int>& prices){
+     //     int n = prices.size();
+     //     // dp 数组
+     //     vector<vector<vector<int>>> dp(n, vector<vector<int>>(2, vector<int>(2,0)));
+
+     //     // base
+     //     // dp start
+     //     for(int i = 0; i<n ;i++){
+     //        if(i-1 == -1) {
+     //             dp[0][0][0] = 0;
+     //             dp[0][0][1] = INT_MIN;
+     //             dp[0][1][0] = 0;
+     //             dp[0][1][1] = INT_MIN;
+     //             // cuo
+     //        }
+     //        for(int k=0;k<2;k++){  // cuo wu
+     //         dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]);
+     //         dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i]);
+     //        }
+     //     }
+
+     //     // return
+     //     return dp[n-1][2][0];
+     // }
 };
