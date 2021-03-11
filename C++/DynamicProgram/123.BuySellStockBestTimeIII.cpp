@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-11 12:09:37
+ * @LastEditTime        : 2021-03-11 12:29:31
  * @Version             : 1.0
  * @Description         : 买卖股票最佳时间 最大利润。III。 添加限制 只能交易两次。
  * 123. 买卖股票的最佳时机 III
@@ -59,42 +59,40 @@ class Solution
 {
 public:
      /**
-     * @Description: k=2  状态机
+     * @Description: k=2  状态机—— 优化成模板！
      * @param {*}
      * @return {*} 注意理解： 返回的一定是k=2状态，因为 每个状态机都代表——
      *              当前状态下递推(递归似的)的既得收益！
      * @notes: 关键：状态机穷举所有状态 + 使用所有选择 更新。
      */
      int maxProfit(vector<int> &prices)
-     {
-          int n = prices.size();
-          int max_k = 2;
-          // dp 数组
-          vector<vector<vector<int>>> dp(n, vector<vector<int>>(max_k + 1, vector<int>(2, 0)));
+    {
+        int n = prices.size();
+        int max_k = 2;
+        // dp 数组
+        vector<vector<vector<int>>> dp(n, vector<vector<int>>(max_k + 1, vector<int>(2, 0)));
 
-          // base
-          // dp start
-          for (int i = 0; i < n; i++)
-          {
-               if (i - 1 == -1)
-               {
-                    dp[i][1][0] = 0;
-                    dp[i][1][1] = -prices[i];
-                    dp[i][2][0] = 0;
-                    dp[i][2][1] = -prices[i];
+        // base
+        // dp start
+        for (int i = 0; i < n; i++)
+        {
+
+            for (int k = max_k; k >= 1; k--) // 正反都可以，因为 主要是下面状态压缩怕正反 修改数值。
+            {                                // cuo wu
+                if (i - 1 == -1)
+                {
+                    dp[i][k][0] = 0;
+                    dp[i][k][1] = -prices[i];
                     continue; // cuo
-               }
-               for (int k = max_k; k >= 1; k--)
-               { // cuo wu
+                }
+                dp[i][k][0] = max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i]);
+                dp[i][k][1] = max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i]);
+            }
+        }
 
-                    dp[i][k][0] = max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i]);
-                    dp[i][k][1] = max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i]);
-               }
-          }
-
-          // return
-          return dp[n - 1][max_k][0];
-     }
+        // return
+        return dp[n - 1][max_k][0];
+    }
      /**
      * @Description: 方法二：状态机 压缩空间 —— 高效！！！
      * @param {*}
@@ -116,7 +114,7 @@ public:
                dp_1_0 = max(dp_1_0, dp_1_1+prices[i]);
                dp_1_1 = max(dp_1_1, -prices[i]);
                dp_2_0 = max(dp_2_0, dp_2_1+prices[i]);
-               dp_2_1 = max(dp_2_1, dp_1_0-prices[i]);
+               dp_2_1 = max(dp_2_1, temp1-prices[i]);   // 主要是这里 k后到前 就不用temp1 新建了！
                // if (i - 1 == -1)
                // {
                //      dp[i][1][0] = 0;
