@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\DynamicProgram\494.TargetSum.cpp
+ * @FilePath            : \project\AlgorithmSlay\C++\DynamicProgram\494.TargetSum.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-03-11 16:31:26
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-11 17:33:25
+ * @LastEditTime        : 2021-03-12 12:06:41
  * @Version             : 1.0
  * @Description         : 目标和  区别回溯 以及 冬天规划
  * 494. 目标和
@@ -97,5 +97,82 @@ public:
         }
         memo[key] = count;
         return count;
+    }
+    /**
+     * @Description: 方法二: 动态规划——转为为——子集划分的01背包问题。
+     * @param {int} S
+     * @return {*}
+     * @notes: 
+     */
+    int findTargetSumWays(vector<int> &nums, int S)
+    {
+        int n = nums.size();
+        if (n == 0)
+            return 0;
+        
+        int sum = 0;
+        for(int num:nums){
+            sum+=num;
+        }
+        // 不合法的子集划分 排除掉。
+        if(sum < S || (sum+S) %2 == 1){
+            return 0;                     // 不合法
+        }
+
+        // 进入0-1 背包问题中
+        return subSets(nums, (S+sum)/2);
+
+    }
+    // helper —— 辅助函数
+    // 真正的 子集划分01背包问题。
+        // dp[i][j]  i从1开始。 前i个物品，载重为j 最多能有几种方法将背包恰好填满。
+    int subSets(vector<int>& nums, int target){
+        int n = nums.size();
+
+        vector<vector<int>> dp(n+1, vector<int>(target+1, 0));
+        // base
+        for(int i=0;i<n+1;i++){
+            dp[i][0] = 1;
+        }
+
+        // 遍历
+        for(int i = 1;i<n+1;i++){
+            for(int j = 0;j<target+1;j++){  // j=0 开始，因为 还有i=0的 重量/数字呢！
+                if(j >= nums[i-1]){// 放得下
+                    dp[i][j] = dp[i-1][j]+dp[i-1][j-nums[i-1]];
+                }else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][target];
+
+    }
+    /**
+     * @Description: 辅助函数 状态压缩。内存压缩。
+     * @param {int} target
+     * @return {*}
+     * @notes: 
+     */
+    int subSets(vector<int>& nums, int target){
+        int n = nums.size();
+
+        // 压缩到1维
+        vector<int> dp(target+1, 0);
+        // base
+        dp[0] = 1;
+
+        // 遍历
+        for(int i = 1;i<n+1;i++){
+            for(int j = target; j>=0;j--){  // 从后到前，防止覆盖上个状态。// j=0 开始，因为 还有i=0的 重量/数字呢！
+                if(j >= nums[i-1]){// 放得下
+                    dp[j] = dp[j]+dp[j-nums[i-1]];
+                }else{
+                    dp[j] = dp[j];
+                }
+            }
+        }
+        return dp[target];
+
     }
 };
