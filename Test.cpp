@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\Test.cpp
+ * @FilePath            : \project\AlgorithmSlay\Test.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-12-10 15:45:57
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-12-30 14:35:11
+ * @LastEditTime        : 2021-03-12 22:18:52
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -113,6 +113,9 @@ int main(){
     cout << "1.0/2 = " << 1.0/2 << endl;
     cout << "1.0/a = " << 1.0/a << endl;
 
+    for(char ch='1';ch<='9';ch++){
+        cout << "Now ch is:"<<ch<<endl;
+    }
     
 //     cout << endl << endl << "Now Test return array Numbers" << endl;
 //     //内部声明普通数组
