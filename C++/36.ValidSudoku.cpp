@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\C++\36.ValidSudoku.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\36.ValidSudoku.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-03-12 22:35:45
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-12 22:55:36
+ * @LastEditTime        : 2021-03-13 00:07:09
  * @Version             : 1.0
  * @Description         : 有效的 数独基础判断
  * 36. 有效的数独
@@ -101,10 +101,18 @@ public:
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (board[i][j] != '.') {
-                    int num = atoi(&board[i][j]);
-                    // if(row[i][num])
+                    int num = board[i][j]-'1';// gai cuowu atoi(&board[i][j])-1;
+                    if(!row[i][num] && !col[j][num] && !block[i/3+(i/3)*2+j/3][num]){  //block 不对
+                        // 不存在摆放。
+                        row[i][num]=true;
+                        col[j][num]=true;
+                        block[i/3+(i/3)*2+j/3][num]=true;
+                    }else{
+                        return false;
+                    }
                 }
             }
         }
+        return true;
     }
 };

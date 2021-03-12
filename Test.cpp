@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\Test.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\Test.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-12-10 15:45:57
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-12 22:35:13
+ * @LastEditTime        : 2021-03-12 23:49:27
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -122,7 +122,7 @@ int main()
 
     for (char ch = '1'; ch <= '9'; ch++)
     {
-        cout << "Now ch is:" << ch << endl;
+        cout << "Now ch is:" << atoi(&ch) << endl;
     }
 
     //     cout << endl << endl << "Now Test return array Numbers" << endl;
