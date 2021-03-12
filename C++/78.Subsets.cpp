@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-12 20:36:27
+ * @LastEditTime        : 2021-03-12 21:00:38
  * @Version             : 1.0
  * @Description         : 子集。
  * 78. 子集
@@ -49,19 +49,30 @@ public:
      * @notes: 返回当前nums 下的子集
      */
     vector<vector<int>> subsets(vector<int>& nums) {
-        if(nums.size() == 0) return {{}};
-        // 最后一个元素拿出来作为 插入依据
-        int back = nums.back();
-        nums.pop_back();
-
-        vector<vector<int>> res = subsets(nums);
-        for(int i = 0; i<res.size() ;i++){
-            // 插入最后一个值到每个数组中
-            res.push_back(res[i]);
-            res.back().push_back(back);
-        }
+        vector<vector<int>> res={{}};
+        for (int i = 0; i < nums.size(); i++) {
+            int len = res.size();
+            for (int j = 0; j < len; j++) {
+                res.push_back(res[j]);
+                res.back().push_back(nums[i]);
+            }
+        };
         return res;
     }
+    // vector<vector<int>> subsets(vector<int>& nums) {
+    //     if(nums.size() == 0) return {{}};
+    //     // 最后一个元素拿出来作为 插入依据
+    //     int back = nums.back();
+    //     nums.pop_back();
+
+    //     vector<vector<int>> res = subsets(nums);
+    //     for(int i = 0; i<res.size() ;i++){
+    //         // 插入最后一个值到每个数组中
+    //         res.push_back(res[i]);
+    //         res.back().push_back(back);
+    //     }
+    //     return res;
+    // }
     /**
      * @Description: 方法二：回溯法
      * @param {*}
