@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-15 00:25:43
+ * @LastEditTime        : 2021-03-15 00:30:33
  * @Version             : 1.0
  * @Description         : 子数组的和为k
  * 560. 和为K的子数组
@@ -78,10 +78,13 @@ public:
             int sum0_j = sum0_i - k;
             if(preSum.count(sum0_j)){
                 ans+=preSum[sum0_j];
-                preSum[sum0_j] ++;
-            }else{ // 不存在 则加入
-                preSum.insert(sum0_i, 1);
+                // preSum[sum0_j] ++;
             }
+            // else{ // 不存在 则加入
+            //     preSum.emplace(sum0_i, 1);
+            // }
+            // 在不在都需要加1
+            preSum[sum0_i]++;
         }
         return ans;
     }
