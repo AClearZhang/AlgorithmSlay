@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-17 20:44:38
+ * @LastEditTime        : 2021-03-17 22:28:57
  * @Version             : 1.0
  * @Description         : 航班预定统计
  * 1109. 航班预订统计
@@ -71,8 +71,9 @@ public:
         // 首先构造 diff； 然后区间增加； 最后还原为 answers
         vector<int> diff(n, 0); // 初试全部0
         vector<int> answer(n, 0);
+
         // 区间增加
-        for(int i = 0; i<n;i++){
+        for(int i = 0; i<bookings.size();i++){
             // 针对i 增加val；j+1  减少val
                 // note: j+1>= len() 则不处理。
             int i_incre = bookings[i][0];
@@ -84,6 +85,7 @@ public:
             }
             diff[j1_sub] -= bookings[i][2];
         }
+        
         // 还原为answers
         answer[0] = diff[0];
         for(int i = 1; i<n  ;i++){
