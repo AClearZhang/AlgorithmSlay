@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-18 15:07:29
+ * @LastEditTime        : 2021-03-18 15:14:30
  * @Version             : 1.0
  * @Description         : 用不同方式设置优先级
  * 241. 为运算表达式设计优先级
@@ -83,6 +83,53 @@ public:
             sstream >> temp;
             res.push_back(temp);
         }
+        return res;
+    }
+    /**
+     * @Description: 基于上述分治，新增备忘录  加快程序运算
+     * @param {string} expression
+     * @return {*}
+     * @notes: 【这样做】极大地减少了内存的消耗。
+     */
+    unordered_map<string, vector<int>> memo;
+    vector<int> diffWaysToCompute(string expression) {
+        // 先分开， 到底计算出有几个数据 返回得到的数组； 然后合并起来 
+        vector<int> res;
+        if(memo.count(expression) > 0) {
+            return memo[expression];
+        }
+        // 分而治之 —— 分开
+        for(int i = 0; i< expression.size() ;i++){
+            if(expression[i] == '+' || expression[i] == '-' || expression[i] == '*'){
+                // 遇到运算符号之时开始分开运算
+                vector<int> left = diffWaysToCompute(expression.substr(0, i));
+                vector<int> right = diffWaysToCompute(expression.substr(i+1, expression.size()-i-1));
+
+                //之后 进行merge
+                for(int le : left){
+                    for(int ri : right){
+                        if(expression[i] == '+'){
+                            res.push_back(le+ri);
+                        }else if(expression[i] == '-'){
+                            res.push_back(le - ri);
+                        }else if(expression[i] == '*'){
+                            res.push_back(le*ri);
+                        }
+                    }
+                }
+            }
+            // 结束此间递归的分治
+        }
+        // 返回得到的res
+            // 注意当当前存在 数字进行返回时要 —— 返回对应的数字
+        if(res.empty()){
+            stringstream sstream;
+            int temp;
+            sstream << expression;
+            sstream >> temp;
+            res.push_back(temp);
+        }
+        memo.emplace(expression, res);
         return res;
     }
 };
