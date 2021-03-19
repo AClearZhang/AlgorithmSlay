@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-19 22:58:16
+ * @LastEditTime        : 2021-03-19 23:07:09
  * @Version             : 1.0
  * @Description         : 接雨水
  * 42. 接雨水
@@ -70,6 +70,29 @@ public:
      * @notes: 首先计算出 l_max 和 r_max 就避免了平方的时间复杂度。
      */
     int trap(vector<int>& height){
-        
+        if(height.empty()) return 0;
+        int ans = 0;
+        int n = height.size();
+        vector<int> l_max(n, 0);    // 0--i 的最大值
+        vector<int> r_max(n, 0);    // i--n-1 的最大值
+        l_max[0] = height[0];
+        // 从左到右计算出 l_max
+        for(int i = 1; i<n ;i++){
+            l_max[i] = max(height[i], l_max[i-1]);
+        }
+        // 从右到左计算出 r_max
+        r_max[n-1] = height[n-1];
+        for(int i = n-2; i>=0 ;i--){
+            r_max[i] = max(height[i], r_max[i+1]);
+        }
+        // 计算当前位置的储水量。
+        for(int i = 1; i<(height.size()-1); i++){
+            int temp = (min(l_max[i], r_max[i]) - height[i]);
+            if( temp > 0){
+                ans += temp;
+            }
+            // cout << "now ans is:" << ans << endl;
+        }
+        return ans;
     }
 };
