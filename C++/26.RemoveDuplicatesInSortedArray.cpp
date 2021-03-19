@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-19 22:39:43
+ * @LastEditTime        : 2021-03-19 23:16:04
  * @Version             : 1.0
  * @Description         : 原地 删除 有序数组中的重复项。
  * 26. 删除有序数组中的重复项
@@ -62,7 +62,23 @@ using namespace std;
 
 class Solution {
 public:
+    /**
+     * @Description: 
+     * @param {*}
+     * @return {*} 返回不重复的个数
+     * @notes: 因为有序。  维持双指针有意义：slow之前的不重复，fast 直至末尾找
+     */
     int removeDuplicates(vector<int>& nums) {
-
+        int n = nums.size();
+        if( n == 0) return 0;
+        int slow = 0, fast = 1;
+        while(fast<=(n-1)){
+            if(nums[slow] != nums[fast]){
+                nums[slow+1] = nums[fast];
+                slow++;
+            }
+            fast++;
+        }
+        return slow+1;
     }
 };
