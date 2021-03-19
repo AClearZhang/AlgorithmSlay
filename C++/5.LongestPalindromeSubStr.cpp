@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-19 20:39:07
+ * @LastEditTime        : 2021-03-19 20:40:44
  * @Version             : 1.0
  * @Description         : 最长回文子串
  * 5. 最长回文子串
@@ -41,14 +41,14 @@ s 仅由数字和英文字母（大写和/或小写）组成
 #include <algorithm>
 #include <cmath>
 #include <iostream>
-#include <vector>
-#include <unordered_map>
 #include <sstream>
+#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
-
-class Solution {
+class Solution
+{
 public:
     /**
      * @Description:  关键是——回文寻找核心思想：从中间 向两边寻找回文字符串。   使用双指针。
@@ -56,26 +56,32 @@ public:
      * @return {*}
      * @notes: 
      */
-    string longestPalindrome(string s) {
-        if(s.size() == 1) return s;
+    string longestPalindrome(string s)
+    {
+        if (s.size() == 1)
+            return s;
         string res = "";
-        for(int i = 0; i<s.size() ;i++){
+        for (int i = 0; i < s.size(); i++)
+        {
             string jString = findPalindrome(s, i, i);
-            string oString = findPalindrome(s, i, i+1);
-            jString = jString.size() > oString.size() ?jString:oString;
-            if(jString.size() > res.size() ) {
+            string oString = findPalindrome(s, i, i + 1);
+            jString = jString.size() > oString.size() ? jString : oString;
+            if (jString.size() > res.size())
+            {
                 res = jString;
             }
         }
         return res;
     }
     // 辅助函数 返回当前从中到两边的，所得到的最长回文子串。
-        // l和r也不一定相等！注意！
-    string findPalindrome(string s, int l, int r){   
-        while( l>=0 && r <= s.size()-1 && s[l] == s[r]){
+    // l和r也不一定相等！注意！
+    string findPalindrome(string s, int l, int r)
+    {
+        while (l >= 0 && r <= s.size() - 1 && s[l] == s[r])
+        {
             l--;
             r++;
         }
-        return s.substr(l+1, r-l-1);
+        return s.substr(l + 1, r - l - 1);
     }
 };
