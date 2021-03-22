@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-20 17:28:51
+ * @LastEditTime        : 2021-03-22 10:55:52
  * @Version             : 1.0
  * @Description         : 考场就座  二叉平衡树
  * 855. 考场就座
@@ -43,10 +43,17 @@ seat() -> 5，学生最后坐在 5 号座位上。
 #include <sstream>
 #include <unordered_map>
 #include <vector>
+#include <set>
 
 using namespace std;
-
-class ExamRoom {
+/**
+ * @Description: 超出时间限制！！！  —— 改用新的数据结构！
+ * @param {*}
+ * @return {*}
+ * @notes: 
+ */
+class ExamRoom
+{
 public:
     /**
      * @Description: 初始化座位个数
@@ -54,11 +61,12 @@ public:
      * @return {*}
      * @notes: 就近且 与最近人距离最远的方式安排座位。
      */
-    vector<int> seatInt;  // 0表示没有人座。
+    vector<int> seatInt;          // 0表示没有人座。
     vector<pair<int, int>> space; // 表示线段中点以及 间隔大小；注意按照 value降序，key的升序进行。
-    ExamRoom(int N) {
-        vector<int> temp(N,0);
-        this->seatInt.insert(seatInt.begin(), temp.begin(), temp.begin()+N);
+    ExamRoom(int N)
+    {
+        vector<int> temp(N, 0);
+        this->seatInt.insert(seatInt.begin(), temp.begin(), temp.begin() + N);
     }
     /**
      * @Description: 分配座位
@@ -66,43 +74,25 @@ public:
      * @return {*}
      * @notes: 
      */
-    int seat() {
+    int seat()
+    {
         int n = seatInt.size();
-        // 当space为空 ; 只有1个或0个。
-        if(space.empty()){
-            int find = -1;
-            for(int i = 0;i < n;i++){
-                if(seatInt[i] == 1){
-                    find = i;
-                }
-            }
-            if( find == -1){
-                // 两种情况 空或者1个数值
-                seatInt[0] = 1;
-                return 0;
-            }else{
-                // 有一个数值，再插入一个新的。
-                int insertPos = ((n-1)-find) > (find-0) ? n-1 : 0;
-                
-                // 插入
-                int seatNext = ceil( abs(insertPos - find)/2) + findFirst;
-                pair<int, int> spaceTmp = make_pair(seatNext, (ceil((i - findFirst)/2) - 1)); // 间隔赋值.
-                tmpSapce.push_back(spaceTmp);
-                
 
-            seatInt[n-1] = 1;
-            return n-1;       
-            }
+        // 当space为空 ; 只有1个或0个。  
+        // 只需要考虑space空情况即可。全没有数
+        if (space.empty())
+        {
+            seatInt[0] = 1;
+            this->space = this->generateNewSpaceInternal();
+            return 0;
         }
-        
-        
+
         // 下面是需要加入 中间线段
-            // 使用间隔排序找到 当前需要落座位置。
-        pair<int,int> nowSpace = *space.begin();
+        // 使用间隔排序找到 当前需要落座位置。
+        pair<int, int> nowSpace = *space.begin();
         int nowSeat = nowSpace.first;
         seatInt[nowSeat] = 1;
 
-          
         this->space = this->generateNewSpaceInternal();
         return nowSeat;
     }
@@ -112,44 +102,119 @@ public:
      * @return {*}
      * @notes: 
      */
-    void leave(int p) {
+    void leave(int p)
+    {
         seatInt[p] = 0;
-        // 注意如果只剩下一个数了就不行了
-        if(space.size() <= 1){
-            this->space.clear();
-            return ;
-        }
+       
         this->space = generateNewSpaceInternal();
-        return ;
+        return;
     }
 
     // helper 生成新的间隔map
-    vector<pair<int, int>> generateNewSpaceInternal(){
+    vector<pair<int, int>> generateNewSpaceInternal()
+    {
         int n = this->seatInt.size();
-          // 设置新的间隔 并 排序
+        // 设置新的间隔 并 排序
         vector<pair<int, int>> tmpSapce;
         int findFirst = -1; // 未发现
-        for(int i = 0; i<n ; i++){
-            if(seatInt[i] == 0) continue;
-            if(findFirst == -1) {
+        for (int i = 0; i < n; i++)
+        {
+            // 边界处理 0 ， 9 不成线段但是也要放置考生
+            if (i == (n - 1) && seatInt[n - 1] == 0 && findFirst!=-1)
+            {
+                // n-1
+                tmpSapce.push_back(make_pair(n - 1, (n - 1 - findFirst - 1)));
+            }
+
+            if (seatInt[i] == 0)
+                continue;
+            if (findFirst == -1)
+            {
                 findFirst = i; // 找到第一个点
+
+                // 0
+                if (seatInt[0] == 0)
+                {
+                    tmpSapce.push_back(make_pair(0, (findFirst - 0 - 1)));
+                }
+
                 continue;
             }
+
             // 第一个和第二个点都找到了. 开始计算新的space 最终排序
-                // 计算间隔
-            int seatNext = ceil((i - findFirst)/2) + findFirst;
-            pair<int, int> spaceTmp = make_pair(seatNext, (ceil((i - findFirst)/2) - 1)); // 间隔赋值.
-            tmpSapce.push_back(spaceTmp);
+            // 计算间隔
+            int seatNext = ceil((i - findFirst) / 2) + findFirst;
+            pair<int, int> spaceTmp = make_pair(seatNext, (ceil((i - findFirst) / 2) - 1)); // 间隔赋值.
+            if (spaceTmp.second != -1)
+            {
+                tmpSapce.push_back(spaceTmp);
+            }
 
             findFirst = i; // 更新方便下一个间隔进行计算
         }
+
         // 排序tmpSpace
-        sort(tmpSapce.begin(), tmpSapce.end() ,cmp);
+        sort(tmpSapce.begin(), tmpSapce.end(), cmp);
         return tmpSapce;
     }
     // 排序新的 space map的方法。
-    static bool cmp(const pair<int, int>& a, const pair<int,int>& b){
-        return (a.second>b.second) || (a.second==b.second && a.first < b.first);
+    static bool cmp(const pair<int, int> &a, const pair<int, int> &b)
+    {
+        return (a.second > b.second) || (a.second == b.second && a.first < b.first);
+    }
+};
+/**
+ * @Description: 还原代码模板 使用 map+set 完结！
+ * @param {*}
+ * @return {*}
+ * @notes: 关键思路：使用seat存储已有的作为；leave擦除 seat(p) , seat则遍历 set找d==距离大 次序小。 i+d 为座次。  
+ *              加之——额外考虑 0和N-1 加入的情况。
+ */
+class ExamRoom {
+public:
+    int n;
+    set<int> s;
+    ExamRoom(int N) {
+        n = N;
+    }
+    
+    int seat() {
+        if(s.empty()) {
+            s.insert(0);
+            return 0;
+        }
+        int space = 0, insertPos = -1;
+        int findFirst = -1;
+        for(int a:s){
+            if(findFirst == -1){
+                findFirst = a;
+                // 0
+                if( s.count(0) == 0 ){
+                    space = a - 0;
+                    insertPos = 0;
+                }
+                continue;
+            }
+            
+            if( ceil((a - findFirst)/2) > space ){
+                space = ceil((a - findFirst)/2);
+                insertPos = findFirst + space;
+            }
+            findFirst = a;
+        }
+        // n-1
+        if(s.count(n-1) == 0){
+            if( n-1-findFirst > space ){
+                space = n-1-findFirst;
+                insertPos = n-1;
+            }
+        }
+        s.insert(insertPos);
+        return insertPos;
+    }
+    
+    void leave(int p) {
+        s.erase(p);
     }
 };
 
@@ -159,4 +224,3 @@ public:
  * int param_1 = obj->seat();
  * obj->leave(p);
  */
-
