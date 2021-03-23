@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-12 23:49:27
+ * @LastEditTime        : 2021-03-23 22:29:44
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -16,6 +16,7 @@
 #include <string>
 #include <vector>
 #include <windows.h>
+#include <map>
 
 using namespace std;
 
@@ -125,6 +126,17 @@ int main()
         cout << "Now ch is:" << atoi(&ch) << endl;
     }
 
+    cout << "测试使用 multimap:" << endl;
+    multimap<int, int> m;
+    m.insert(make_pair(1, 3));
+    m.insert(make_pair(1, 2));
+    m.insert(make_pair(1, 4));
+    multimap<int, int>::iterator it;
+    for (it = m.begin(); it != m.end(); it++)
+    {
+        cout << it->first << "--->";
+        cout << it->second << endl;
+    }
     //     cout << endl << endl << "Now Test return array Numbers" << endl;
     //     //内部声明普通数组
     //     cout<<"方法1：内部声明静态数组"<<endl;

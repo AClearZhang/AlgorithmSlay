@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-22 10:55:52
+ * @LastEditTime        : 2021-03-22 15:02:47
  * @Version             : 1.0
  * @Description         : 考场就座  二叉平衡树
  * 855. 考场就座
