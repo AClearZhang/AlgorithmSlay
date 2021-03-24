@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-24 22:55:22
+ * @LastEditTime        : 2021-03-24 22:55:39
  * @Version             : 1.0
  * @Description         : LFU 缓存算法
  * 460. LFU 缓存
@@ -186,3 +186,85 @@ private:
     list<Node> _list; // 维持一个从尾到头 有序的双向链表
     int _n;  // 总的承受量
 };
+
+/**
+ * @Description: 方法二： 双哈希表，一个key_table 用来存放key和对应的node迭代器；另一个 fre_table 用来存放fre键和 对应的真实 双向链表list。
+ *              所以有了方法二，主要瓶颈在于  fre大小的查找，所以通过 使用另一个HashMap来存放  多个双向链表（每个fre下有一个链接）。O(1)即可找到。
+ * @param {*}
+ * @return {*}
+ * @notes: 
+ */
+// 缓存的节点信息
+struct Node {
+    int key, val, freq;
+    Node(int _key,int _val,int _freq): key(_key), val(_val), freq(_freq){}
+};
+class LFUCache {
+    int minfreq, capacity;
+    unordered_map<int, list<Node>::iterator> key_table;
+    unordered_map<int, list<Node>> freq_table;
+public:
+    LFUCache(int _capacity) {
+        minfreq = 0;
+        capacity = _capacity;
+        key_table.clear();
+        freq_table.clear();
+    }
+    
+    int get(int key) {
+        if (capacity == 0) return -1;
+        auto it = key_table.find(key);
+        if (it == key_table.end()) return -1;
+
+        // 存在
+        list<Node>::iterator node = it -> second;
+        int val = node -> val, freq = node -> freq;
+        freq_table[freq].erase(node);
+        // 如果当前链表为空，我们需要在哈希表中删除，且更新minFreq
+        if (freq_table[freq].size() == 0) {
+            freq_table.erase(freq);
+            if (minfreq == freq) minfreq += 1;
+        }
+        // 插入到 freq + 1 中
+        freq_table[freq + 1].push_front(Node(key, val, freq + 1));
+        key_table[key] = freq_table[freq + 1].begin();  // 注意这里！
+        return val;
+    }
+    
+    void put(int key, int value) {
+        if (capacity == 0) return;
+        auto it = key_table.find(key);
+        if (it == key_table.end()) { // 不存在这个key
+            // 缓存已满，需要进行删除操作
+            if (key_table.size() == capacity) {
+                // 通过 minFreq 拿到 freq_table[minFreq] 链表的末尾节点
+                auto it2 = freq_table[minfreq].back();
+                key_table.erase(it2.key);  // 删除1
+                freq_table[minfreq].pop_back();  // 删除2
+                if (freq_table[minfreq].size() == 0) {  // 删除3
+                    freq_table.erase(minfreq);
+                }
+            } 
+            freq_table[1].push_front(Node(key, value, 1));
+            key_table[key] = freq_table[1].begin();
+            minfreq = 1;
+        } else { //存在这个key
+            // 与 get 操作基本一致，除了需要更新缓存的值
+            list<Node>::iterator node = it -> second;
+            int freq = node -> freq;
+            freq_table[freq].erase(node);       // 破坏了当前iterator，下面 新建了。
+            if (freq_table[freq].size() == 0) {
+                freq_table.erase(freq);
+                if (minfreq == freq) minfreq += 1;
+            }
+            freq_table[freq + 1].push_front(Node(key, value, freq + 1));
+            key_table[key] = freq_table[freq + 1].begin();
+        }
+    }
+};
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache* obj = new LFUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
