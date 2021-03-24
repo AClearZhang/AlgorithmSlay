@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-24 22:55:39
+ * @LastEditTime        : 2021-03-24 23:04:03
  * @Version             : 1.0
  * @Description         : LFU 缓存算法
  * 460. LFU 缓存
@@ -195,11 +195,13 @@ private:
  * @notes: 
  */
 // 缓存的节点信息
-struct Node {
-    int key, val, freq;
-    Node(int _key,int _val,int _freq): key(_key), val(_val), freq(_freq){}
-};
+
 class LFUCache {
+private:
+    struct Node {
+        int key, val, freq;
+        Node(int _key,int _val,int _freq): key(_key), val(_val), freq(_freq){}
+    };
     int minfreq, capacity;
     unordered_map<int, list<Node>::iterator> key_table;
     unordered_map<int, list<Node>> freq_table;
