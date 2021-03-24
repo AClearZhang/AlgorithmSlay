@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-24 20:30:09
+ * @LastEditTime        : 2021-03-24 22:55:22
  * @Version             : 1.0
  * @Description         : LFU 缓存算法
  * 460. LFU 缓存
@@ -65,25 +65,124 @@ lFUCache.get(4);      // 返回 4
 
 using namespace std;
 
-
+/**
+ * @Description: 
+ * @param {*}
+ * @return {*}
+ * @notes: 头出尾入 ； 但是还是要看  当前fre和新旧。关键：新旧通过 get() put() 进行比较选择排序。比较慢。
+ *          所以有了方法二，主要瓶颈在于  fre大小的查找，所以通过 使用另一个HashMap来存放  多个双向链表（每个fre下有一个链接）。O(1)即可找到。
+ */
 class LFUCache {
 public:
     LFUCache(int capacity) {
-
+        _n = capacity;
     }
     
     int get(int key) {
+        auto it = _mapHash.find(key);
+        if(it != _mapHash.end()){
+            // 得到val，并添加1个fre  寻找插入位置。
+            int ans = it->second->value;  // 相当于指针 已经指向了具体的位置 pair
+            it->second->fre++;
 
+            // 开始更换位置
+            list<Node>::iterator it_node = it->second;
+            auto it_next_node = next(it_node, 1);
+            while(it_next_node != _list.end() && *it_node >= *it_next_node){
+                // 频率大的时候
+                it_next_node++;
+            }
+                // 当前频率下  插入到next前面
+            _list.splice(it_next_node, _list, it_node); 
+            // 结束更换位置
+            return ans;
+        }else{ // 不存在
+            return -1;
+        }
     }
     
     void put(int key, int value) {
+        auto it = _mapHash.find(key);
+        if(it != _mapHash.end()) { // 存在则变更数值，fre++ 更换位置
+            it->second->value = value;
+            it->second->fre++;
 
+            // 开始更换位置
+            list<Node>::iterator it_node = it->second;
+            auto it_next_node = next(it_node, 1);
+            while(it_next_node != _list.end() && *it_node >= *it_next_node){
+                // 频率大的时候
+                it_next_node++;
+            }
+                // 当前频率下  插入到next前面
+            _list.splice(it_next_node, _list, it_node); 
+            // 结束更换位置
+            return ;
+        }
+        
+        // 不存在，两种情况 未超出和超出
+        if(_list.size() < _n){ // 未超出
+            // 直接插入到头部或再往前！因为自己为新的
+            Node *tmp_node = new Node(key, value, 1);  // 新的 所以>=
+
+            // 开始更换位置
+            list<Node>::iterator it_next_node = _list.begin();
+            while(it_next_node != _list.end() && *tmp_node >= *it_next_node){
+                // 频率大的时候
+                it_next_node++;
+            }
+                // 当前频率下  插入到next前面
+            auto it_now = _list.insert(it_next_node, *tmp_node); 
+            // 结束更换位置
+
+            // map新增
+            _mapHash.emplace(key, it_now);
+            return ;
+        }else{ // 超出
+        
+            // 0 超出,不存在可以插入的
+            if(this->_n == 0)
+                return ;
+                
+            // 删除list的头部fre低、不新的； 接着erase map中的key
+            _mapHash.erase(_list.front().key);
+            _list.pop_front();
+
+
+            // 直接插入到头部或再往前！因为自己为新的
+            Node *tmp_node = new Node(key, value, 1);  // 新的 所以>=
+
+            // 开始更换位置
+            list<Node>::iterator it_next_node = _list.begin();
+            while(it_next_node != _list.end() && *tmp_node >= *it_next_node){
+                // 频率大的时候
+                it_next_node++;
+            }
+                // 当前频率下  插入到next前面
+            auto it_now = _list.insert(it_next_node, *tmp_node); 
+            // 结束更换位置
+
+            // map新增
+            _mapHash.emplace(key, it_now);
+            return ;
+        }
     }
-};
 
-/**
- * Your LFUCache object will be instantiated and called as such:
- * LFUCache* obj = new LFUCache(capacity);
- * int param_1 = obj->get(key);
- * obj->put(key,value);
- */
+private:
+    struct Node{
+        int key, value, fre;
+        Node(int _key, int _value, int _fre) : key(_key), value(_value), fre(_fre) {
+
+        }  // 自动构造函数
+
+        bool operator>(const Node& bnt){
+            return this->fre > bnt.fre;
+        }
+        bool operator>=(const Node& bnt){
+            return this->fre >= bnt.fre;
+        }
+    };
+    unordered_map<int, list<Node>::iterator> _mapHash;  // 存储list的地址，方便进行移动
+    list<Node> _list; // 维持一个从尾到头 有序的双向链表
+    int _n;  // 总的承受量
+};
