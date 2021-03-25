@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\855.ExamRoom.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\DS\855.ExamRoom.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-03-20 15:11:58
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-22 15:02:47
+ * @LastEditTime        : 2021-03-25 10:10:12
  * @Version             : 1.0
  * @Description         : 考场就座  二叉平衡树
  * 855. 考场就座
@@ -143,8 +143,8 @@ public:
 
             // 第一个和第二个点都找到了. 开始计算新的space 最终排序
             // 计算间隔
-            int seatNext = ceil((i - findFirst) / 2) + findFirst;
-            pair<int, int> spaceTmp = make_pair(seatNext, (ceil((i - findFirst) / 2) - 1)); // 间隔赋值.
+            int seatNext = floor((i - findFirst) / 2) + findFirst;
+            pair<int, int> spaceTmp = make_pair(seatNext, (floor((i - findFirst) / 2) - 1)); // 间隔赋值.
             if (spaceTmp.second != -1)
             {
                 tmpSapce.push_back(spaceTmp);
@@ -196,8 +196,8 @@ public:
                 continue;
             }
             
-            if( ceil((a - findFirst)/2) > space ){
-                space = ceil((a - findFirst)/2);
+            if( floor((a - findFirst)/2) > space ){
+                space = floor((a - findFirst)/2);
                 insertPos = findFirst + space;
             }
             findFirst = a;

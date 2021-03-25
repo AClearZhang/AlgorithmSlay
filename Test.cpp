@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-23 22:29:44
+ * @LastEditTime        : 2021-03-25 10:06:43
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -120,6 +120,10 @@ int main()
     // printf("a/b:%.1f\n", a / b);
     cout << "1.0/2 = " << 1.0 / 2 << endl;
     cout << "1.0/a = " << 1.0 / a << endl;
+    cout << "4/3 = " << 4/3 << endl;
+    cout << "float(4)/3 = " << float(4)/3 << endl;
+    cout << "ceil(float(4)/3) = " << ceil(float(4)/3) << endl;
+    cout << "floor(float(4)/3) = " << floor(float(4)/3) << endl;
 
     for (char ch = '1'; ch <= '9'; ch++)
     {
