@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-25 10:51:57
+ * @LastEditTime        : 2021-03-25 11:13:53
  * @Version             : 1.0
  * @Description         : 下一个更大的的元素II
  * 503. 下一个更大元素 II
@@ -27,12 +27,29 @@
 #include <unordered_map>
 #include <vector>
 #include <set>
+#include <stack>
 
 using namespace std;
 
 class Solution {
 public:
+    /**
+     * @Description: 循环 基于496题目，进行 2倍数组扩展的% 取余模拟计算。下一个更大值。
+     * @param {*}
+     * @return {*}
+     * @notes:  使用单调栈。
+     */
     vector<int> nextGreaterElements(vector<int>& nums) {
-        
+        int n = nums.size();
+        vector<int> ans(n, -1);    // 注意 vector是固定长度的，需要预先分配好地址！
+        stack<int> s;
+        for(int i = 2*n-1; i>=0 ;i--){
+            while(!s.empty() && s.top()<=nums[i%n]){  // 将比当前值小或等于的统统 删掉。
+                s.pop();
+            }
+            ans[i%n] = s.empty() ? -1 : s.top();
+            s.push(nums[i%n]);
+        }
+        return ans;
     }
 };

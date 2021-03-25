@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-25 10:51:13
+ * @LastEditTime        : 2021-03-25 11:05:49
  * @Version             : 1.0
  * @Description         : 下一个更大的元素I
  * 496. 下一个更大元素 I
@@ -40,12 +40,36 @@ nums1 中数字 x 的下一个更大元素是指 x 在 nums2 中对应位置的�
 #include <unordered_map>
 #include <vector>
 #include <set>
+#include <stack>
 
 using namespace std;
 
 class Solution {
 public:
+    /**
+     * @Description: 把握好单调栈 核心——每次都push但是 每次都将比自己小的pop 出去。
+     * @param {*}
+     * @return {*}
+     * @notes: 【用于解决 下一个更大的元素问题】
+     */
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
-        
+
+        unordered_map<int, int> ans; // 一个放置 nums[i], 另一个防止ans  下一个更大的数
+        stack<int> s; // 存储单调栈 一个比一个大。// 从后往前 一个个大
+        int n2 = nums2.size(), n1 = nums1.size();
+        for(int i = n2-1; i>=0 ;i--){
+            while(!s.empty() && s.top()<=nums2[i]){  // 将比当前值小或等于的统统 删掉。
+                s.pop();
+            }
+            ans[nums2[i]] = s.empty() ? -1 : s.top() ;
+            s.push(nums2[i]);
+        }
+
+        // nums1 中寻找并返回
+        vector<int> ans1(n1, -1);
+        for(int i = 0;i<n1;i++){
+            ans1[i] = ans[nums1[i]];
+        }
+        return ans1;
     }
 };
