@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-26 23:21:49
+ * @LastEditTime        : 2021-03-27 09:04:29
  * @Version             : 1.0
  * @Description         : 等式方程的可满足性
  *990. 等式方程的可满足性
@@ -63,7 +63,7 @@ class UnionFind
 public:
     UnionFind(int n)
     {
-        this->n = n;
+        this->cnt = n;
 
         // 动态数组内存分配
         this->parent = new int[n];
@@ -96,7 +96,7 @@ public:
     /* 返回图中有多少个连通分量 */
     int count()
     {
-        return this->n;
+        return this->cnt;
     }
     // 发现 父节点， 返回父节点
     int find(int x)
@@ -128,11 +128,11 @@ public:
             parent[rootP] = rootQ;
             size[rootQ] += size[rootP]; //cuo
         }
-        n--; // cuo
+        this->cnt--; // cuo
     }
 
 private:
-    int n;       // 连通分量
+    int cnt;       // 连通分量
     int *parent; // 节点父节点索引 —— 方便并查集合并与使用
     int *size;   // 每个节点的重量是多少，方便 减少查找次数
 };
