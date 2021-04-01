@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-25 10:06:43
+ * @LastEditTime        : 2021-04-01 14:24:54
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -110,6 +110,7 @@ int main()
      * @return {*}
      * @notes: 
      */
+    cout << "*********小数转换*********" << endl;
     int a = 4;
     int b = 3;
     float c = a / b;
@@ -125,11 +126,23 @@ int main()
     cout << "ceil(float(4)/3) = " << ceil(float(4)/3) << endl;
     cout << "floor(float(4)/3) = " << floor(float(4)/3) << endl;
 
+    cout << "*********str测试*********" << endl;
     for (char ch = '1'; ch <= '9'; ch++)
     {
         cout << "Now ch is:" << atoi(&ch) << endl;
+        cout << "Now ch is:" << int(ch) << endl;
+        cout << "Now ch is:" << ch-'0' << endl;
+        cout << "Now ch is:" << int(ch-'0') << endl;
+    }
+    for (char ch = 'a'; ch <= 'j'; ch++)
+    {
+        cout << "Now ch is:" << atoi(&ch) << endl;
+        cout << "Now ch is:" << int(ch) << endl;
+        cout << "Now ch is:" << int(ch-'a'+1) << endl;
     }
 
+
+    cout << "*********多映射map*********" << endl;
     cout << "测试使用 multimap:" << endl;
     multimap<int, int> m;
     m.insert(make_pair(1, 3));
