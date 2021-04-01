@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \AlgorithmSlay\C++\1.TwoSum.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\1.TwoSum.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-11-22 22:57:29
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-11-23 20:23:57
+ * @LastEditTime        : 2021-04-01 09:54:03
  * @Version             : 1.0
  * @Description         : 两数之和  C++
  * 
@@ -31,6 +31,8 @@
 #include <map>
 #include <vector>
 #include <windows.h>
+#include <unordered_map>
+#include <algorithm>
 
 using namespace std;
 
@@ -54,6 +56,42 @@ public:
         return {i, j};
     };
 };
+
+
+class Solution11
+{
+public:
+    /**
+     * @Description: 双指针去做——①主要是去重，不要出现太多重复。②先排序再做。
+     * @param {vector<int>} &nums
+     * @param {int} target
+     * @return {*}
+     * @notes:   【关键】 返回的不是下标而是 具体的加和数值；所以可以用在 NSum 问题中去。
+     */
+    // vector<vector<int>> twoSum(vector<int> &nums, int target)
+    // {
+    //     vector<vector<int>> res;
+    //     if(nums.size() < 2) return res;
+
+    //     sort(nums.begin(), nums.end());   // 本题要的下标 所以不能这个排序！还是用 map去映射吧！
+    //     int lo=0, hi=nums.size()-1;
+    //     while(lo<hi){
+    //         int sum = nums[lo]+nums[hi];
+    //         int left=nums[lo], right=nums[hi];
+    //         if(sum > target) {
+    //             while(lo<hi && nums[hi]==right) hi--;
+    //         }else if(sum < target){
+    //             while(lo<hi && nums[lo]==left) lo++;
+    //         }else if(sum == target){
+    //             res.push_back({left, right});
+    //             while(lo < hi && nums[hi]==right) hi--;
+    //             while(lo < hi && nums[lo]==left) lo++;
+    //         }
+    //     }
+    //     return res;
+    // };
+};
+
 //方法二： 两边哈希表
 // value存放索引，key 存放实际数值.
 class Solution2

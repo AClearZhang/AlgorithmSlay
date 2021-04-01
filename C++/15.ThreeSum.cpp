@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\C++\15ThreeSum.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\15.ThreeSum.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-11-24 23:17:05
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2020-11-24 23:17:19
+ * @LastEditTime        : 2021-04-01 10:02:36
  * @Version             : 1.0
  * @Description         : 
  */
@@ -101,6 +101,51 @@ public:
 
 
 //方法二： 3Sum--变2Sum  两层去 count()  
+// 方法一： 去重，双指针大法
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+      vector<vector<int>> ans;
+      int lo = 0, hi = nums.size()-1;
+      if(hi<2) return ans;
+      sort(nums.begin(), nums.end());
+      for(int i=0; i<hi-1 ;){
+        int now = nums[i];
+        int target = 0-nums[i];
+        vector<vector<int>> ansTwo = this->twoSum(nums, i+1, target);
+        for(vector<int> a:ansTwo){
+            a.push_back(nums[i]);
+            ans.push_back(a);
+        }
+        // 避免重复添加
+        while(i<hi-1 && nums[i] == now) i++;
+      }
+      return ans;
+    }
+    vector<vector<int>> twoSum(vector<int> &nums, int start, int target)
+    {
+        vector<vector<int>> res;
+        // if(nums.size() < 2) return res;
+
+        // sort(nums.begin(), nums.end());   // 本题要的下标 所以不能这个排序！还是用 map去映射吧！
+        int lo=start, hi=nums.size()-1;
+        while(lo<hi){
+            int sum = nums[lo]+nums[hi];
+            int left=nums[lo], right=nums[hi];
+            if(sum > target) {
+                while(lo<hi && nums[hi]==right) hi--;
+            }else if(sum < target){
+                while(lo<hi && nums[lo]==left) lo++;
+            }else if(sum == target){
+                res.push_back({left, right});
+                while(lo < hi && nums[hi]==right) hi--;
+                while(lo < hi && nums[lo]==left) lo++;
+            }
+        }
+        return res;
+    };
+};
+
 
 
 int main(){
