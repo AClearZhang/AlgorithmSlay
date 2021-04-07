@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-01 14:24:54
+ * @LastEditTime        : 2021-04-07 09:46:02
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -13,10 +13,10 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 #include <windows.h>
-#include <map>
 
 using namespace std;
 
@@ -121,26 +121,25 @@ int main()
     // printf("a/b:%.1f\n", a / b);
     cout << "1.0/2 = " << 1.0 / 2 << endl;
     cout << "1.0/a = " << 1.0 / a << endl;
-    cout << "4/3 = " << 4/3 << endl;
-    cout << "float(4)/3 = " << float(4)/3 << endl;
-    cout << "ceil(float(4)/3) = " << ceil(float(4)/3) << endl;
-    cout << "floor(float(4)/3) = " << floor(float(4)/3) << endl;
+    cout << "4/3 = " << 4 / 3 << endl;
+    cout << "float(4)/3 = " << float(4) / 3 << endl;
+    cout << "ceil(float(4)/3) = " << ceil(float(4) / 3) << endl;
+    cout << "floor(float(4)/3) = " << floor(float(4) / 3) << endl;
 
     cout << "*********str测试*********" << endl;
     for (char ch = '1'; ch <= '9'; ch++)
     {
         cout << "Now ch is:" << atoi(&ch) << endl;
         cout << "Now ch is:" << int(ch) << endl;
-        cout << "Now ch is:" << ch-'0' << endl;
-        cout << "Now ch is:" << int(ch-'0') << endl;
+        cout << "Now ch is:" << ch - '0' << endl;
+        cout << "Now ch is:" << int(ch - '0') << endl;
     }
     for (char ch = 'a'; ch <= 'j'; ch++)
     {
         cout << "Now ch is:" << atoi(&ch) << endl;
         cout << "Now ch is:" << int(ch) << endl;
-        cout << "Now ch is:" << int(ch-'a'+1) << endl;
+        cout << "Now ch is:" << int(ch - 'a' + 1) << endl;
     }
-
 
     cout << "*********多映射map*********" << endl;
     cout << "测试使用 multimap:" << endl;
@@ -154,6 +153,22 @@ int main()
         cout << it->first << "--->";
         cout << it->second << endl;
     }
+    
+
+    cout << "******测试迭代器的大小******" << endl;
+    int myints[] = {3, 7, 2, 5, 6, 4, 9};
+
+    // using default comparison:
+    std::cout << "The smallest element is " << min_element(myints, myints + 7) << '\n';  //对应的十六进制的存储地址
+    std::cout << "The largest element is " << max_element(myints, myints + 7) << '\n';
+    cout << "对应迭代器转换为数字：" << endl;
+    int point_min = min_element(myints, myints+7)-myints;
+    int point_max = max_element(myints, myints+7)-myints;
+    std::cout << "The smallest element is " << point_min << '\n';  //2
+    std::cout << "The largest element is " << point_max << '\n';   //6
+
+
+
     //     cout << endl << endl << "Now Test return array Numbers" << endl;
     //     //内部声明普通数组
     //     cout<<"方法1：内部声明静态数组"<<endl;
