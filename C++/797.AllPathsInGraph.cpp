@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-14 21:06:51
+ * @LastEditTime        : 2021-04-14 21:15:42
  * @Version             : 1.0
  * @Description         : 图中所有可能的路径
  * 797. 所有可能的路径
@@ -95,5 +95,49 @@ public:
                 tmp.pop_back();
             }
         }
+    }
+};
+
+/**
+ * @Description: 注意 不用visited了，因为可以重复访问 —— 就是一个回溯！
+ * @param {*}
+ * @return {*}
+ * @notes: 
+ */
+class Solution {
+public:
+    /**
+     * @Description: 使用深度优先搜索  查找所能到达的节点。
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        vector<vector<int>> res;
+        vector<int> tmp;
+        dfs(graph, res, tmp, 0);
+        return res;
+    }
+
+    void dfs(vector<vector<int>>& graph, vector<vector<int>>& res, vector<int> &tmp, int s){
+        // visited[s] = true;
+        tmp.push_back(s);
+        if( s== (graph.size()-1)){
+            res.push_back(tmp);
+            // visited[s] = false;// 离开当前节点
+            tmp.pop_back();
+            return ;            
+        }
+
+        // neighbors visited
+        for(int vertex: graph[s]){
+            dfs(graph, res, tmp, vertex);
+                // visited[vertex] = false;// 返回
+                // tmp.pop_back();
+            
+        }
+
+        // visited[s] = false;// 离开当前节点
+        tmp.pop_back();
     }
 };
