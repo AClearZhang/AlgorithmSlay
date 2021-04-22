@@ -1,24 +1,35 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\Test.cpp
+ * @FilePath            : \Algorithm&Interview\AlgorithmSlay\Test.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-12-10 15:45:57
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-18 09:51:44
+ * @LastEditTime        : 2021-04-22 17:02:59
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
 
 #include <algorithm>
 #include <cmath>
+#include <deque>
 #include <iostream>
+#include <list>
+#include <queue>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <unordered_map>
 #include <map>
-#include <string>
 #include <vector>
-#include <windows.h>
 
 using namespace std;
+
+
+
+#define For(x,y,z) for(ll x = y; x < z;++x)
+typedef long long ll;
+
 
 //C++返回多个值
 //有四种方法
@@ -165,8 +176,11 @@ int main()
     std::cout << "The smallest element is " << point_min << '\n';  //2
     std::cout << "The largest element is " << point_max << '\n';   //6
 
-
-
+    cout << "测试 atoi转变string为 int" << endl;
+    string str= "11";
+    int a1 = atoi(str.data());
+    cout << "now atoi(str.data()) is : "<< a1 << endl;
+    cout << str[0]-'0' << endl;
     //     cout << endl << endl << "Now Test return array Numbers" << endl;
     //     //内部声明普通数组
     //     cout<<"方法1：内部声明静态数组"<<endl;
