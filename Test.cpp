@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-22 17:02:59
+ * @LastEditTime        : 2021-04-23 16:08:51
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -181,6 +181,24 @@ int main()
     int a1 = atoi(str.data());
     cout << "now atoi(str.data()) is : "<< a1 << endl;
     cout << str[0]-'0' << endl;
+
+    cout << "测试 指针-------形参和实参-------" << endl;
+    int *i = new int(0);
+    cout << "调用前，i的地址：" << i << endl;
+    int a2 = 9;
+    i = &a2;
+    cout << "调用后，i的地址：" << i << endl;
+    cout << "调用后，i指向的值：" << *i << endl;
+    int b1 = 8;
+    *i = b1;
+    cout << "调用后2，i的地址：" << i << endl;
+    cout << "调用后2，i指向的值：" << *i << endl;
+    cout << "调用后2，b的地址：" << &b1 << endl;
+    cout << "调用后2，a的地址：" << &a2 << endl;
+    cout << "调用后2，a的数值：" << a2 << endl;
+    cout << "前面：`i的地址` 指的i存放的地址" << endl;
+    cout << "调用后2，i本身的地址：" << &i << endl;
+    
     //     cout << endl << endl << "Now Test return array Numbers" << endl;
     //     //内部声明普通数组
     //     cout<<"方法1：内部声明静态数组"<<endl;
