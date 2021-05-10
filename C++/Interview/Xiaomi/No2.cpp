@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-29 22:37:02
+ * @LastEditTime        : 2021-05-10 10:39:49
  * @Version             : 1.0
  * @Description         : 
  */
@@ -89,7 +89,7 @@ int main(){
     unordered_map<char, int>   mapBad;
     string badKeyboard;
     string inputs;
-    cin >> badKeyboard;
+    cin >> badKeyboard; 
     cin >> inputs;
     For(i, 0, badKeyboard.size()){
         mapBad[badKeyboard[i]]++;
