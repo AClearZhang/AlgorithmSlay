@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-05-14 19:15:59
+ * @LastEditTime        : 2021-05-14 19:17:22
  * @Version             : 1.0
  * @Description         : 最大数
  * 179. 最大数
@@ -92,20 +92,7 @@ public:
 int main()
 {
 
-    // Solution so;
-    vector<int> a{3, 30, 34, 5, 9};
-    // so.largestNumber(a);
-    vector<string> s;
-    for (auto a1 : a)
-    {
-        s.push_back(to_string(a1));
-    }
-    // string s(nums.begin(), nums.end());
-    for (auto s1 : s)
-    {
-        cout << s1 << " ";
-    }
-    cout << endl;
+   
     system("pause");
     return 0;
 }
