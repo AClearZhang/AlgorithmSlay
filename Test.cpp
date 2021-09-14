@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\Test.cpp
+ * @FilePath            : \AlgorithmInterview\AlgorithmSlay\Test.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-12-10 15:45:57
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-23 16:08:51
+ * @LastEditTime        : 2021-09-13 11:38:35
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -178,7 +178,7 @@ int main()
 
     cout << "测试 atoi转变string为 int" << endl;
     string str= "11";
-    int a1 = atoi(str.data());
+    int a1 = atoi(str.data()); 
     cout << "now atoi(str.data()) is : "<< a1 << endl;
     cout << str[0]-'0' << endl;
 
