@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\151.ReverseWordsInStr.cpp
+ * @FilePath            : \project\AlgorithmSlay\C++\151.ReverseWordsInStr.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-04-13 10:45:03
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-13 11:34:13
+ * @LastEditTime        : 2021-09-17 21:48:01
  * @Version             : 1.0
  * @Description         : 翻转字符串中的单词
  * 151. 翻转字符串里的单词
@@ -52,27 +52,96 @@ s 中 至少存在一个 单词
 #include <algorithm>
 #include <cmath>
 #include <iostream>
-#include <vector>
 #include <queue>
 #include <set>
-#include <unordered_set>
 #include <sstream>
+#include <unordered_set>
+#include <vector>
 
 using namespace std;
 
-#define For(x,y,z) for(int x=y; x<z; ++x)
+#define For(x, y, z) for (int x = y; x < z; ++x)
 typedef long long ll;
 
-class Solution {
+class Solution
+{
 public:
-    vector<string> split(string inputs, char del){
+    vector<string> split(string inputs, char del)
+    {
         stringstream strStream(inputs);
         vector<string> res;
         string tmp;
-        
-        while(getline(strStream, tmp, del)){
+
+        while (getline(strStream, tmp, del))
+        {
             res.push_back(tmp);
         }
+        return res;
+    }
+
+    /**
+     * @Description: 设置 去除单词前后额空格
+     * @param {*}
+     * @return {*}
+     * @notes: 
+     */
+    void trim(string &s)
+    {
+        if (s.size() == 0)
+            return;
+
+        while (s[0] == ' ')
+            s.erase(0, 1);
+        while (s[s.size() - 1 == ' '])
+            s.erase(s.size() - 1, 1);
+        return; // 注意直接在string上做， 有可能全部去除了。
+    }
+    /**
+     * @Description: 先分割；再倒序输出. 添加去除 多余空格
+     * @param {string} s
+     * @return {*}
+     * @notes: 
+     */
+    string reverseWords2(string s)
+    {
+        this->trim(s); // 左右去除空格.
+        vector<string> strSplit;
+        strSplit = this->split(s, ' ');
+        string res;
+        // 倒序输出并添加空格
+        vector<string>::reverse_iterator rit;
+        for (rit = strSplit.rbegin(); rit != strSplit.rend() - 1; rit++)
+        {
+            string tmp = *rit;
+            this->trim(tmp);
+            if (tmp != "" && tmp != " ")
+            {
+                res += tmp;
+                res.push_back(' ');
+            }
+            // if (*rit != " ")
+            // {
+            //     res += *rit;
+            //     res.push_back(' ');
+            // }
+        }
+
+        string tmp = *rit;
+        this->trim(tmp);
+        if (tmp != "" && tmp != " ")
+        {
+            res += tmp;
+        }else{
+            res.erase(res.size() - 1);
+        }
+        // if (*rit != " ")
+        // {
+        //     res += *rit;
+        // }
+        // else
+        // { //说明前面最后一个 加了" "； 把自己假的 " "去除掉。
+        //     res.erase(res.size() - 1);
+        // }
         return res;
     }
 
@@ -82,22 +151,28 @@ public:
      * @return {*}
      * @notes: 
      */
-    string reverseWords(string s) {
+    string reverseWords(string s)
+    {
         vector<string> strSplit;
         strSplit = this->split(s, ' ');
         string res;
         // 倒序输出并添加空格
         vector<string>::reverse_iterator rit;
-        for(rit = strSplit.rbegin();  rit!=strSplit.rend()-1;rit++ ){
-            if(*rit != " "){
-                res+=*rit;
+        for (rit = strSplit.rbegin(); rit != strSplit.rend() - 1; rit++)
+        {
+            if (*rit != " ")
+            {
+                res += *rit;
                 res.push_back(' ');
             }
         }
-        if(*rit != " "){
-            res+=*rit;
-        }else{//说明前面最后一个 加了" "
-            res.erase(res.size()-1);
+        if (*rit != " ")
+        {
+            res += *rit;
+        }
+        else
+        { //说明前面最后一个 加了" "
+            res.erase(res.size() - 1);
         }
         return res;
     }
