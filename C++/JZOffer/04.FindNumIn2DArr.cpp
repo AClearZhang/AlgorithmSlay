@@ -1,4 +1,16 @@
 /*
+ * @FilePath            : \project\AlgorithmSlay\C++\JZOffer\04.FindNumIn2DArr.cpp
+ * @Author              : AClearZhang
+ * @Date                : 2021-09-18 17:06:48
+ * @E-mail              : aclearzhang@qq.com
+ * @Homepage            : www.aclear.top
+ * @LastEditors         : AClearZhang
+ * @LastEditTime        : 2021-09-18 17:15:34
+ * @Version             : 1.0
+ * @Description         : 同 240题目---已完成
+ */
+
+/*
  * @FilePath            : \project\AlgorithmSlay\C++\240.Search2DMatrixII.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-04-23 10:29:55
@@ -38,33 +50,38 @@ n == matrix[i].length
 -109 <= target <= 109
  */
 
-
-#include <vector>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-#define For(x,y,z) for(int x=y, x<z, x++)
+#define For(x, y, z) for (int x = y, x < z, x++)
 
-class Solution {
+class Solution
+{
 public:
-    /**
-     * @Description: 
-     * @param {int} target
-     * @return {*}
-     * @notes: 关键从左下角查找 —— 因为同时是行最小和列最大。 方便进行 “转移”数组 路径，进行遍历。
-     *  时间复杂度：O(m+n)  空间复杂度：1 （原地进行的。）
-     */
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+    bool findNumberIn2DArray(vector<vector<int>> &matrix, int target)
+    {
+        // 剑指offer 不一样的点在于边界值判断！！！
+        if(matrix.size() == 0 || matrix[0].size() ==0 ){
+            return false;
+        }
+
         int m = matrix.size(), n = matrix[0].size();
-        int row = m-1, col = 0;
-        while(row>=0 && col<n){
+        int row = m - 1, col = 0;
+        while (row >= 0 && col < n)
+        {
             int now = matrix[row][col];
-            if(now == target){
+            if (now == target)
+            {
                 return true;
-            }else if(now > target){
+            }
+            else if (now > target)
+            {
                 row--;
-            }else{
+            }
+            else
+            {
                 col++;
             }
         }

@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-09-18 16:51:24
+ * @LastEditTime        : 2021-09-18 17:49:07
  * @Version             : 1.0
  * @Description         : 翻转字符串中的单词
  * 151. 翻转字符串里的单词
@@ -90,9 +90,9 @@ public:
         if (s.size() == 0)
             return;
 
-        while (s[0] == ' ')
+        while (!s.empty() && s[0] == ' ')
             s.erase(0, 1);
-        while (s[s.size() - 1] == ' ')
+        while (!s.empty() && s[s.size() - 1] == ' ')
             s.erase(s.size() - 1, 1);
         return; // 注意直接在string上做， 有可能全部去除了。
     }
