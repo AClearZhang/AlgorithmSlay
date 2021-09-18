@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-09-17 21:59:13
+ * @LastEditTime        : 2021-09-18 16:49:54
  * @Version             : 1.0
  * @Description         : 秋天。
  */
@@ -84,7 +84,7 @@ void trim(string &s)
 
     while (s[0] == ' ')
         s.erase(0, 1);
-    while (s[s.size() - 1 == ' '])
+    while (s[s.size() - 1] == ' ')
         s.erase(s.size() - 1, 1);
     return; // 注意直接在string上做， 有可能全部去除了。
 }
@@ -101,22 +101,54 @@ string reverseWords2(string s)
     strSplit = split(s, ' ');
     string res;
     // 倒序输出并添加空格
-    vector<string>::reverse_iterator rit;
-    for (rit = strSplit.rbegin(); rit != strSplit.rend() - 1; rit++)
+    for (int i = strSplit.size() - 1; i > 0; i--)
     {
-        cout << "type is:" << type(*rit) << endl;
-        trim(*rit);
-        if (*rit != "" && *rit != " ")
+        string tmp = strSplit[i];
+        trim(tmp);
+        if (tmp != "" && tmp != " ")
         {
-            res += *rit;
+            res += tmp;
             res.push_back(' ');
         }
     }
 
-    trim(*rit);
-    if (*rit != "" && *rit != " ")
+    string tmp = strSplit.front();
+    trim(tmp);
+    if (tmp != "" && tmp != " ")
     {
-        res += *rit;
+        res += tmp;
+    }
+    else
+    {
+        res.erase(res.size() - 1);
+    }
+    return res;
+}
+
+string reverseWords3(string s)
+{
+    trim(s); // 左右去除空格.
+    vector<string> strSplit;
+    strSplit = split(s, ' ');
+    string res;
+    // 倒序输出并添加空格
+    vector<string>::reverse_iterator rit;
+    for (rit = strSplit.rbegin(); rit != strSplit.rend() - 1; rit++)
+    {
+        string tmp = *rit;
+        trim(tmp);
+        if (tmp != "" && tmp != " ")
+        {
+            res += tmp;
+            res.push_back(' ');
+        }
+    }
+
+    string tmp = *rit;
+    trim(tmp);
+    if (tmp != "" && tmp != " ")
+    {
+        res += tmp;
     }
     else
     {
@@ -191,6 +223,7 @@ int main()
     cout << endl;
     cout << "reverse words is:" << reverseWords(testStr) << endl;
     cout << "reverse words2 is:" << reverseWords2(testStr) << endl;
+    cout << "reverse words3 is:" << reverseWords3(testStr) << endl;
     cout << testStr.size() << endl;
 
     system("pause");
