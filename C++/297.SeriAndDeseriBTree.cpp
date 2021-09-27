@@ -123,7 +123,7 @@ private:
     TreeNode* deserialize(queue<string> &q)
     {
         if(q.empty()) return nullptr;
-
+    
         string cur = q.front();
         q.pop();
         if(cur == "null") return nullptr;

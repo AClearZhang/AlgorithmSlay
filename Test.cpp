@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-09-13 11:38:35
+ * @LastEditTime        : 2021-09-27 21:59:59
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -22,6 +22,8 @@
 #include <unordered_map>
 #include <map>
 #include <vector>
+#include <stdio.h>
+#include <cstring>
 
 using namespace std;
 
@@ -105,6 +107,7 @@ int findKthLargest1(vector<int> &nums, int k)
     sort(nums.begin(), nums.begin() + n, comp);
     return nums[k - 1];
 }
+
 
 int main()
 {
