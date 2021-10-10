@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-10-09 20:37:01
+ * @LastEditTime        : 2021-10-10 09:45:17
  * @Version             : 1.0
  * @Description         : 秋天。
  */
@@ -225,6 +225,15 @@ int main()
     cout << "reverse words2 is:" << reverseWords2(testStr) << endl;
     cout << "reverse words3 is:" << reverseWords3(testStr) << endl;
     cout << testStr.size() << endl;
+    
+    cout << "测试 ASCII码转换为 char" << endl;
+    cout << (char)('a'+2) << endl;
+    cout << (char)(  ('Z' - 'A' + 1 + 26) % 26 + 65) << endl;
+    cout << (  ('Z' - 'A' + 1 + 26) % 26 + 65) << endl;
+
+    cout << (char)(  ('A' - 'A' - 1 + 26) % 26 + 65) << endl;
+    cout << (  ('A' - 'A' - 1 + 26) % 26 + 65) << endl;
+
 
 
 

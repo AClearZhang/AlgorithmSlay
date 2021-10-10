@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\Interview\MTuan\No1.cpp
+ * @FilePath            : \AlgorithmInterview\AlgorithmSlay\C++\Interview\MTuan\No1.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-04-18 10:05:19
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-18 11:01:54
+ * @LastEditTime        : 2021-09-27 10:25:20
  * @Version             : 1.0
  * @Description         : 美团第一道
  */
@@ -45,7 +45,7 @@ bool cmp(const pair<ll,ll> &a, const pair<ll,ll> &b){
 }
 
 
-ll main(){
+int main(){
     
     ll n;
     map<ll, ll> idMap;

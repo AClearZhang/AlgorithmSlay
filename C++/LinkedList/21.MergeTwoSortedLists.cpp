@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\LinkedList\21.MergeTwoSortedLists.cpp
+ * @FilePath            : \AlgorithmInterview\AlgorithmSlay\C++\LinkedList\21.MergeTwoSortedLists.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-01-20 18:44:11
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-01-27 10:44:48
+ * @LastEditTime        : 2021-09-27 22:50:36
  * @Version             : 1.0
  * @Description         : 合并两个有序的链表 —— 升序
  * 21. 合并两个有序链表
@@ -33,6 +33,47 @@
 两个链表的节点数目范围是 [0, 50]
 -100 <= Node.val <= 100
 l1 和 l2 均按 非递减顺序 排列
+ */
+
+/**
+ * @Description: 双向链表有序添加
+ * @param {*}
+ * @return {*}
+ * @notes: 
+ * 
+
+ void addByOrder(HeroNode2 node) {
+        HeroNode2 temp = head;
+        //头节点的情况此时链表没有数据所以直接插入就好
+        if (head.next == null) {
+            head.next = node;
+            node.pre = head;
+            //直接结束掉此方法
+            return;
+        }
+        //这个标记为标记是否在元素最后插入还是在中间插入
+        boolean flag = false;
+        //这里的temp是所插入元素的前节点
+        while (temp.next != null) {
+            if (temp.next.no >= node.no) {
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag) {
+            node.pre = temp;
+            node.next = temp.next;
+            temp.next.pre = node;
+            temp.next = node;
+
+        } else {
+            temp.next = node;
+            node.pre = temp;
+        }
+
+
+    }
  */
 
 #include <iostream>
