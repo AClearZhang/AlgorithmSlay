@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-10-09 17:34:10
+ * @LastEditTime        : 2021-10-10 19:43:08
  * @Version             : 1.0
  * @Description         : 去除重复字母
  * 
@@ -65,7 +65,7 @@ public:
         unordered_map<char, int> strMap;
         for(char ch : s){
             strMap[ch] ++;
-            cout << "strmap[" << ch << "]:" << strMap[ch] << endl;
+            // cout << "strmap[" << ch << "]:" << strMap[ch] << endl;
         }
 
         vector<int> visited(26, 0);
@@ -74,7 +74,8 @@ public:
             if(!visited[ch - 'a']){
                 // 一直进行判断  去除大的，而且后面有的时候
                 while(!stackStr.empty() && stackStr.top() > ch){
-                    if(strMap.count(stackStr.top()) > 0){ //  后面还有的话
+                    // cout << stackStr.top() << endl;
+                    if(strMap[stackStr.top()] > 0){ //  后面还有的话  // 不可以使用count 是计算有多少个key，一直有；而是使用里面的 num有几个！
                         visited[stackStr.top() - 'a'] = 0;
                         // cout << "strmap[" << ch << "]:" << strMap[ch] << endl;
                         // cout << "pop while:" << stackStr.top() << endl;
@@ -92,6 +93,7 @@ public:
             }
             // 访问过 --
             strMap[ch] --;
+            
         }
         string res;
         while(!stackStr.empty()){
@@ -106,6 +108,8 @@ public:
 
 int main(int argc, char const *argv[])
 {
-    /* code */
+    Solution s;
+    cout << s.removeDuplicateLetters("cbacdcbc") << endl;
+    system("pause");
     return 0;
 }
