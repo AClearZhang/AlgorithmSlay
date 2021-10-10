@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-09-18 17:49:11
+ * @LastEditTime        : 2021-10-09 20:37:01
  * @Version             : 1.0
  * @Description         : 秋天。
  */
@@ -78,16 +78,16 @@ string reverseWords(string s)
      * @notes: 
      */
 void trim(string &s)
-    {
-        if (s.size() == 0)
-            return;
+{
+    if (s.size() == 0)
+        return;
 
-        while (!s.empty() && s[0] == ' ')
-            s.erase(0, 1);
-        while (!s.empty() && s[s.size() - 1] == ' ')
-            s.erase(s.size() - 1, 1);
-        return; // 注意直接在string上做， 有可能全部去除了。
-    }
+    while (!s.empty() && s[0] == ' ')
+        s.erase(0, 1);
+    while (!s.empty() && s[s.size() - 1] == ' ')
+        s.erase(s.size() - 1, 1);
+    return; // 注意直接在string上做， 有可能全部去除了。
+}
 /**
      * @Description: 先分割；再倒序输出. 添加去除 多余空格
      * @param {string} s
@@ -225,6 +225,8 @@ int main()
     cout << "reverse words2 is:" << reverseWords2(testStr) << endl;
     cout << "reverse words3 is:" << reverseWords3(testStr) << endl;
     cout << testStr.size() << endl;
+
+
 
     system("pause");
     return 0;
