@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \project\AlgorithmSlay\C++\JZOffer\39.ShuZuChuXianChaoYiBanShuZi.cpp
+ * @FilePath            : \AlgorithmInterview\AlgorithmSlay\C++\JZOffer\39.ShuZuChuXianChaoYiBanShuZi.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-10-14 22:08:30
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-10-14 23:33:13
+ * @LastEditTime        : 2021-10-16 21:04:47
  * @Version             : 1.0
  * @Description         : 剑指 Offer 39. 数组中出现次数超过一半的数字
 数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
@@ -59,7 +59,7 @@ public:
      * @return {*}
      * @notes: 
      */
-    int Partition(vector<int> &nums, int n, int left, int right)
+    int Partition(vector<int> &nums, int left, int right)
     {
         int pivot = nums[left];
         while (left < right)
@@ -99,20 +99,20 @@ public:
     {
         // 如果 位置大于k-1 找左边；小于k-1 找右边。
         int n = nums.size();
-        int mid = nums.size() / 2;
+        int mid = n / 2;
         int left = 0, right = n - 1;
-        int index = Partition(nums, n, left, right);
+        int index = Partition(nums,left, right);
         while (index != mid)
         {
             if (index > mid)
             {
                 right = index - 1;
-                index = Partition(nums, n, left, right);
+                index = Partition(nums,left, right);
             }
             else
             {
                 left = index + 1;
-                index = Partition(nums, n, left, right);
+                index = Partition(nums,left, right);
             }
         }
 
@@ -142,4 +142,31 @@ public:
         }
         return res;
     }
+
+    // java
+//     class Solution {
+//     public int majorityElement(int[] nums) {
+//          partition(nums,0,nums.length-1);
+//          return nums[nums.length/2];
+//     }
+//     private void partition(int[] nums, int lo, int hi){
+//         int num = nums[lo];
+//         int i =lo,j=hi+1;
+//         while(true){
+//             while(i<hi && nums[++i]<num);
+//             while(j>lo && nums[--j]>num);
+//             if(i>=j) break;
+//             swap(nums,i,j);
+//         }
+//         swap(nums,lo,j);
+//         int mid = nums.length>>1;
+//         if(j == mid) return;
+//         if(j>mid) partition(nums,lo,j-1);
+//         else partition(nums,j+1,hi);
+//     }
+//     private void swap(int[]nums, int i ,int j ){
+//         int temp = nums[i];nums[i] = nums[j];nums[j] = temp;
+//     }
+// }
+
 };
