@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\1.TwoSum.cpp
+ * @FilePath            : \AlgorithmInterview\AlgorithmSlay\C++\1.TwoSum.cpp
  * @Author              : AClearZhang
  * @Date                : 2020-11-22 22:57:29
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-01 09:54:03
+ * @LastEditTime        : 2021-10-18 19:00:03
  * @Version             : 1.0
  * @Description         : 两数之和  C++
  * 
@@ -149,7 +149,7 @@ int main()
 {
 
     Solution2 s;
-    vector<int> c = {2, 7, 11, 15};
+    vector<int> c = {2, 7, 11, 15}; 
     vector<int> a = s.twoSum(c, 9);
     for (int i = 0; i < a.size(); i++)
     {
