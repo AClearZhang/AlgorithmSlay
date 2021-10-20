@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\DS\460.LFUCache.cpp
+ * @FilePath            : \AlgorithmInterview\AlgorithmSlay\C++\DS\460.LFUCache.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-03-24 20:29:39
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-03-24 23:04:03
+ * @LastEditTime        : 2021-10-20 15:55:54
  * @Version             : 1.0
  * @Description         : LFU 缓存算法
  * 460. LFU 缓存
@@ -196,7 +196,7 @@ private:
  */
 // 缓存的节点信息
 
-class LFUCache {
+class LFUCache2 {
 private:
     struct Node {
         int key, val, freq;
@@ -206,7 +206,7 @@ private:
     unordered_map<int, list<Node>::iterator> key_table;
     unordered_map<int, list<Node>> freq_table;
 public:
-    LFUCache(int _capacity) {
+    LFUCache2(int _capacity) {
         minfreq = 0;
         capacity = _capacity;
         key_table.clear();
@@ -270,3 +270,27 @@ public:
  * int param_1 = obj->get(key);
  * obj->put(key,value);
  */
+
+int main(int argc, char const *argv[])
+{
+    LFUCache lFUCache(2);
+    lFUCache.put(1, 1);   // cache=[1,_], cnt(1)=1
+    lFUCache.put(2, 2);   // cache=[2,1], cnt(2)=1, cnt(1)=1
+    cout << lFUCache.get(1) << endl;      // 返回 1
+                        // cache=[1,2], cnt(2)=1, cnt(1)=2
+    lFUCache.put(3, 3);   // 去除键 2 ，因为 cnt(2)=1 ，使用计数最小
+                        // cache=[3,1], cnt(3)=1, cnt(1)=2
+    cout << lFUCache.get(2) << endl;      // 返回 -1（未找到）
+    cout << lFUCache.get(3) << endl;      // 返回 3
+                        // cache=[3,1], cnt(3)=2, cnt(1)=2
+    lFUCache.put(4, 4);   // 去除键 1 ，1 和 3 的 cnt 相同，但 1 最久未使用
+                        // cache=[4,3], cnt(4)=1, cnt(3)=2
+    cout << lFUCache.get(1) << endl;      // 返回 -1（未找到）
+    cout << lFUCache.get(3) << endl;      // 返回 3
+                        // cache=[3,4], cnt(4)=1, cnt(3)=3
+    cout << lFUCache.get(4) << endl;      // 返回 4
+                        // cache=[3,4], cnt(4)=2, cnt(3)=3
+    system("pause");
+    return 0;
+}
+

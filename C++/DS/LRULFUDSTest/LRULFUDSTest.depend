@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1634716217 source:e:\project\algorithminterview\algorithmslay\c++\ds\lrulfudstest\main.cpp
+	<algorithm>
+	<cmath>
+	<iostream>
+	<sstream>
+	<unordered_map>
+	<vector>
+	<set>
+	<deque>
+	<list>
+

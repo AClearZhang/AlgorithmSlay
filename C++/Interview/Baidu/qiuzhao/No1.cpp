@@ -1,14 +1,15 @@
 /*
  * @FilePath            : \AlgorithmInterview\AlgorithmSlay\C++\Interview\Baidu\qiuzhao\No1.cpp
  * @Author              : AClearZhang
- * @Date                : 2021-04-18 10:55:23
+ * @Date                : 2021-10-18 20:03:31
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-10-18 20:03:31
+ * @LastEditTime        : 2021-10-20 17:09:12
  * @Version             : 1.0
- * @Description         : 美团第二道题
- *
+ * @Description         : 百度第一题
+ *11
+ 1 2 3 3 3 4  4 3 4 2 1
  */
 
 #include <algorithm>

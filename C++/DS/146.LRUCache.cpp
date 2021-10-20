@@ -1,11 +1,11 @@
 /*
- * @FilePath            : \Algorithm&Interview\AlgorithmSlay\C++\DS\146.LRUCache.cpp
+ * @FilePath            : \AlgorithmInterview\AlgorithmSlay\C++\DS\146.LRUCache.cpp
  * @Author              : AClearZhang
  * @Date                : 2021-03-24 14:47:06
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-04-14 20:23:34
+ * @LastEditTime        : 2021-10-20 15:56:43
  * @Version             : 1.0
  * @Description         : LRU 缓存机制
  * 146. LRU 缓存机制
@@ -61,59 +61,59 @@ lRUCache.get(4);    // 返回 4
 
 using namespace std;
 
-/**
- * @Description: 
- * @param {*}
- * @return {*}
- * @notes: 关键：DoubleLinkedHashmap —— 尾入头出。
- */
-class LRUCache {
-public:
-    LRUCache(int capacity) {
-        this->_n = capacity;
-    }
+// /**
+//  * @Description: 注意这个方法 存储list<piar<>>  夭折了？。。。
+//  * @param {*}
+//  * @return {*}
+//  * @notes: 关键：DoubleLinkedHashmap —— 尾入头出。
+//  */
+// class LRUCache {
+// public:
+//     LRUCache(int capacity) {
+//         this->_n = capacity;
+//     }
     
-    int get(int key) {
-        if(_mapHash.count(key) > 0){
-            // 得到val，并转移到链表尾
-            list<pair<int,int>> tmpList = _mapHash[key];
-            int ans = tmpList.front().second;
-            _list.splice(_list.end(), _list, tmpList.begin());  // 指向的当前查询的数值 插入到链表尾前面。
-            return ans;
-        }else{ // 不存在
-            return -1;
-        }
-    }
+//     int get(int key) {
+//         if(_mapHash.count(key) > 0){
+//             // 得到val，并转移到链表尾
+//             list<pair<int,int>> tmpList = _mapHash[key];
+//             int ans = tmpList.front().second;
+//             _list.splice(_list.end(), _list, tmpList.begin());  // 指向的当前查询的数值 插入到链表尾前面。
+//             return ans;
+//         }else{ // 不存在
+//             return -1;
+//         }
+//     }
     
-    void put(int key, int value) {
-        if(_mapHash.count(key) > 0) { // 存在则变更数值，并放置到链表尾
-            list<pair<int,int>> tmpList = _mapHash[key];
-            tmpList.front().second = value;
-            _list.splice(_list.end(), _list, tmpList.begin());  // 指向的当前查询的数值 插入到链表尾前面。
-            return ;
-        }
-        // 不存在，两种情况 超出、未超出
-        if(_list.size() != _n){ // 未超出
-            // 直接插入到尾部
-            _list.push_back(make_pair(key, value));
-            // map新增
-            _mapHash.emplace(key, _list.back());
-            return ;
-        }else{ // 超出
-            // 删除list头， 删除map key
-            _list.pop_front();
-            _mapHash.erase(key);
-            // 其它的和上面一样了。
-            _list.push_back(make_pair(key, value));
-            _mapHash.emplace(key, _list.back());
-            return ;
-        }
-    }
-private:
-    unordered_map<int, list<pair<int, int>>> _mapHash;  // 为存储 iterator 这个方法夭折了。
-    list<pair<int,int>> _list;
-    int _n;  // 总的承受量
-};
+//     void put(int key, int value) {
+//         if(_mapHash.count(key) > 0) { // 存在则变更数值，并放置到链表尾
+//             list<pair<int,int>> tmpList = _mapHash[key];
+//             tmpList.front().second = value;
+//             _list.splice(_list.end(), _list, tmpList.begin());  // 指向的当前查询的数值 插入到链表尾前面。
+//             return ;
+//         }
+//         // 不存在，两种情况 超出、未超出
+//         if(_list.size() != _n){ // 未超出
+//             // 直接插入到尾部
+//             _list.push_back(make_pair(key, value));
+//             // map新增
+//             _mapHash.emplace(key, _list.back());
+//             return ;
+//         }else{ // 超出
+//             // 删除list头， 删除map key
+//             _list.pop_front();
+//             _mapHash.erase(key);
+//             // 其它的和上面一样了。
+//             _list.push_back(make_pair(key, value));
+//             _mapHash.emplace(key, _list.back());
+//             return ;
+//         }
+//     }
+// private:
+//     unordered_map<int, list<pair<int, int>>> _mapHash;  // 为存储 iterator 这个方法夭折了。
+//     list<pair<int,int>> _list;
+//     int _n;  // 总的承受量
+// };
 
 
 /**
@@ -122,9 +122,9 @@ private:
  * @return {*}
  * @notes: 关键：DoubleLinkedHashmap —— 尾入头出。
  */
-class LRUCache {
+class LRUCache2 {
 public:
-    LRUCache(int capacity) {
+    LRUCache2(int capacity) {
         this->_n = capacity;
     }
     
@@ -178,3 +178,21 @@ private:
  * int param_1 = obj->get(key);
  * obj->put(key,value);
  */
+
+int main(int argc, char const *argv[])
+{
+    LRUCache2 lRUCache(2);
+    lRUCache.put(1, 1); // 缓存是 {1=1}
+    lRUCache.put(2, 2); // 缓存是 {1=1, 2=2}
+    cout << lRUCache.get(1) << endl;    // 返回 1
+    lRUCache.put(3, 3); // 该操作会使得关键字 2 作废，缓存是 {1=1, 3=3}
+    cout << lRUCache.get(2) << endl;    // 返回 -1 (未找到)
+    lRUCache.put(4, 4); // 该操作会使得关键字 1 作废，缓存是 {4=4, 3=3}
+    cout << lRUCache.get(1) << endl;    // 返回 -1 (未找到)
+    cout << lRUCache.get(3) << endl;    // 返回 3
+    cout << lRUCache.get(4) << endl;  
+
+    system("pause");
+    return 0;
+}
+
