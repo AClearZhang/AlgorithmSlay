@@ -5,7 +5,7 @@
  * @E-mail              : aclearzhang@qq.com
  * @Homepage            : www.aclear.top
  * @LastEditors         : AClearZhang
- * @LastEditTime        : 2021-10-09 21:59:15
+ * @LastEditTime        : 2022-04-25 22:09:57
  * @Version             : 1.0
  * @Description         : c++语法测试
  */
@@ -108,6 +108,35 @@ int findKthLargest1(vector<int> &nums, int k)
     return nums[k - 1];
 }
 
+class Solution_char {
+public:
+    /**
+     * 
+     * @param arr int整型vector the array
+     * @return int整型
+     */
+    int maxLength(vector<int>& arr) {
+        unordered_map<int, int> window;
+        // int window[100001];
+        int left=0,right=0,res=0;
+        while(right<arr.size())
+        {
+            int c=arr[right];
+            // cout << "right now:" << c << endl;
+            right++;
+            window[c]++;
+            while(window[c]>1)
+            {
+                int d=arr[left];
+                // cout << "left now:" << d << endl;
+                left++;
+                window[d]--;
+            }
+            res=max(res,right-left);
+        }
+        return res;
+    }
+};
 
 int main()
 {
@@ -124,6 +153,16 @@ int main()
      * @return {*}
      * @notes: 
      */
+    vector<int> arr = {2, 2, 3, 4, 2};
+    for(int i; i<arr.size() ;i++){
+
+        cout << arr[i] << endl;
+        char a = arr[i]+48;
+        cout << a << endl;
+    }
+    // Solution_char Sc;
+    // cout << "Max char Lens is: " << Sc.maxLength(arr) << endl;
+
     cout << "*********小数转换*********" << endl;
     int a = 4;
     int b = 3;
